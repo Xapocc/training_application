@@ -15,6 +15,9 @@ class DataState extends MainScreenState {
 }
 
 class ErrorState extends MainScreenState {
+  final String errorMessage = "some long error text with a lot of symbols for testing";
+  static const double fontSize = 24.0;
+
   @override
   List<Object> get props => [];
 }
