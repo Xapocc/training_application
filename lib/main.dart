@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/show_data_cubit.dart';
 import 'show_data_page.dart';
-import 'package:bloc/bloc.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: BlocProvider(
         create: (_) => ShowDataCubit(),
-        child: ShowDataPage(),
+        child: const ShowDataPage(),
       ),
     );
   }

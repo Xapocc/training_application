@@ -1,10 +1,22 @@
-import 'package:flutter/material.dart';
+import 'main_screen_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:math';
 
-class ShowDataCubit extends Cubit<Widget> {
-  ShowDataCubit() : super(Container());
+class ShowDataCubit extends Cubit<MainScreenState> {
+  ShowDataCubit() : super(LoadingState()) {
+    loadData();
+  }
 
-  void loading() => emit(Center(child: Container(color: Colors.amber,),));
-  void loaded() => emit(Center(child: Container(color: Colors.green,),));
-  void error() => emit(Center(child: Container(color: Colors.red,),));
+  void loadData() async {
+    emit(LoadingState());
+
+    await Future.delayed(const Duration(seconds: 2));
+
+    var rnd = Random();
+    if (rnd.nextInt(99) % 2 == 0) {
+      emit(LoadedState());
+    } else {
+      emit(ErrorState());
+    }
+  }
 }
