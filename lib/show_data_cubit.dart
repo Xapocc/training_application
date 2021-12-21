@@ -13,7 +13,7 @@ class ShowDataCubit extends Cubit<MainScreenState> {
     await Future.delayed(const Duration(seconds: 1));
 
     var rnd = Random();
-    if (rnd.nextInt(99) % 1 != 0) {
+    if (rnd.nextInt(99) % 2 == 0) {
       emit(DataState());
     } else {
       emit(ErrorState());
