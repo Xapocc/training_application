@@ -7,7 +7,7 @@ class LoadingState extends MainScreenState {
   List<Object> get props => [];
 }
 
-class LoadedState extends MainScreenState {
+class DataState extends MainScreenState {
   final String data = "data";
 
   @override

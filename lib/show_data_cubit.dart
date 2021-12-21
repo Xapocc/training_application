@@ -14,7 +14,7 @@ class ShowDataCubit extends Cubit<MainScreenState> {
 
     var rnd = Random();
     if (rnd.nextInt(99) % 2 == 0) {
-      emit(LoadedState());
+      emit(DataState());
     } else {
       emit(ErrorState());
     }
