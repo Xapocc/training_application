@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'show_data_cubit.dart';
 import 'main_screen_state.dart';
@@ -90,16 +88,17 @@ Widget errorMessageCircle(
     aspectRatio: 1,
     child: Container(
       decoration: BoxDecoration(
-          border: Border.all(color: circleColor, width: 5.0),
-          borderRadius: BorderRadius.circular(90.0)),
+        shape: BoxShape.circle,
+        border: Border.all(color: circleColor, width: 5.0),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: FittedBox(
-          fit: BoxFit.fitWidth,
-          child: Center(
-            child: Text(errorMessage,
-                style: TextStyle(color: textColor, inherit: false)),
-          ),
+        child: Center(
+          child: Text(errorMessage,
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+              softWrap: true,
+              style: TextStyle(color: textColor, inherit: false)),
         ),
       ),
     ),
