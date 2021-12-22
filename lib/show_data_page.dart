@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'show_data_cubit.dart';
@@ -38,7 +39,7 @@ class ShowDataPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Container(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             color: Colors.purpleAccent,
                             child: Center(
                               child: Text(
@@ -94,10 +95,8 @@ Widget errorMessageCircle(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
-          child: Text(errorMessage,
-              maxLines: 4,
-              overflow: TextOverflow.ellipsis,
-              softWrap: true,
+          child: AutoSizeText(errorMessage,
+              minFontSize: 3.0,
               style: TextStyle(color: textColor, inherit: false)),
         ),
       ),

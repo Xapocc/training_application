@@ -16,8 +16,7 @@ class DataState extends MainScreenState {
 }
 
 class ErrorState extends MainScreenState {
-  final String errorMessage =
-      "some long error text with a lot of symbols for testing";
+  final String errorMessage = "some long error text with a lot of symbols and word for testing your error screen as it should display every error`s message despite how long it is";
   static const double fontSize = 24.0;
 
   String getWrappedErrorMessage() {
