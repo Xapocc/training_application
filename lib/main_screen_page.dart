@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'main_screen_cubit.dart';
 import 'main_screen_state.dart';
 
-class ShowDataPage extends StatelessWidget {
-  const ShowDataPage({Key? key}) : super(key: key);
+class MainScreenPage extends StatelessWidget {
+  const MainScreenPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

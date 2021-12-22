@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: BlocProvider(
         create: (_) => MainScreenCubit(),
-        child: const ShowDataPage(),
+        child: const MainScreenPage(),
       ),
     );
   }
