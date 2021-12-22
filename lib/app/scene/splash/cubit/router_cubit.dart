@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:training_application/router_state.dart';
+import 'package:training_application/app/scene/splash/cubit/router_state.dart';
 
 class RouterCubit extends Cubit<RouterState> {
   RouterCubit() : super(const SplashScreenState()) {

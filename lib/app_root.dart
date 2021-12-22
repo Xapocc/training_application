@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:training_application/root_router_delegate.dart';
-import 'package:training_application/router_cubit.dart';
-import 'package:training_application/router_state.dart';
+import 'package:training_application/app/scene/splash/cubit/root_router_delegate.dart';
+import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
+import 'package:training_application/app/scene/splash/cubit/router_state.dart';
 
 class AppRoot extends StatelessWidget {
   AppRoot({Key? key}) : super(key: key);

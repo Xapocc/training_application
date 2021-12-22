@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'main_screen_cubit.dart';
-import 'main_screen_state.dart';
+import 'cubit/main_screen_cubit.dart';
+import 'cubit/main_screen_state.dart';
 
 class MainScreenPage extends StatelessWidget {
   const MainScreenPage({Key? key}) : super(key: key);
