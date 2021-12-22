@@ -9,63 +9,67 @@ class MainScreenPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MainScreenCubit, MainScreenState>(
-        builder: (context, state) {
-      if (state is LoadingState) {
-        return mainScreenViewTemplate(
-            const CircularProgressIndicator(
-              color: Colors.white,
-            ),
-            Colors.blue);
-      } else if (state is DataState) {
-        return mainScreenViewTemplate(
-            Text(state.data,
-                style: const TextStyle(color: Colors.white, inherit: false)),
-            Colors.green);
-      } else if (state is ErrorState) {
-        return mainScreenViewTemplate(
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
+
+    return BlocProvider(
+      create: (context) => MainScreenCubit(),
+      child: BlocBuilder<MainScreenCubit, MainScreenState>(
+          builder: (context, state) {
+        if (state is LoadingState) {
+          return mainScreenViewTemplate(
+              const CircularProgressIndicator(
+                color: Colors.white,
+              ),
+              Colors.blue);
+        } else if (state is DataState) {
+          return mainScreenViewTemplate(
+              Text(state.data,
+                  style: const TextStyle(color: Colors.white, inherit: false)),
+              Colors.green);
+        } else if (state is ErrorState) {
+          return mainScreenViewTemplate(
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                        flex: 1,
+                        child: errorMessageRow(state.errorMessage, Colors.orange,
+                            Colors.red, Colors.white, Colors.orange)),
+                    Expanded(
                       flex: 1,
-                      child: errorMessageRow(state.errorMessage, Colors.orange,
-                          Colors.red, Colors.white, Colors.orange)),
-                  Expanded(
-                    flex: 1,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            color: Colors.purpleAccent,
-                            child: Center(
-                              child: Text(
-                                state.errorMessage,
-                                style: const TextStyle(
-                                    color: Colors.yellow,
-                                    inherit: false,
-                                    fontSize: ErrorState.fontSize),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(8.0),
+                              color: Colors.purpleAccent,
+                              child: Center(
+                                child: Text(
+                                  state.errorMessage,
+                                  style: const TextStyle(
+                                      color: Colors.yellow,
+                                      inherit: false,
+                                      fontSize: ErrorState.fontSize),
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: errorMessageRow(state.errorMessage, Colors.red,
-                          Colors.yellow, Colors.yellow, Colors.white)),
-                ],
+                    Expanded(
+                        flex: 1,
+                        child: errorMessageRow(state.errorMessage, Colors.red,
+                            Colors.yellow, Colors.yellow, Colors.white)),
+                  ],
+                ),
               ),
-            ),
-            Colors.red);
-      }
-      return const Center();
-    });
+              Colors.red);
+        }
+        return const Center();
+      }),
+    );
   }
 }
 

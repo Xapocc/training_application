@@ -8,11 +8,15 @@ abstract class RouterState extends Equatable {
 }
 
 class SplashScreenState extends RouterState {
+  const SplashScreenState();
+
   @override
   List<Object?> get props => [];
 }
 
 class MainScreenState extends RouterState {
+  const MainScreenState();
+
   @override
   List<Object?> get props => [];
 }
