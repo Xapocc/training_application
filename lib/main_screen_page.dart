@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'show_data_cubit.dart';
+import 'main_screen_cubit.dart';
 import 'main_screen_state.dart';
 
 class ShowDataPage extends StatelessWidget {
@@ -9,7 +9,7 @@ class ShowDataPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ShowDataCubit, MainScreenState>(
+    return BlocBuilder<MainScreenCubit, MainScreenState>(
         builder: (context, state) {
       if (state is LoadingState) {
         return mainScreenViewTemplate(
