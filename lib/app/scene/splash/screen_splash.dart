@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../colors.dart' as colors;
-import '../../size.dart' as size;
+import 'package:training_application/app/colors.dart';
+import 'package:training_application/app/size.dart';
 
 class ScreenSplash extends StatelessWidget {
   const ScreenSplash({
@@ -14,16 +13,16 @@ class ScreenSplash extends StatelessWidget {
       decoration: const BoxDecoration(
         gradient: RadialGradient(
           center: Alignment.bottomCenter,
-          colors: colors.colorsBgGradientSplashScreen,
-          radius: size.radiusGradientBgSplashScreen,
-          stops: size.stopsGradientBgSplashScreen,
+          colors: AppColors.colorsBgGradientSplashScreen,
+          radius: AppSizes.radiusGradientBgSplashScreen,
+          stops: AppSizes.stopsGradientBgSplashScreen,
         ),
       ),
       child: const Center(
         child: Icon(
           Icons.flight_takeoff,
-          size: size.sizeIconSplashScreen,
-          color: colors.colorForegroundSplashScreen,
+          size: AppSizes.sizeIconSplashScreen,
+          color: AppColors.colorForegroundSplashScreen,
         ),
       ),
     );

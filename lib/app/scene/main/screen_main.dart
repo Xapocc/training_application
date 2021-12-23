@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:training_application/app/colors.dart';
+import 'package:training_application/app/size.dart';
 
 import 'cubit/main_cubit.dart';
 import 'cubit/main_state.dart';
-import '../../colors.dart' as colors;
-import '../../size.dart' as size;
 
 class ScreenMain extends StatelessWidget {
   const ScreenMain({Key? key}) : super(key: key);
@@ -19,15 +19,16 @@ class ScreenMain extends StatelessWidget {
         if (state is LoadingState) {
           return _mainScreenViewTemplate(
               const CircularProgressIndicator(
-                color: colors.colorForegroundMainScreen,
+                color: AppColors.colorForegroundMainScreen,
               ),
-              colors.colorBorderLoadingScreen);
+              AppColors.colorBorderLoadingScreen);
         } else if (state is DataState) {
           return _mainScreenViewTemplate(
               Text(state.data,
                   style: const TextStyle(
-                      color: colors.colorForegroundMainScreen, inherit: false)),
-              colors.colorBorderDataScreen);
+                      color: AppColors.colorForegroundMainScreen,
+                      inherit: false)),
+              AppColors.colorBorderDataScreen);
         } else if (state is ErrorState) {
           return _mainScreenViewTemplate(
               Padding(
@@ -39,10 +40,10 @@ class ScreenMain extends StatelessWidget {
                         flex: 1,
                         child: _errorMessageRow(
                             state.errorMessage,
-                            colors.colorsTextMainScreenCircle[0],
-                            colors.colorsBorderMainScreenCircle[0],
-                            colors.colorsTextMainScreenCircle[1],
-                            colors.colorsBorderMainScreenCircle[1])),
+                            AppColors.colorsTextMainScreenCircle[0],
+                            AppColors.colorsBorderMainScreenCircle[0],
+                            AppColors.colorsTextMainScreenCircle[1],
+                            AppColors.colorsBorderMainScreenCircle[1])),
                     Expanded(
                       flex: 1,
                       child: Row(
@@ -50,15 +51,16 @@ class ScreenMain extends StatelessWidget {
                           Expanded(
                             child: Container(
                               padding: const EdgeInsets.all(8.0),
-                              color: colors.colorBgCentralErrorMessage,
+                              color: AppColors.colorBgCentralErrorMessage,
                               child: Center(
                                 child: Text(
                                   state.errorMessage,
                                   style: const TextStyle(
-                                      color: colors.colorFgCentralErrorMessage,
+                                      color:
+                                          AppColors.colorFgCentralErrorMessage,
                                       inherit: false,
                                       fontSize:
-                                          size.sizeFontCentralErrorMessage),
+                                          AppSizes.sizeFontCentralErrorMessage),
                                 ),
                               ),
                             ),
@@ -70,14 +72,14 @@ class ScreenMain extends StatelessWidget {
                         flex: 1,
                         child: _errorMessageRow(
                             state.errorMessage,
-                            colors.colorsTextMainScreenCircle[2],
-                            colors.colorsBorderMainScreenCircle[2],
-                            colors.colorsTextMainScreenCircle[3],
-                            colors.colorsBorderMainScreenCircle[3])),
+                            AppColors.colorsTextMainScreenCircle[2],
+                            AppColors.colorsBorderMainScreenCircle[2],
+                            AppColors.colorsTextMainScreenCircle[3],
+                            AppColors.colorsBorderMainScreenCircle[3])),
                   ],
                 ),
               ),
-              colors.colorBorderErrorScreen);
+              AppColors.colorBorderErrorScreen);
         }
         return const Center();
       }),
@@ -89,10 +91,10 @@ Widget _mainScreenViewTemplate(Widget child, Color colorBorder) {
   return Center(
     child: Container(
       decoration: BoxDecoration(
-          color: colors.colorBackgroundMainScreen,
-          border:
-              Border.all(color: colorBorder, width: size.widthBorderMainScreen),
-          borderRadius: BorderRadius.circular(size.radiusBorderMainScreen)),
+          color: AppColors.colorBackgroundMainScreen,
+          border: Border.all(
+              color: colorBorder, width: AppSizes.widthBorderMainScreen),
+          borderRadius: BorderRadius.circular(AppSizes.radiusBorderMainScreen)),
       child: Center(
         child: child,
       ),
@@ -107,8 +109,8 @@ Widget _errorMessageCircle(
     child: Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border:
-            Border.all(color: colorBorder, width: size.widthBorderErrorCircle),
+        border: Border.all(
+            color: colorBorder, width: AppSizes.widthBorderErrorCircle),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -122,14 +124,19 @@ Widget _errorMessageCircle(
   );
 }
 
-Widget _errorMessageRow(String errorMessage, Color colorTextCircle0,
-    Color colorBorderCircle0, Color colorTextCircle1, Color colorBorderCircle1) {
+Widget _errorMessageRow(
+    String errorMessage,
+    Color colorTextCircle0,
+    Color colorBorderCircle0,
+    Color colorTextCircle1,
+    Color colorBorderCircle1) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Expanded(
         flex: 1,
-        child: _errorMessageCircle(errorMessage, colorTextCircle0, colorBorderCircle0),
+        child: _errorMessageCircle(
+            errorMessage, colorTextCircle0, colorBorderCircle0),
       ),
       Expanded(
         flex: 1,
@@ -137,7 +144,8 @@ Widget _errorMessageRow(String errorMessage, Color colorTextCircle0,
       ),
       Expanded(
         flex: 1,
-        child: _errorMessageCircle(errorMessage, colorTextCircle1, colorBorderCircle1),
+        child: _errorMessageCircle(
+            errorMessage, colorTextCircle1, colorBorderCircle1),
       ),
     ],
   );

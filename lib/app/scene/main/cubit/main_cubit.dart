@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:training_application/app/string.dart';
 
-import '../../../string.dart' as string;
 import 'main_state.dart';
 
 class MainScreenCubit extends Cubit<MainScreenState> {
@@ -17,7 +17,7 @@ class MainScreenCubit extends Cubit<MainScreenState> {
     if (rnd.nextInt(99) % 2 == 0) {
       emit(DataState());
     } else {
-      emit(ErrorState(string.errorMessageTest));
+      emit(ErrorState(AppStrings.errorMessageTest));
     }
   }
 }
