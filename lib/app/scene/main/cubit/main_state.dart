@@ -16,7 +16,8 @@ class DataState extends MainScreenState {
 
 class ErrorState extends MainScreenState {
   ErrorState(String errorMessage) : _errorMessage = errorMessage;
-  String _errorMessage;
+  final String _errorMessage;
+
   String get errorMessage => _errorMessage;
   static const double fontSize = 24.0;
 
