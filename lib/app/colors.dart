@@ -1,27 +1,33 @@
 import 'package:flutter/material.dart';
 
-const Color loadingScreenColor = Colors.blue;
-const Color dataScreenColor = Colors.green;
-const Color errorScreenColor = Colors.red;
-const Color backgroundColorScreen = Colors.black;
-const Color foregroundColorScreen = Colors.white;
+// main screen
+const Color colorBorderLoadingScreen = Colors.blue;
+const Color colorBorderDataScreen = Colors.green;
+const Color colorBorderErrorScreen = Colors.red;
+const Color colorBackgroundMainScreen = Colors.black;
+const Color colorForegroundMainScreen = Colors.white;
 
-const Color circleBorderColor0 = Colors.red;
-const Color circleBorderColor1 = Colors.orange;
-const Color circleBorderColor2 = Colors.yellow;
-const Color circleBorderColor3 = Colors.white;
+// error screen
+const Color colorFgCentralErrorMessage = Colors.yellow;
+const Color colorBgCentralErrorMessage = Colors.purpleAccent;
 
-const Color circleTextColor0 = Colors.orange;
-const Color circleTextColor1 = Colors.white;
-const Color circleTextColor2 = Colors.red;
-const Color circleTextColor3 = Colors.yellow;
+// error screen circles
+const List<Color> colorsBorderMainScreenCircle = [
+  Colors.red,
+  Colors.orange,
+  Colors.yellow,
+  Colors.white
+];
+const List<Color> colorsTextMainScreenCircle = [
+  Colors.orange,
+  Colors.white,
+  Colors.red,
+  Colors.yellow
+];
 
-const Color centralErrorMessageForegroundColor = Colors.yellow;
-const Color centralErrorMessageBackgroundColor = Colors.purpleAccent;
-
-const Color foregroundColor = Colors.black;
-
-const List<Color> backgroundGradientColors = [
+// splash screen
+const Color colorForegroundSplashScreen = Colors.black;
+const List<Color> colorsBgGradientSplashScreen = [
   Colors.red,
   Colors.amber,
   Colors.amberAccent,

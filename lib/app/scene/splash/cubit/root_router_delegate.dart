@@ -19,7 +19,7 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
   Widget build(BuildContext context) => Navigator(
         key: navigatorKey,
         pages: List.from(
-            [const MaterialPage(child: SplashScreenPage()), ..._extraPages]),
+            [const MaterialPage(child: ScreenSplash()), ..._extraPages]),
         onPopPage: _onPopPageParser,
       );
 
@@ -31,10 +31,10 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
 
   List<Page> get _extraPages {
     if (_routerCubit.state is SplashScreenState) {
-      return [const MaterialPage(child: SplashScreenPage())];
+      return [const MaterialPage(child: ScreenSplash())];
     }
     if (_routerCubit.state is MainScreenState) {
-      return [const MaterialPage(child: MainScreenPage())];
+      return [const MaterialPage(child: ScreenMain())];
     }
     return [];
   }

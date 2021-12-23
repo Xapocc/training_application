@@ -17,7 +17,7 @@ class MainScreenCubit extends Cubit<MainScreenState> {
     if (rnd.nextInt(99) % 2 == 0) {
       emit(DataState());
     } else {
-      emit(ErrorState(string.testingErrorMessage));
+      emit(ErrorState(string.errorMessageTest));
     }
   }
 }
