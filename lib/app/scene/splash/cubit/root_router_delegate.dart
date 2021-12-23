@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:training_application/app/scene/choose/screen_choose.dart';
 import 'package:training_application/app/scene/main/screen_main.dart';
 import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
 import 'package:training_application/app/scene/splash/cubit/router_state.dart';
@@ -30,8 +31,8 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
   }
 
   List<Page> get _extraPages {
-    if (_routerCubit.state is SplashScreenState) {
-      return [const MaterialPage(child: ScreenSplash())];
+    if (_routerCubit.state is ChooseScreenState) {
+      return [const MaterialPage(child: ScreenChoose())];
     }
     if (_routerCubit.state is MainScreenState) {
       return [const MaterialPage(child: ScreenMain())];
@@ -41,7 +42,6 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
 
   @override
   Future<bool> popRoute() async {
-    _routerCubit.startApp();
     return true;
   }
 

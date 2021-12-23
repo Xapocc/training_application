@@ -20,3 +20,17 @@ class MainScreenState extends RouterState {
   @override
   List<Object?> get props => [];
 }
+
+class ChooseScreenState extends RouterState {
+  const ChooseScreenState();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class TimerScreenState extends RouterState {
+  const TimerScreenState();
+
+  @override
+  List<Object?> get props => [];
+}

@@ -7,9 +7,8 @@ class RouterCubit extends Cubit<RouterState> {
   }
 
   void startApp() async {
-
     await Future.delayed(const Duration(seconds: 3));
 
-    emit(const MainScreenState());
+    emit(const ChooseScreenState());
   }
 }
