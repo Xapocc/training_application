@@ -17,19 +17,19 @@ class MainScreenPage extends StatelessWidget {
       child: BlocBuilder<MainScreenCubit, MainScreenState>(
           builder: (context, state) {
         if (state is LoadingState) {
-          return mainScreenViewTemplate(
+          return _mainScreenViewTemplate(
               const CircularProgressIndicator(
                 color: colors.foregroundColorScreen,
               ),
               colors.loadingScreenColor);
         } else if (state is DataState) {
-          return mainScreenViewTemplate(
+          return _mainScreenViewTemplate(
               Text(state.data,
                   style: const TextStyle(
                       color: colors.foregroundColorScreen, inherit: false)),
               colors.dataScreenColor);
         } else if (state is ErrorState) {
-          return mainScreenViewTemplate(
+          return _mainScreenViewTemplate(
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -37,7 +37,7 @@ class MainScreenPage extends StatelessWidget {
                   children: [
                     Expanded(
                         flex: 1,
-                        child: errorMessageRow(
+                        child: _errorMessageRow(
                             state.errorMessage,
                             colors.circleTextColor0,
                             colors.circleBorderColor0,
@@ -68,7 +68,7 @@ class MainScreenPage extends StatelessWidget {
                     ),
                     Expanded(
                         flex: 1,
-                        child: errorMessageRow(
+                        child: _errorMessageRow(
                             state.errorMessage,
                             colors.circleTextColor2,
                             colors.circleBorderColor2,
@@ -85,7 +85,7 @@ class MainScreenPage extends StatelessWidget {
   }
 }
 
-Widget mainScreenViewTemplate(Widget child, Color borderColor) {
+Widget _mainScreenViewTemplate(Widget child, Color borderColor) {
   return Center(
     child: Container(
       decoration: BoxDecoration(
@@ -99,7 +99,7 @@ Widget mainScreenViewTemplate(Widget child, Color borderColor) {
   );
 }
 
-Widget errorMessageCircle(
+Widget _errorMessageCircle(
     String errorMessage, Color textColor, Color circleColor) {
   return AspectRatio(
     aspectRatio: 1,
@@ -120,14 +120,14 @@ Widget errorMessageCircle(
   );
 }
 
-Widget errorMessageRow(String errorMessage, Color textColor0,
+Widget _errorMessageRow(String errorMessage, Color textColor0,
     Color circleColor0, Color textColor1, Color circleColor1) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Expanded(
         flex: 1,
-        child: errorMessageCircle(errorMessage, textColor0, circleColor0),
+        child: _errorMessageCircle(errorMessage, textColor0, circleColor0),
       ),
       Expanded(
         flex: 1,
@@ -135,7 +135,7 @@ Widget errorMessageRow(String errorMessage, Color textColor0,
       ),
       Expanded(
         flex: 1,
-        child: errorMessageCircle(errorMessage, textColor1, circleColor1),
+        child: _errorMessageCircle(errorMessage, textColor1, circleColor1),
       ),
     ],
   );
