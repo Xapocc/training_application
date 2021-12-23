@@ -1,4 +1,4 @@
-import 'main_screen_state.dart';
+import 'main_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:math';
 
@@ -14,7 +14,8 @@ class MainScreenCubit extends Cubit<MainScreenState> {
     if (rnd.nextInt(99) % 2 == 0) {
       emit(DataState());
     } else {
-      emit(ErrorState());
+      emit(ErrorState(
+          "some long error text with a lot of symbols and word for testing your error screen as it should display every error`s message despite how long it is"));
     }
   }
 }

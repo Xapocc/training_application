@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:training_application/app/scene/main/main_screen_page.dart';
+import 'package:training_application/app/scene/main/screen_main.dart';
 import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
 import 'package:training_application/app/scene/splash/cubit/router_state.dart';
-import 'package:training_application/app/scene/splash/splash_screen_page.dart';
+import 'package:training_application/app/scene/splash/screen_splash.dart';
 
 class RootRouterDelegate extends RouterDelegate<RouterState> {
   final GlobalKey<NavigatorState> _navigatorKey;
