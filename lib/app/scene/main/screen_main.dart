@@ -1,15 +1,17 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'cubit/main_cubit.dart';
 import 'cubit/main_state.dart';
+import '../../colors.dart' as colors;
+import '../../size.dart' as size;
 
 class MainScreenPage extends StatelessWidget {
   const MainScreenPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return BlocProvider(
       create: (context) => MainScreenCubit(),
       child: BlocBuilder<MainScreenCubit, MainScreenState>(
@@ -17,14 +19,15 @@ class MainScreenPage extends StatelessWidget {
         if (state is LoadingState) {
           return mainScreenViewTemplate(
               const CircularProgressIndicator(
-                color: Colors.white,
+                color: colors.foregroundColorScreen,
               ),
-              Colors.blue);
+              colors.loadingScreenColor);
         } else if (state is DataState) {
           return mainScreenViewTemplate(
               Text(state.data,
-                  style: const TextStyle(color: Colors.white, inherit: false)),
-              Colors.green);
+                  style: const TextStyle(
+                      color: colors.foregroundColorScreen, inherit: false)),
+              colors.dataScreenColor);
         } else if (state is ErrorState) {
           return mainScreenViewTemplate(
               Padding(
@@ -34,8 +37,12 @@ class MainScreenPage extends StatelessWidget {
                   children: [
                     Expanded(
                         flex: 1,
-                        child: errorMessageRow(state.errorMessage, Colors.orange,
-                            Colors.red, Colors.white, Colors.orange)),
+                        child: errorMessageRow(
+                            state.errorMessage,
+                            colors.circleTextColor0,
+                            colors.circleBorderColor0,
+                            colors.circleTextColor1,
+                            colors.circleBorderColor1)),
                     Expanded(
                       flex: 1,
                       child: Row(
@@ -43,14 +50,15 @@ class MainScreenPage extends StatelessWidget {
                           Expanded(
                             child: Container(
                               padding: const EdgeInsets.all(8.0),
-                              color: Colors.purpleAccent,
+                              color: colors.centralErrorMessageBackgroundColor,
                               child: Center(
                                 child: Text(
                                   state.errorMessage,
                                   style: const TextStyle(
-                                      color: Colors.yellow,
+                                      color: colors
+                                          .centralErrorMessageForegroundColor,
                                       inherit: false,
-                                      fontSize: ErrorState.fontSize),
+                                      fontSize: size.fontSize),
                                 ),
                               ),
                             ),
@@ -60,12 +68,16 @@ class MainScreenPage extends StatelessWidget {
                     ),
                     Expanded(
                         flex: 1,
-                        child: errorMessageRow(state.errorMessage, Colors.red,
-                            Colors.yellow, Colors.yellow, Colors.white)),
+                        child: errorMessageRow(
+                            state.errorMessage,
+                            colors.circleTextColor2,
+                            colors.circleBorderColor2,
+                            colors.circleTextColor3,
+                            colors.circleBorderColor3)),
                   ],
                 ),
               ),
-              Colors.red);
+              colors.errorScreenColor);
         }
         return const Center();
       }),
@@ -77,9 +89,9 @@ Widget mainScreenViewTemplate(Widget child, Color borderColor) {
   return Center(
     child: Container(
       decoration: BoxDecoration(
-          color: Colors.black,
-          border: Border.all(color: borderColor, width: 5.0),
-          borderRadius: BorderRadius.circular(45.0)),
+          color: colors.backgroundColorScreen,
+          border: Border.all(color: borderColor, width: size.borderWidthScreen),
+          borderRadius: BorderRadius.circular(size.borderRadiusScreen)),
       child: Center(
         child: child,
       ),
@@ -94,7 +106,7 @@ Widget errorMessageCircle(
     child: Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: circleColor, width: 5.0),
+        border: Border.all(color: circleColor, width: size.borderWidthCircle),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),

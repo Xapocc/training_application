@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../colors.dart' as colors;
+import '../../size.dart' as size;
+
 class SplashScreenPage extends StatelessWidget {
   const SplashScreenPage({
     Key? key,
@@ -11,16 +14,16 @@ class SplashScreenPage extends StatelessWidget {
       decoration: const BoxDecoration(
         gradient: RadialGradient(
           center: Alignment.bottomCenter,
-          colors: [Colors.red, Colors.amber, Colors.amberAccent, Colors.yellow],
-          radius: 2.5,
-          stops: [0.1, 0.4, 0.6, 1],
+          colors: colors.backgroundGradientColors,
+          radius: size.backgroundGradientRadius,
+          stops: size.backgroundGradientStops,
         ),
       ),
       child: const Center(
         child: Icon(
           Icons.flight_takeoff,
           size: 64.0,
-          color: Colors.black,
+          color: colors.foregroundColor,
         ),
       ),
     );
