@@ -14,11 +14,14 @@ class AppRoot extends StatelessWidget {
     return BlocProvider(
       create: (context) => RouterCubit(),
       child: MaterialApp(
-        home: BlocBuilder<RouterCubit, RouterState>(
-          builder: (context, state) => Router(
-            routerDelegate: RootRouterDelegate(
-              navigatorKey,
-              context.read<RouterCubit>(),
+        debugShowCheckedModeBanner: false,
+        home: SafeArea(
+          child: BlocBuilder<RouterCubit, RouterState>(
+            builder: (context, state) => Router(
+              routerDelegate: RootRouterDelegate(
+                navigatorKey,
+                context.read<RouterCubit>(),
+              ),
             ),
           ),
         ),
