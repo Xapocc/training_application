@@ -6,6 +6,10 @@ class RouterCubit extends Cubit<RouterState> {
     startApp();
   }
 
+  void goToScreenTask3() => emit(const Task3ScreenState());
+  void goToScreenTask4() => emit(const Task4ScreenState());
+  void goToScreenStatistics() => emit(const StatisticScreenState());
+
   void startApp() async {
     await Future.delayed(const Duration(seconds: 3));
 
