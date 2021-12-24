@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:training_application/app/scene/main/screen_main.dart';
+import 'package:training_application/app/scene/choose/screen_choose.dart';
+import 'package:training_application/app/scene/task3/screen_task3.dart';
 import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
 import 'package:training_application/app/scene/splash/cubit/router_state.dart';
 import 'package:training_application/app/scene/splash/screen_splash.dart';
-import 'package:training_application/app/scene/task4/screen_task4.dart';
 
 class RootRouterDelegate extends RouterDelegate<RouterState> {
   final GlobalKey<NavigatorState> _navigatorKey;
@@ -32,10 +32,10 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
 
   List<Page> get _extraPages {
     if (_routerCubit.state is ChooseScreenState) {
-      return [const MaterialPage(child: ScreenTask4())];
+      return [const MaterialPage(child: ScreenChoose())];
     }
-    if (_routerCubit.state is MainScreenState) {
-      return [const MaterialPage(child: ScreenMain())];
+    if (_routerCubit.state is Task3ScreenState) {
+      return [const MaterialPage(child: ScreenTask3())];
     }
     return [];
   }

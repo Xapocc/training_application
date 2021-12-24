@@ -14,8 +14,8 @@ class SplashScreenState extends RouterState {
   List<Object?> get props => [];
 }
 
-class MainScreenState extends RouterState {
-  const MainScreenState();
+class Task3ScreenState extends RouterState {
+  const Task3ScreenState();
 
   @override
   List<Object?> get props => [];
@@ -28,8 +28,15 @@ class ChooseScreenState extends RouterState {
   List<Object?> get props => [];
 }
 
-class TimerScreenState extends RouterState {
-  const TimerScreenState();
+class Task4ScreenState extends RouterState {
+  const Task4ScreenState();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class StatisticScreenState extends RouterState {
+  const StatisticScreenState();
 
   @override
   List<Object?> get props => [];

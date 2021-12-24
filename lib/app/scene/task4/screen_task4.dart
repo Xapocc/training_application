@@ -14,59 +14,24 @@ class ScreenTask4 extends StatelessWidget {
       create: (context) => Task4ScreenCubit(),
       child: BlocBuilder<Task4ScreenCubit, Task4ScreenState>(
         builder: (context, state) {
-          if (state is InputTimeState) {
-            return Container(
-              padding: const EdgeInsets.all(8.0),
-              color: Colors.black,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Material(
-                      child: TextField(),
-                    ),
-                    ElevatedButton(
-                      child: const Text("Start"),
-                      onPressed: () {
-                        context.read<Task4ScreenCubit>().startRotation(10);
-                      },
-                    )
-                  ],
-                ),
-              ),
-            );
-          } else if (state is TimerState) {
-            return Center(
+          return Container(
+            padding: const EdgeInsets.all(8.0),
+            color: Colors.black,
+            child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const CircularProgressIndicator(),
-                  Text(
-                    "${state.time}",
-                    style: const TextStyle(
-                      inherit: false,
-                      color: Colors.white,
-                    ),
+                  const Material(
+                    child: TextField(),
                   ),
+                  ElevatedButton(
+                    child: const Text("Start"),
+                    onPressed: () {},
+                  )
                 ],
               ),
-            );
-          } else {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "$state",
-                    style: const TextStyle(
-                      inherit: false,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }
+            ),
+          );
         },
       ),
     );

@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:training_application/app/scene/main/cubit/main_state.dart';
+import 'package:training_application/app/scene/task3/cubit/task3_state.dart';
 import 'package:training_application/app/string.dart';
 
-class MainScreenCubit extends Cubit<MainScreenState> {
-  MainScreenCubit() : super(LoadingState()) {
+class Task3ScreenCubit extends Cubit<Task3ScreenState> {
+  Task3ScreenCubit() : super(LoadingState()) {
     loadData();
   }
 

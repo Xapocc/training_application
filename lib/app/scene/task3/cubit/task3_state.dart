@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
-abstract class MainScreenState extends Equatable {}
+abstract class Task3ScreenState extends Equatable {}
 
-class LoadingState extends MainScreenState {
+class LoadingState extends Task3ScreenState {
   @override
   List<Object> get props => [];
 }
 
-class DataState extends MainScreenState {
+class DataState extends Task3ScreenState {
   final String _data = "data";
 
   String get data => _data;
@@ -16,7 +16,7 @@ class DataState extends MainScreenState {
   List<Object> get props => [];
 }
 
-class ErrorState extends MainScreenState {
+class ErrorState extends Task3ScreenState {
   ErrorState(String errorMessage) : _errorMessage = errorMessage;
 
   final String _errorMessage;

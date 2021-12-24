@@ -4,33 +4,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/colors.dart';
 import 'package:training_application/app/size.dart';
 
-import 'cubit/main_cubit.dart';
-import 'cubit/main_state.dart';
+import 'cubit/task3_cubit.dart';
+import 'cubit/task3_state.dart';
 
-class ScreenMain extends StatelessWidget {
-  const ScreenMain({Key? key}) : super(key: key);
+class ScreenTask3 extends StatelessWidget {
+  const ScreenTask3({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MainScreenCubit(),
-      child: BlocBuilder<MainScreenCubit, MainScreenState>(
+      create: (context) => Task3ScreenCubit(),
+      child: BlocBuilder<Task3ScreenCubit, Task3ScreenState>(
           builder: (context, state) {
         if (state is LoadingState) {
-          return _mainScreenViewTemplate(
+          return _task3ScreenViewTemplate(
               const CircularProgressIndicator(
                 color: AppColors.colorForegroundMainScreen,
               ),
               AppColors.colorBorderLoadingScreen);
         } else if (state is DataState) {
-          return _mainScreenViewTemplate(
+          return _task3ScreenViewTemplate(
               Text(state.data,
                   style: const TextStyle(
                       color: AppColors.colorForegroundMainScreen,
                       inherit: false)),
               AppColors.colorBorderDataScreen);
         } else if (state is ErrorState) {
-          return _mainScreenViewTemplate(
+          return _task3ScreenViewTemplate(
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -87,7 +87,7 @@ class ScreenMain extends StatelessWidget {
   }
 }
 
-Widget _mainScreenViewTemplate(Widget child, Color colorBorder) {
+Widget _task3ScreenViewTemplate(Widget child, Color colorBorder) {
   return Center(
     child: Container(
       decoration: BoxDecoration(
