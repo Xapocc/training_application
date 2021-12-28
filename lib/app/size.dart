@@ -17,7 +17,13 @@ abstract class AppSizes {
   static const double sizeIconSplashScreen = 64.0;
 
   // choose screen
-  static const widthButtonChooseScreen = 250.0;
-  static const heightButtonChooseScreen = 40.0;
-  static const fontSizeButtonChooseScreen = 32.0;
+  static const double widthButtonChooseScreen = 250.0;
+  static const double heightButtonChooseScreen = 40.0;
+  static const double fontSizeButtonChooseScreen = 32.0;
+
+  // task 4 screen
+  static const double widthTextFieldTask4Screen = 100.0;
+  static const int maxLengthTextFieldTask4Screen = 2;
+  static const double fontSizeTextFieldTask4Screen = 64.0;
+  static const int emptyReplacerTextFieldTask4Screen = 0;
 }

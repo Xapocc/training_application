@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:training_application/app/colors.dart';
 import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
 import 'package:training_application/app/scene/task4/cubit/task4_cubit.dart';
 import 'package:training_application/app/scene/task4/cubit/task4_state.dart';
+import 'package:training_application/app/size.dart';
+import 'package:training_application/app/string.dart';
 import 'package:training_application/domain/task4/task4_timer_domain.dart';
 
 class ScreenTask4 extends StatelessWidget {
@@ -28,47 +31,54 @@ class ScreenTask4 extends StatelessWidget {
           child: BlocBuilder<Task4ScreenCubit, Task4ScreenState>(
             builder: (context, state) {
               return Container(
-                padding: const EdgeInsets.all(8.0),
-                color: Colors.black,
+                color: AppColors.colorBgTask4Screen,
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: 100.0,
+                        width: AppSizes.widthTextFieldTask4Screen,
                         child: Material(
-                          color: Colors.black,
+                          color: AppColors.colorBgTextFieldTask4Screen,
                           child: TextField(
                             enableSuggestions: false,
-                            cursorColor: Colors.white,
-                            maxLength: 2,
+                            cursorColor: AppColors.colorFgTextFieldTask4Screen,
+                            maxLength: AppSizes.maxLengthTextFieldTask4Screen,
                             decoration: InputDecoration(
                               hintText: snapshot.hasData
                                   ? snapshot.hasError
-                                      ? "0"
+                                      ? AppStrings.textHintDefaultTask4Screen
                                       : "${snapshot.data}"
-                                  : "0",
-                              hintStyle: const TextStyle(color: Colors.white30),
+                                  : AppStrings.textHintDefaultTask4Screen,
+                              hintStyle: const TextStyle(
+                                  color: AppColors
+                                      .colorFgHintTextFieldTask4Screen),
                               focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
+                                borderSide: BorderSide(
+                                    color:
+                                        AppColors.colorFgTextFieldTask4Screen),
                               ),
                               enabledBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white30),
+                                borderSide: BorderSide(
+                                    color: AppColors
+                                        .colorFgHintTextFieldTask4Screen),
                               ),
                             ),
                             style: const TextStyle(
-                                fontSize: 64.0,
-                                color: Colors.white,
-                                backgroundColor: Colors.black,
-                                decorationColor: Colors.red),
+                              fontSize: AppSizes.fontSizeTextFieldTask4Screen,
+                              color: AppColors.colorFgTextFieldTask4Screen,
+                              backgroundColor:
+                                  AppColors.colorBgTextFieldTask4Screen,
+                            ),
                             textAlign: TextAlign.center,
                             onChanged: (text) {
                               try {
-                                seconds = int.parse(text == ""
+                                seconds = int.parse(text.isEmpty
                                     ? snapshot.data.toString()
                                     : text);
                               } catch (ex) {
-                                seconds = 0;
+                                seconds =
+                                    AppSizes.emptyReplacerTextFieldTask4Screen;
                               }
                               context
                                   .read<Task4ScreenCubit>()
@@ -77,32 +87,7 @@ class ScreenTask4 extends StatelessWidget {
                           ),
                         ),
                       ),
-                      state is EnabledButtonState
-                          ? ElevatedButton(
-                              style: ButtonStyle(
-                                foregroundColor: MaterialStateColor.resolveWith(
-                                    (states) => Colors.black),
-                                backgroundColor: MaterialStateColor.resolveWith(
-                                    (states) => Colors.white),
-                                overlayColor: MaterialStateColor.resolveWith(
-                                    (states) => Colors.black12),
-                              ),
-                              child: const Text("Start"),
-                              onPressed: () {
-                                Task4TimerDomain.saveTime(seconds);
-                                _routerCubit.goToScreenStatistics(seconds);
-                              },
-                            )
-                          : ElevatedButton(
-                              style: ButtonStyle(
-                                foregroundColor: MaterialStateColor.resolveWith(
-                                    (states) => Colors.black54),
-                                backgroundColor: MaterialStateColor.resolveWith(
-                                    (states) => Colors.white12),
-                              ),
-                              child: const Text("Start"),
-                              onPressed: null,
-                            ),
+                      _startButton(state, seconds),
                     ],
                   ),
                 ),
@@ -112,5 +97,36 @@ class ScreenTask4 extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget _startButton(Task4ScreenState state, int seconds) {
+    if (state is EnabledButtonState) {
+      return ElevatedButton(
+        style: ButtonStyle(
+          foregroundColor: MaterialStateColor.resolveWith(
+              (states) => AppColors.colorFgButtonEnabledStartTask4Screen),
+          backgroundColor: MaterialStateColor.resolveWith(
+              (states) => AppColors.colorBgButtonEnabledStartTask4Screen),
+          overlayColor: MaterialStateColor.resolveWith(
+              (states) => AppColors.colorOverlayButtonStartTask4Screen),
+        ),
+        child: const Text(AppStrings.textButtonStartTimerTask4Screen),
+        onPressed: () {
+          Task4TimerDomain.saveTime(seconds);
+          _routerCubit.goToScreenStatistics(seconds);
+        },
+      );
+    } else {
+      return ElevatedButton(
+        style: ButtonStyle(
+          foregroundColor: MaterialStateColor.resolveWith(
+              (states) => AppColors.colorFgButtonDisabledStartTask4Screen),
+          backgroundColor: MaterialStateColor.resolveWith(
+              (states) => AppColors.colorBgButtonDisabledStartTask4Screen),
+        ),
+        child: const Text(AppStrings.textButtonStartTimerTask4Screen),
+        onPressed: null,
+      );
+    }
   }
 }
