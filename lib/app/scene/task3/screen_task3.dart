@@ -19,20 +19,19 @@ class ScreenTask3 extends StatelessWidget {
         if (state is LoadingState) {
           return _task3ScreenViewTemplate(
               const CircularProgressIndicator(
-                color: AppColors.colorForegroundMainScreen,
+                color: AppColors.colorFgTask3Screen,
               ),
               AppColors.colorBorderLoadingScreen);
         } else if (state is DataState) {
           return _task3ScreenViewTemplate(
               Text(state.data,
                   style: const TextStyle(
-                      color: AppColors.colorForegroundMainScreen,
-                      inherit: false)),
+                      color: AppColors.colorFgTask3Screen, inherit: false)),
               AppColors.colorBorderDataScreen);
         } else if (state is ErrorState) {
           return _task3ScreenViewTemplate(
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(AppSizes.paddingErrorScreen),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -40,17 +39,18 @@ class ScreenTask3 extends StatelessWidget {
                         flex: 1,
                         child: _errorMessageRow(
                             state.errorMessage,
-                            AppColors.colorsTextMainScreenCircle[0],
-                            AppColors.colorsBorderMainScreenCircle[0],
-                            AppColors.colorsTextMainScreenCircle[1],
-                            AppColors.colorsBorderMainScreenCircle[1])),
+                            AppColors.colorsTextCircleTask3Screen[0],
+                            AppColors.colorsBorderCircleTask3Screen[0],
+                            AppColors.colorsTextCircleTask3Screen[1],
+                            AppColors.colorsBorderCircleTask3Screen[1])),
                     Expanded(
                       flex: 1,
                       child: Row(
                         children: [
                           Expanded(
                             child: Container(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(
+                                  AppSizes.paddingCentralErrorMessage),
                               color: AppColors.colorBgCentralErrorMessage,
                               child: Center(
                                 child: Text(
@@ -72,10 +72,10 @@ class ScreenTask3 extends StatelessWidget {
                         flex: 1,
                         child: _errorMessageRow(
                             state.errorMessage,
-                            AppColors.colorsTextMainScreenCircle[2],
-                            AppColors.colorsBorderMainScreenCircle[2],
-                            AppColors.colorsTextMainScreenCircle[3],
-                            AppColors.colorsBorderMainScreenCircle[3])),
+                            AppColors.colorsTextCircleTask3Screen[2],
+                            AppColors.colorsBorderCircleTask3Screen[2],
+                            AppColors.colorsTextCircleTask3Screen[3],
+                            AppColors.colorsBorderCircleTask3Screen[3])),
                   ],
                 ),
               ),
@@ -91,10 +91,11 @@ Widget _task3ScreenViewTemplate(Widget child, Color colorBorder) {
   return Center(
     child: Container(
       decoration: BoxDecoration(
-          color: AppColors.colorBackgroundMainScreen,
+          color: AppColors.colorBgTask3Screen,
           border: Border.all(
-              color: colorBorder, width: AppSizes.widthBorderMainScreen),
-          borderRadius: BorderRadius.circular(AppSizes.radiusBorderMainScreen)),
+              color: colorBorder, width: AppSizes.widthBorderTask3Screen),
+          borderRadius:
+              BorderRadius.circular(AppSizes.radiusBorderTask3Screen)),
       child: Center(
         child: child,
       ),
@@ -113,10 +114,10 @@ Widget _errorMessageCircle(
             color: colorBorder, width: AppSizes.widthBorderErrorCircle),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(AppSizes.paddingCircleErrorMessage),
         child: Center(
           child: AutoSizeText(errorMessage,
-              minFontSize: 3.0,
+              minFontSize: AppSizes.minFontSizeCircleErrorMessage,
               style: TextStyle(color: colorText, inherit: false)),
         ),
       ),
