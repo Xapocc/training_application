@@ -22,7 +22,7 @@ class ScreenSplash extends StatelessWidget {
         child: Icon(
           Icons.flight_takeoff,
           size: AppSizes.sizeIconSplashScreen,
-          color: AppColors.colorForegroundSplashScreen,
+          color: AppColors.colorFgSplashScreen,
         ),
       ),
     );

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
+import 'package:training_application/app/colors.dart';
+import 'package:training_application/app/size.dart';
+import 'package:training_application/app/string.dart';
 
 class ScreenChoose extends StatelessWidget {
   const ScreenChoose(
@@ -13,34 +16,35 @@ class ScreenChoose extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.amberAccent,
+      color: AppColors.colorBgChooseScreen,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  fixedSize: const Size(250, 40), primary: Colors.black),
-              onPressed: () {
-                routerCubit.goToScreenTask3();
-              },
-              child: const Text("Task 1 Screen",
-                  style: TextStyle(
-                      inherit: false, fontSize: 32.0, color: Colors.white)),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  fixedSize: const Size(250, 40), primary: Colors.black),
-              onPressed: () {
-                routerCubit.goToScreenTask4();
-              },
-              child: const Text("Task 4 Screen",
-                  style: TextStyle(
-                      inherit: false, fontSize: 32.0, color: Colors.white)),
-            ),
+            _chooseScreenButton(AppStrings.textButton0ChooseScreen, () {
+              routerCubit.goToScreenTask3();
+            }),
+            _chooseScreenButton(AppStrings.textButton1ChooseScreen, () {
+              routerCubit.goToScreenTask4();
+            }),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _chooseScreenButton(String text, VoidCallback callback) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          fixedSize: const Size(AppSizes.widthButtonChooseScreen,
+              AppSizes.heightButtonChooseScreen),
+          primary: AppColors.colorBgButtonChooseScreen),
+      onPressed: callback,
+      child: Text(text,
+          style: const TextStyle(
+              inherit: false,
+              fontSize: AppSizes.fontSizeButtonChooseScreen,
+              color: AppColors.colorTextButtonChooseScreen)),
     );
   }
 }
