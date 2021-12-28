@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/scene/statistic/cubit/statistic_state.dart';
 
 class StatisticScreenCubit extends Cubit<StatisticScreenState> {
-  StatisticScreenCubit() : super(TimerState(0));
+  StatisticScreenCubit(int seconds) : super(TimerState(seconds)) {
+    startTimer();
+  }
 
   void startRotation(int timer) {
     emit(TimerState(timer));

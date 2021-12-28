@@ -6,6 +6,7 @@ import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
 import 'package:training_application/app/scene/splash/cubit/router_state.dart';
 import 'package:training_application/app/scene/splash/screen_splash.dart';
 import 'package:training_application/app/scene/task4/screen_task4.dart';
+import 'package:training_application/domain/task4/task4_timer_domain.dart';
 
 class RootRouterDelegate extends RouterDelegate<RouterState> {
   final GlobalKey<NavigatorState> _navigatorKey;
@@ -33,17 +34,37 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
   }
 
   List<Page> get _extraPages {
-    if (_routerCubit.state is ChooseScreenState) {
+    if (_routerCubit.state is RouterStateChooseScreen) {
       return [MaterialPage(child: ScreenChoose(_routerCubit))];
     }
-    if (_routerCubit.state is Task3ScreenState) {
+    if (_routerCubit.state is RouterStateTask3Screen) {
       return [const MaterialPage(child: ScreenTask3())];
     }
-    if (_routerCubit.state is Task4ScreenState) {
-      return [const MaterialPage(child: ScreenTask4())];
+    if (_routerCubit.state is RouterStateTask4Screen) {
+      return [
+        MaterialPage(
+          child: FutureBuilder(
+            future: Task4TimerDomain.getTime(),
+            builder: (context, snapshot) => ScreenTask4(
+              _routerCubit,
+              snapshot.hasData
+                  ? snapshot.hasError
+                      ? 0
+                      : (snapshot.data as int)
+                  : 0,
+            ),
+          ),
+        ),
+      ];
     }
-    if (_routerCubit.state is StatisticScreenState) {
-      return [const MaterialPage(child: ScreenStatistics())];
+    if (_routerCubit.state is RouterStateStatisticScreen) {
+      return [
+        MaterialPage(
+          child: ScreenStatistics(
+              seconds:
+                  (_routerCubit.state as RouterStateStatisticScreen).seconds),
+        )
+      ];
     }
     return [];
   }

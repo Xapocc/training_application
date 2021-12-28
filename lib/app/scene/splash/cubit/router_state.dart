@@ -7,36 +7,39 @@ abstract class RouterState extends Equatable {
   List<Object?> get props => [];
 }
 
-class SplashScreenState extends RouterState {
-  const SplashScreenState();
+class RouterStateSplashScreen extends RouterState {
+  const RouterStateSplashScreen();
 
   @override
   List<Object?> get props => [];
 }
 
-class Task3ScreenState extends RouterState {
-  const Task3ScreenState();
+class RouterStateTask3Screen extends RouterState {
+  const RouterStateTask3Screen();
 
   @override
   List<Object?> get props => [];
 }
 
-class ChooseScreenState extends RouterState {
-  const ChooseScreenState();
+class RouterStateChooseScreen extends RouterState {
+  const RouterStateChooseScreen();
 
   @override
   List<Object?> get props => [];
 }
 
-class Task4ScreenState extends RouterState {
-  const Task4ScreenState();
+class RouterStateTask4Screen extends RouterState {
+  const RouterStateTask4Screen();
 
   @override
   List<Object?> get props => [];
 }
 
-class StatisticScreenState extends RouterState {
-  const StatisticScreenState();
+class RouterStateStatisticScreen extends RouterState {
+  const RouterStateStatisticScreen(int sec) : _seconds = sec;
+
+  final int _seconds;
+  int get seconds => _seconds;
 
   @override
   List<Object?> get props => [];

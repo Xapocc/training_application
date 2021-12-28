@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  path_provider: ^2.0.8
   auto_size_text: ^3.0.0
   equatable: ^2.0.0
   flutter_bloc: ^8.0.0
