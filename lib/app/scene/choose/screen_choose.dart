@@ -34,6 +34,7 @@ class ScreenChoose extends StatelessWidget {
   }
 
   Widget _chooseScreenButton(String text, VoidCallback callback) {
+    // already has the ripple effect as default
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
           fixedSize: const Size(AppSizes.widthButtonChooseScreen,
