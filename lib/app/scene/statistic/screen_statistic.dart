@@ -26,9 +26,6 @@ class ScreenStatistics extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-/*    for (String url in _images) {
-      precacheImage(NetworkImage(url), context);
-    }*/
     return BlocProvider(
       create: (context) => StatisticScreenCubit(_seconds),
       child: BlocBuilder<StatisticScreenCubit, StatisticScreenState>(
