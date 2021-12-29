@@ -81,7 +81,6 @@ class ScreenStatistics extends StatelessWidget {
   }
 
   Widget _dataListView() {
-    print("aaa ${_images.length ~/ 2 + _images.length % 2}");
     return Flexible(
       child: ListView.builder(
         cacheExtent: 10000,
