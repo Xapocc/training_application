@@ -22,6 +22,7 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
 
     if ((state as TimerState).time == 0) {
       var rnd = Random();
+
       if (rnd.nextInt(99) % 2 == 0) {
         emit(DataState());
       } else {
