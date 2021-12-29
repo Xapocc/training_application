@@ -9,26 +9,25 @@ abstract class Task4OfflineRepository {
     return directory.path;
   }
 
-  static Future<File> get _localFile async {
+  static Future<File> get _localFileTime async {
     final path = await _localPath;
     return File('$path/timer.txt');
   }
 
   static Future<File> saveTimeToFile(int time) async {
-    final file = await _localFile;
+    final file = await _localFileTime;
     return file.writeAsString('$time');
   }
 
   static Future<int> getTimeFromFile() async {
     try {
-      final file = await _localFile;
+      final file = await _localFileTime;
 
       // Read the file
       final contents = await file.readAsString();
 
       return int.parse(contents);
     } catch (e) {
-      // If encountering an error, return 0
       return 0;
     }
   }

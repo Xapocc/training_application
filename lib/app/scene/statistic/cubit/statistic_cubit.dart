@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/scene/statistic/cubit/statistic_state.dart';
+import 'package:training_application/domain/statistic/statistic_domain.dart';
 
 class StatisticScreenCubit extends Cubit<StatisticScreenState> {
   StatisticScreenCubit(int seconds) : super(TimerState(seconds)) {
@@ -24,8 +25,10 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
       var rnd = Random();
 
       if (rnd.nextInt(99) % 2 == 0) {
+        StatisticDomain.incrementDataStateCounter();
         emit(DataState());
       } else {
+        StatisticDomain.incrementErrorStateCounter();
         emit(ErrorState());
       }
     }

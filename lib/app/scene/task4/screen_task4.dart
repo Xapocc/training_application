@@ -6,6 +6,7 @@ import 'package:training_application/app/scene/task4/cubit/task4_cubit.dart';
 import 'package:training_application/app/scene/task4/cubit/task4_state.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/app/string.dart';
+import 'package:training_application/domain/statistic/statistic_domain.dart';
 import 'package:training_application/domain/task4/task4_timer_domain.dart';
 
 class ScreenTask4 extends StatelessWidget {
@@ -23,17 +24,18 @@ class ScreenTask4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int seconds = _seconds;
-    return FutureBuilder(
-      future: Task4TimerDomain.getTime(),
-      builder: (context, snapshot) {
-        return BlocProvider(
-          create: (context) => Task4ScreenCubit(),
-          child: BlocBuilder<Task4ScreenCubit, Task4ScreenState>(
-            builder: (context, state) {
-              return Container(
-                color: AppColors.colorBgTask4Screen,
-                child: Center(
-                  child: Column(
+
+    return BlocProvider(
+      create: (context) => Task4ScreenCubit(),
+      child: BlocBuilder<Task4ScreenCubit, Task4ScreenState>(
+        builder: (context, state) {
+          return Container(
+            color: AppColors.colorBgTask4Screen,
+            child: Center(
+              child: FutureBuilder(
+                future: Task4TimerDomain.getTime(),
+                builder: (context, snapshot) {
+                  return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
@@ -88,14 +90,59 @@ class ScreenTask4 extends StatelessWidget {
                         ),
                       ),
                       _startButton(state, seconds),
+                      const SizedBox(
+                        height: 16.0,
+                      ),
+                      FutureBuilder(
+                        future: StatisticDomain.getStateCountersMap(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return FittedBox(
+                              child: Container(
+                                padding: const EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.white60),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      "Data state\nappeared ${(snapshot.data as Map)["dataStateCounter"]} times",
+                                      style: const TextStyle(
+                                          inherit: false,
+                                          color: Colors.white60,
+                                          fontSize: 16.0),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    const SizedBox(
+                                      width: 16.0,
+                                    ),
+                                    Text(
+                                      "Error state\nappeared ${(snapshot.data as Map)["errorStateCounter"]} times",
+                                      style: const TextStyle(
+                                          inherit: false,
+                                          color: Colors.white60,
+                                          fontSize: 16.0),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          } else {
+                            return Container();
+                          }
+                        },
+                      )
                     ],
-                  ),
-                ),
-              );
-            },
-          ),
-        );
-      },
+                  );
+                },
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 

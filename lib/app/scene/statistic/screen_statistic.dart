@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/scene/statistic/cubit/statistic_cubit.dart';
 import 'package:training_application/app/scene/statistic/cubit/statistic_state.dart';
+import 'package:training_application/domain/statistic/statistic_domain.dart';
 
 class ScreenStatistics extends StatelessWidget {
   const ScreenStatistics({
@@ -58,22 +59,31 @@ class ScreenStatistics extends StatelessWidget {
               ),
             );
           } else {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    "$state was seen N times now",
-                    style: TextStyle(
-                      inherit: false,
-                      color: (state is ErrorState) ? Colors.red : Colors.green,
-                    ),
-                  ),
-                ),
-                if (state is DataState) _dataListView(),
-              ],
-            );
+            return FutureBuilder(
+                future: StatisticDomain.getStateCountersMap(),
+                builder: (context, snapshot) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      if (snapshot.hasData)
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            state is DataState
+                                ? "Data state appeared ${(snapshot.data as Map)["dataStateCounter"]} times now"
+                                : "Error state appeared ${(snapshot.data as Map)["errorStateCounter"]} times now",
+                            style: TextStyle(
+                              inherit: false,
+                              color: (state is ErrorState)
+                                  ? Colors.red
+                                  : Colors.green,
+                            ),
+                          ),
+                        ),
+                      if (state is DataState) _dataListView(),
+                    ],
+                  );
+                });
           }
         },
       ),
