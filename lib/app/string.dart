@@ -9,7 +9,7 @@ abstract class AppStrings {
 
   // task 4 screen
   static const String textButtonStartTimerTask4Screen = "Start";
-  static const String textHintDefaultTask4Screen = "0";
+  static const String textHintDefaultTask4Screen = "1";
 
   // statistic screen
   static const List<String> imagesCatsUrls = [

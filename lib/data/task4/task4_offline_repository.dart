@@ -28,7 +28,7 @@ abstract class Task4OfflineRepository {
 
       return int.parse(contents);
     } catch (e) {
-      return 0;
+      return 1;
     }
   }
 }

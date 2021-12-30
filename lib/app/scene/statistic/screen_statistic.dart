@@ -26,23 +26,23 @@ class ScreenStatistics extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    child: CircularProgressIndicator(
+                  SizedBox(
+                    child: const CircularProgressIndicator(
                       color: Colors.white,
                       strokeWidth: 16.0,
                     ),
-                    width: 128.0,
-                    height: 128.0,
+                    width: MediaQuery.of(context).size.width * 0.33,
+                    height: MediaQuery.of(context).size.width * 0.33,
                   ),
-                  const SizedBox(
-                    height: 32.0,
-                  ),
-                  Text(
-                    AppStrings.spinnerText(state.time),
-                    style: const TextStyle(
-                      fontSize: 24.0,
-                      inherit: false,
-                      color: Colors.white,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: Text(
+                      AppStrings.spinnerText(state.time),
+                      style: const TextStyle(
+                        fontSize: 24.0,
+                        inherit: false,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ],
@@ -86,21 +86,22 @@ class ScreenStatistics extends StatelessWidget {
       child: ListView.builder(
         cacheExtent: 10000,
         scrollDirection: Axis.vertical,
-        controller: ScrollController(initialScrollOffset: 0),
         itemCount: _images.length ~/ 2,
         itemBuilder: (context, index) {
           return FittedBox(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 8.0),
+              padding: const EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: [
                   SizedBox(
-                    height: 500,
-                    child: Image.network(_images[index * 2]),
+                    height: MediaQuery.of(context).size.height,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Image.network(_images[index * 2]),
+                    ),
                   ),
-                  const SizedBox(width: 8.0),
                   SizedBox(
-                    height: 500,
+                    height: MediaQuery.of(context).size.height,
                     child: Image.network(_images[index * 2 + 1]),
                   ),
                 ],
