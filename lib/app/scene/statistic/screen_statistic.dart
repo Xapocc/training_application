@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:training_application/app/colors.dart';
 import 'package:training_application/app/scene/statistic/cubit/statistic_cubit.dart';
 import 'package:training_application/app/scene/statistic/cubit/statistic_state.dart';
+import 'package:training_application/app/size.dart';
 import 'package:training_application/app/string.dart';
 import 'package:training_application/domain/statistic/statistic_domain.dart';
 
@@ -28,20 +30,28 @@ class ScreenStatistics extends StatelessWidget {
                 children: [
                   SizedBox(
                     child: const CircularProgressIndicator(
-                      color: Colors.white,
-                      strokeWidth: 16.0,
+                      color: AppColors.colorProgressIndicatorStatisticScreen,
+                      strokeWidth:
+                          AppSizes.widthStrokeProgressIndicatorStatisticScreen,
                     ),
-                    width: MediaQuery.of(context).size.width * 0.33,
-                    height: MediaQuery.of(context).size.width * 0.33,
+                    width: MediaQuery.of(context).size.width *
+                        AppSizes
+                            .coefficientWidthProgressIndicatorStatisticScreen,
+                    height: MediaQuery.of(context).size.width *
+                        AppSizes
+                            .coefficientWidthProgressIndicatorStatisticScreen,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
+                    padding: const EdgeInsets.only(
+                        top: AppSizes
+                            .paddingTextProgressIndicatorStatisticScreen),
                     child: Text(
-                      AppStrings.spinnerText(state.time),
+                      AppStrings.spinnerTextStatisticScreen(state.time),
                       style: const TextStyle(
-                        fontSize: 24.0,
+                        fontSize: AppSizes
+                            .fontSizeTextProgressIndicatorStatisticScreen,
                         inherit: false,
-                        color: Colors.white,
+                        color: AppColors.colorProgressTextStatisticScreen,
                       ),
                     ),
                   ),
@@ -57,16 +67,20 @@ class ScreenStatistics extends StatelessWidget {
                   children: [
                     if (snapshot.hasData)
                       Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(
+                            AppSizes.paddingTextStateCounterStatisticScreen),
                         child: Text(
-                          state is DataState
-                              ? "Data state appeared ${(snapshot.data as Map)["dataStateCounter"]} times now"
-                              : "Error state appeared ${(snapshot.data as Map)["errorStateCounter"]} times now",
+                          AppStrings.stateCountersTextStatisticScreen(
+                              (snapshot.data as Map)[state is DataState
+                                  ? AppStrings.dataStateFieldNameStatisticScreen
+                                  : AppStrings
+                                      .errorStateFieldNameStatisticScreen],
+                              state is DataState),
                           style: TextStyle(
                             inherit: false,
                             color: (state is ErrorState)
-                                ? Colors.red
-                                : Colors.green,
+                                ? AppColors.colorTextErrorStateStatisticScreen
+                                : AppColors.colorTextDataStateStatisticScreen,
                           ),
                         ),
                       ),
@@ -84,19 +98,21 @@ class ScreenStatistics extends StatelessWidget {
   Widget _dataListView() {
     return Flexible(
       child: ListView.builder(
-        cacheExtent: 10000,
+        cacheExtent: AppSizes.cacheItemsNumberStatisticScreen,
         scrollDirection: Axis.vertical,
         itemCount: _images.length ~/ 2,
         itemBuilder: (context, index) {
           return FittedBox(
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+              padding: const EdgeInsets.only(
+                  bottom: AppSizes.paddingListViewItemStatisticScreen),
               child: Row(
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).size.height,
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
+                      padding: const EdgeInsets.only(
+                          right: AppSizes.paddingListViewItemStatisticScreen),
                       child: Image.network(_images[index * 2]),
                     ),
                   ),

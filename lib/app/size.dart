@@ -26,4 +26,17 @@ abstract class AppSizes {
   static const int maxLengthTextFieldTask4Screen = 2;
   static const double fontSizeTextFieldTask4Screen = 64.0;
   static const int emptyReplacerTextFieldTask4Screen = 0;
+  static const double paddingButtonStartTask4Screen = 16.0;
+  static const double paddingContainerStatisticsTask4Screen = 8.0;
+  static const double paddingDataStateCounterTask4Screen = 16.0;
+  static const double fontSizeTextStateCounterTask4Screen = 16.0;
+
+  // statistic screen
+  static const double widthStrokeProgressIndicatorStatisticScreen = 16.0;
+  static const double coefficientWidthProgressIndicatorStatisticScreen = 0.33;
+  static const double paddingTextProgressIndicatorStatisticScreen = 16.0;
+  static const double fontSizeTextProgressIndicatorStatisticScreen = 24.0;
+  static const double paddingTextStateCounterStatisticScreen = 16.0;
+  static const double paddingListViewItemStatisticScreen = 8.0;
+  static const double cacheItemsNumberStatisticScreen = 1000;
 }

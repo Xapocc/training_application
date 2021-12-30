@@ -89,9 +89,10 @@ class ScreenTask4 extends StatelessWidget {
                           ),
                         ),
                       ),
-                      _startButton(state, seconds),
-                      const SizedBox(
-                        height: 16.0,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: AppSizes.paddingButtonStartTask4Screen),
+                        child: _startButton(state, seconds),
                       ),
                       FutureBuilder(
                         future: StatisticDomain.getStateCountersMap(),
@@ -99,33 +100,30 @@ class ScreenTask4 extends StatelessWidget {
                           if (snapshot.hasData) {
                             return FittedBox(
                               child: Container(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(AppSizes
+                                    .paddingContainerStatisticsTask4Screen),
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.white60),
+                                  border: Border.all(
+                                      color: AppColors
+                                          .colorBgTextStateCounterTaskScreen),
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    Text(
-                                      "Data state\nappeared ${(snapshot.data as Map)["dataStateCounter"]} times",
-                                      style: const TextStyle(
-                                          inherit: false,
-                                          color: Colors.white60,
-                                          fontSize: 16.0),
-                                      textAlign: TextAlign.center,
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: AppSizes
+                                              .paddingDataStateCounterTask4Screen),
+                                      child: _stateCounterText(
+                                          (snapshot.data as Map)[AppStrings
+                                              .dataStateFieldNameStatisticScreen],
+                                          true),
                                     ),
-                                    const SizedBox(
-                                      width: 16.0,
-                                    ),
-                                    Text(
-                                      "Error state\nappeared ${(snapshot.data as Map)["errorStateCounter"]} times",
-                                      style: const TextStyle(
-                                          inherit: false,
-                                          color: Colors.white60,
-                                          fontSize: 16.0),
-                                      textAlign: TextAlign.center,
-                                    ),
+                                    _stateCounterText(
+                                        (snapshot.data as Map)[AppStrings
+                                            .errorStateFieldNameStatisticScreen],
+                                        false),
                                   ],
                                 ),
                               ),
@@ -143,6 +141,17 @@ class ScreenTask4 extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  Widget _stateCounterText(counter, hasData) {
+    return Text(
+      AppStrings.stateCountersTextTask4Screen(counter, hasData),
+      style: const TextStyle(
+          inherit: false,
+          color: AppColors.colorFgTextStateCounterTaskScreen,
+          fontSize: AppSizes.fontSizeTextStateCounterTask4Screen),
+      textAlign: TextAlign.center,
     );
   }
 

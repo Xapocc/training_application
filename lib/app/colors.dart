@@ -45,10 +45,18 @@ abstract class AppColors {
   static const Color colorBgTextFieldTask4Screen = Colors.black;
   static const Color colorFgTextFieldTask4Screen = Colors.white;
   static const Color colorFgHintTextFieldTask4Screen = Colors.white30;
+  static const Color colorFgTextStateCounterTaskScreen = Colors.white60;
+  static const Color colorBgTextStateCounterTaskScreen = Colors.white60;
 
   static const Color colorFgButtonEnabledStartTask4Screen = Colors.black;
   static const Color colorBgButtonEnabledStartTask4Screen = Colors.white;
   static const Color colorOverlayButtonStartTask4Screen = Colors.black12;
   static const Color colorFgButtonDisabledStartTask4Screen = Colors.black54;
   static const Color colorBgButtonDisabledStartTask4Screen = Colors.white12;
+
+  // statistic screen
+  static const Color colorProgressIndicatorStatisticScreen = Colors.white;
+  static const Color colorProgressTextStatisticScreen = Colors.white;
+  static const Color colorTextDataStateStatisticScreen = Colors.green;
+  static const Color colorTextErrorStateStatisticScreen = Colors.red;
 }

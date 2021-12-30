@@ -10,6 +10,8 @@ abstract class AppStrings {
   // task 4 screen
   static const String textButtonStartTimerTask4Screen = "Start";
   static const String textHintDefaultTask4Screen = "1";
+  static String stateCountersTextTask4Screen(counter, hasData) => "${hasData ? "Data" : "Error"} state\nappeared $counter time${counter == 1 ? "" : "s"}";
+
 
   // statistic screen
   static const List<String> imagesCatsUrls = [
@@ -24,5 +26,8 @@ abstract class AppStrings {
     "https://unsplash.com/photos/LEpfefQf4rU/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MTR8fGNhdHx8MHx8fHwxNjQwNzA2MDA2",
     "https://unsplash.com/photos/75715CVEJhI/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MTV8fGNhdHx8MHx8fHwxNjQwNzA2MDA2",
   ];
-  static String spinnerText(time) => "Please wait $time seconds";
+  static String spinnerTextStatisticScreen(time) => "Please wait $time second${time == 1 ? "" : "s"}";
+  static String stateCountersTextStatisticScreen(counter, hasData) => "${hasData ? "Data" : "Error"} state appeared $counter time${counter == 1 ? "" : "s"} now";
+  static const String dataStateFieldNameStatisticScreen = "dataStateCounter";
+  static const String errorStateFieldNameStatisticScreen = "errorStateCounter";
 }
