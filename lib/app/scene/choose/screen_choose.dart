@@ -21,10 +21,15 @@ class ScreenChoose extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _chooseScreenButton(AppStrings.textButton0ChooseScreen, () {
-              routerCubit.goToScreenTask3();
-            }),
-            _chooseScreenButton(AppStrings.textButton1ChooseScreen, () {
+            Padding(
+              padding: const EdgeInsets.all(AppSizes.paddingButtonChooseScreen),
+              child: _chooseScreenButton(
+                  context, AppStrings.textButton0ChooseScreen, () {
+                routerCubit.goToScreenTask3();
+              }),
+            ),
+            _chooseScreenButton(context, AppStrings.textButton1ChooseScreen,
+                () {
               routerCubit.goToScreenTask4();
             }),
           ],
@@ -33,12 +38,15 @@ class ScreenChoose extends StatelessWidget {
     );
   }
 
-  Widget _chooseScreenButton(String text, VoidCallback callback) {
+  Widget _chooseScreenButton(context, String text, VoidCallback callback) {
     // already has the ripple effect as default
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-          fixedSize: const Size(AppSizes.widthButtonChooseScreen,
-              AppSizes.heightButtonChooseScreen),
+          fixedSize: Size(
+              MediaQuery.of(context).size.width *
+                  AppSizes.coefficientWidthButtonChooseScreen,
+              MediaQuery.of(context).size.width *
+                  AppSizes.coefficientHeightButtonChooseScreen),
           primary: AppColors.colorBgButtonChooseScreen),
       onPressed: callback,
       child: Text(text,

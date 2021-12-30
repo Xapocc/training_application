@@ -60,7 +60,7 @@ class ScreenTask3 extends StatelessWidget {
                                           AppColors.colorFgCentralErrorMessage,
                                       inherit: false,
                                       fontSize:
-                                          AppSizes.sizeFontCentralErrorMessage),
+                                          AppSizes.fontSizeCentralErrorMessage),
                                 ),
                               ),
                             ),

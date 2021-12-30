@@ -18,10 +18,11 @@ class ScreenSplash extends StatelessWidget {
           stops: AppSizes.stopsGradientBgSplashScreen,
         ),
       ),
-      child: const Center(
+      child: Center(
         child: Icon(
           Icons.flight_takeoff,
-          size: AppSizes.sizeIconSplashScreen,
+          size: MediaQuery.of(context).size.width *
+              AppSizes.coefficientSizeIconSplashScreen,
           color: AppColors.colorFgSplashScreen,
         ),
       ),

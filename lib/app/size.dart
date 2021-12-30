@@ -5,7 +5,7 @@ abstract class AppSizes {
 
   // error screen
   static const double widthBorderErrorCircle = 5.0;
-  static const double sizeFontCentralErrorMessage = 24.0;
+  static const double fontSizeCentralErrorMessage = 24.0;
   static const double paddingErrorScreen = 8.0;
   static const double paddingCentralErrorMessage = 8.0;
   static const double paddingCircleErrorMessage = 16.0;
@@ -14,18 +14,19 @@ abstract class AppSizes {
   // splash screen
   static const List<double> stopsGradientBgSplashScreen = [0.1, 0.4, 0.6, 1];
   static const double radiusGradientBgSplashScreen = 2.5;
-  static const double sizeIconSplashScreen = 64.0;
+  static const double coefficientSizeIconSplashScreen = 0.2;
 
   // choose screen
-  static const double widthButtonChooseScreen = 250.0;
-  static const double heightButtonChooseScreen = 40.0;
+  static const double coefficientWidthButtonChooseScreen = 0.7;
+  static const double coefficientHeightButtonChooseScreen = 0.11;
   static const double fontSizeButtonChooseScreen = 32.0;
+  static const double paddingButtonChooseScreen = 8.0;
 
   // task 4 screen
-  static const double widthTextFieldTask4Screen = 100.0;
+  static const double coefficientWidthTextFieldTask4Screen = 1.5;
   static const int maxLengthTextFieldTask4Screen = 2;
   static const double fontSizeTextFieldTask4Screen = 64.0;
-  static const int emptyReplacerTextFieldTask4Screen = 0;
+  static const int parserExReplacerTextFieldTask4Screen = 0;
   static const double paddingButtonStartTask4Screen = 16.0;
   static const double paddingContainerStatisticsTask4Screen = 8.0;
   static const double paddingDataStateCounterTask4Screen = 16.0;

@@ -39,7 +39,8 @@ class ScreenTask4 extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: AppSizes.widthTextFieldTask4Screen,
+                        width: AppSizes.fontSizeTextFieldTask4Screen *
+                            AppSizes.coefficientWidthTextFieldTask4Screen,
                         child: Material(
                           color: AppColors.colorBgTextFieldTask4Screen,
                           child: TextField(
@@ -50,7 +51,7 @@ class ScreenTask4 extends StatelessWidget {
                               hintText: snapshot.hasData
                                   ? snapshot.hasError
                                       ? AppStrings.textHintDefaultTask4Screen
-                                      : "${snapshot.data}"
+                                      : snapshot.data.toString()
                                   : AppStrings.textHintDefaultTask4Screen,
                               hintStyle: const TextStyle(
                                   color: AppColors
@@ -80,7 +81,7 @@ class ScreenTask4 extends StatelessWidget {
                                     : text);
                               } catch (ex) {
                                 seconds =
-                                    AppSizes.emptyReplacerTextFieldTask4Screen;
+                                    AppSizes.parserExReplacerTextFieldTask4Screen;
                               }
                               context
                                   .read<Task4ScreenCubit>()
