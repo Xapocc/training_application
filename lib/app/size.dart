@@ -26,7 +26,7 @@ abstract class AppSizes {
   static const double coefficientWidthTextFieldTask4Screen = 1.5;
   static const int maxLengthTextFieldTask4Screen = 2;
   static const double fontSizeTextFieldTask4Screen = 64.0;
-  static const int parserExReplacerTextFieldTask4Screen = 0;
+  static const int parserExReplacerTextFieldTask4Screen = 1;
   static const double paddingButtonStartTask4Screen = 16.0;
   static const double paddingContainerStatisticsTask4Screen = 8.0;
   static const double paddingDataStateCounterTask4Screen = 16.0;

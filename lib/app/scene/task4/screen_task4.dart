@@ -44,9 +44,7 @@ class ScreenTask4 extends StatelessWidget {
                             maxLength: AppSizes.maxLengthTextFieldTask4Screen,
                             decoration: InputDecoration(
                               hintText: snapshot.hasData
-                                  ? snapshot.hasError
-                                      ? AppStrings.textHintDefaultTask4Screen
-                                      : snapshot.data.toString()
+                                  ? snapshot.data.toString()
                                   : AppStrings.textHintDefaultTask4Screen,
                               hintStyle: const TextStyle(
                                   color: AppColors

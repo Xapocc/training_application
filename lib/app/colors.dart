@@ -55,6 +55,7 @@ abstract class AppColors {
   static const Color colorBgButtonDisabledStartTask4Screen = Colors.white12;
 
   // statistic screen
+  static const Color colorBgStatisticScreen = Colors.black;
   static const Color colorProgressIndicatorStatisticScreen = Colors.white;
   static const Color colorProgressTextStatisticScreen = Colors.white;
   static const Color colorTextDataStateStatisticScreen = Colors.green;

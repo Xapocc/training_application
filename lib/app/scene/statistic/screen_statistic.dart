@@ -18,13 +18,14 @@ class ScreenStatistics extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => StatisticScreenCubit(_seconds),
-      child: BlocBuilder<StatisticScreenCubit, StatisticScreenState>(
-        builder: (context, state) {
-          if (state is TimerState) {
-            return Center(
-              child: Column(
+    return Container(
+      color: AppColors.colorBgStatisticScreen,
+      child: BlocProvider(
+        create: (context) => StatisticScreenCubit(_seconds),
+        child: BlocBuilder<StatisticScreenCubit, StatisticScreenState>(
+          builder: (context, state) {
+            if (state is TimerState) {
+              return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
@@ -55,75 +56,79 @@ class ScreenStatistics extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
-            );
-          } else {
-            return FutureBuilder(
-              future: StatisticScreenCubit.getStateCountersMap(),
-              builder: (context, snapshot) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    if (snapshot.hasData)
-                      Padding(
-                        padding: const EdgeInsets.all(
-                            AppSizes.paddingTextStateCounterStatisticScreen),
-                        child: Text(
-                          AppStrings.stateCountersTextStatisticScreen(
-                              (snapshot.data as Map)[state is DataState
-                                  ? AppStrings.dataStateFieldNameStatisticScreen
-                                  : AppStrings
-                                      .errorStateFieldNameStatisticScreen],
-                              state is DataState),
-                          style: TextStyle(
-                            inherit: false,
-                            color: (state is ErrorState)
-                                ? AppColors.colorTextErrorStateStatisticScreen
-                                : AppColors.colorTextDataStateStatisticScreen,
+              );
+            } else {
+              return FutureBuilder(
+                future: StatisticScreenCubit.getStateCountersMap(),
+                builder: (context, snapshot) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      if (snapshot.hasData)
+                        Padding(
+                          padding: const EdgeInsets.all(
+                              AppSizes.paddingTextStateCounterStatisticScreen),
+                          child: Text(
+                            AppStrings.stateCountersTextStatisticScreen(
+                                (snapshot.data as Map)[state is DataState
+                                    ? AppStrings
+                                        .dataStateFieldNameStatisticScreen
+                                    : AppStrings
+                                        .errorStateFieldNameStatisticScreen],
+                                state is DataState),
+                            style: TextStyle(
+                              inherit: false,
+                              color: (state is ErrorState)
+                                  ? AppColors.colorTextErrorStateStatisticScreen
+                                  : AppColors.colorTextDataStateStatisticScreen,
+                            ),
                           ),
                         ),
-                      ),
-                    if (state is DataState) _dataListView(),
-                  ],
-                );
-              },
-            );
-          }
-        },
+                      if (state is DataState) _dataListView(),
+                    ],
+                  );
+                },
+              );
+            }
+          },
+        ),
       ),
     );
   }
 
   Widget _dataListView() {
     return Flexible(
-      child: ListView.builder(
-        cacheExtent: AppSizes.cacheItemsNumberStatisticScreen,
-        scrollDirection: Axis.vertical,
-        itemCount: _images.length ~/ 2,
-        itemBuilder: (context, index) {
-          return FittedBox(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  bottom: AppSizes.paddingListViewItemStatisticScreen),
-              child: Row(
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          right: AppSizes.paddingListViewItemStatisticScreen),
-                      child: Image.network(_images[index * 2]),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppSizes.paddingListViewItemStatisticScreen),
+        child: ListView.builder(
+          cacheExtent: AppSizes.cacheItemsNumberStatisticScreen,
+          scrollDirection: Axis.vertical,
+          itemCount: _images.length ~/ 2,
+          itemBuilder: (context, index) {
+            return FittedBox(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    bottom: AppSizes.paddingListViewItemStatisticScreen),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            right: AppSizes.paddingListViewItemStatisticScreen),
+                        child: Image.network(_images[index * 2]),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    child: Image.network(_images[index * 2 + 1]),
-                  ),
-                ],
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: Image.network(_images[index * 2 + 1]),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
