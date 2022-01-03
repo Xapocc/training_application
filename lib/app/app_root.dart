@@ -22,6 +22,7 @@ class AppRoot extends StatelessWidget {
                 navigatorKey,
                 context.read<RouterCubit>(),
               ),
+              backButtonDispatcher: RootBackButtonDispatcher(),
             ),
           ),
         ),
