@@ -9,16 +9,19 @@ import 'package:training_application/app/string.dart';
 
 class ScreenTask4 extends StatelessWidget {
   const ScreenTask4(
-    RouterCubit rCubit, {
+    RouterCubit rCubit,
+    int seconds, {
     Key? key,
   })  : _routerCubit = rCubit,
+        _seconds = seconds,
         super(key: key);
 
   final RouterCubit _routerCubit;
+  final int _seconds;
 
   @override
   Widget build(BuildContext context) {
-    int seconds = AppSizes.parserExReplacerTextFieldTask4Screen;
+    int seconds = _seconds;
 
     return BlocProvider(
       create: (context) => Task4ScreenCubit(),
