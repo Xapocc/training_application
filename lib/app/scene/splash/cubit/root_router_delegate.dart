@@ -21,8 +21,7 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
   @override
   Widget build(BuildContext context) => Navigator(
         key: navigatorKey,
-        pages: List.from(
-            [const MaterialPage(child: ScreenSplash()), ..._extraPages]),
+        pages: List.from(_extraPages),
         onPopPage: _onPopPageParser,
       );
 
@@ -33,9 +32,14 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
   }
 
   List<Page> get _extraPages {
-    if (_routerCubit.state is RouterStateChooseScreen) {
-      return [MaterialPage(child: ScreenChoose(_routerCubit))];
+    if (_routerCubit.state is RouterStateSplashScreen) {
+      return [const MaterialPage(child: ScreenSplash())];
     }
+
+    return [MaterialPage(child: ScreenChoose(_routerCubit)), ..._finalPage];
+  }
+
+  List<Page> get _finalPage {
     if (_routerCubit.state is RouterStateTask3Screen) {
       return [const MaterialPage(child: ScreenTask3())];
     }
