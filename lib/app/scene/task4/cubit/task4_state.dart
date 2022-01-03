@@ -5,10 +5,14 @@ abstract class Task4ScreenState extends Equatable {
 }
 
 class EnabledButtonState extends Task4ScreenState {
-  const EnabledButtonState();
+  const EnabledButtonState(int seconds)
+      : _seconds = seconds,
+        super();
+
+  final int _seconds;
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [_seconds];
 }
 
 class DisabledButtonState extends Task4ScreenState {
