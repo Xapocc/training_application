@@ -44,10 +44,7 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
         MaterialPage(
           child: FutureBuilder(
             future: RouterCubit.getTime(),
-            builder: (context, snapshot) => ScreenTask4(
-              _routerCubit,
-              RouterCubit.getTimeFromFile(snapshot),
-            ),
+            builder: (context, snapshot) => ScreenTask4(_routerCubit),
           ),
         ),
       ];
