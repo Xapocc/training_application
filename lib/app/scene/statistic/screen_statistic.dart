@@ -103,7 +103,7 @@ class ScreenStatistics extends StatelessWidget {
         child: ListView.builder(
           cacheExtent: AppSizes.cacheItemsNumberStatisticScreen,
           scrollDirection: Axis.vertical,
-          itemCount: StatisticScreenState.loadedImages.length ~/ 2,
+          itemCount: StatisticScreenState.images.length ~/ 2,
           itemBuilder: (context, index) {
             return FittedBox(
               child: Padding(
@@ -116,12 +116,12 @@ class ScreenStatistics extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(
                             right: AppSizes.paddingListViewItemStatisticScreen),
-                        child: StatisticScreenState.loadedImages[index * 2],
+                        child: StatisticScreenState.images[index * 2],
                       ),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height,
-                      child: StatisticScreenState.loadedImages[index * 2 + 1],
+                      child: StatisticScreenState.images[index * 2 + 1],
                     ),
                   ],
                 ),

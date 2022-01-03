@@ -7,8 +7,8 @@ import 'package:training_application/domain/statistic/statistic_domain.dart';
 
 class StatisticScreenCubit extends Cubit<StatisticScreenState> {
   StatisticScreenCubit(int seconds) : super(TimerState(seconds)) {
-    for (String item in StatisticScreenState.images) {
-      StatisticScreenState.loadedImages.add(Image.network(item));
+    for (String item in StatisticScreenState.imagesUrls) {
+      StatisticScreenState.images.add(Image.network(item));
     }
 
     startTimer();
