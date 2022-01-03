@@ -1,16 +1,15 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/scene/statistic/cubit/statistic_state.dart';
 import 'package:training_application/domain/statistic/statistic_domain.dart';
 
 class StatisticScreenCubit extends Cubit<StatisticScreenState> {
   StatisticScreenCubit(int seconds) : super(TimerState(seconds)) {
-    startTimer();
-  }
-
-  void startRotation(int timer) {
-    emit(TimerState(timer));
+    for (String item in StatisticScreenState.images) {
+      StatisticScreenState.loadedImages.add(Image.network(item));
+    }
 
     startTimer();
   }

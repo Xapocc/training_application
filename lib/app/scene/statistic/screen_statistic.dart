@@ -14,7 +14,6 @@ class ScreenStatistics extends StatelessWidget {
         super(key: key);
 
   final int _seconds;
-  static const List<String> _images = AppStrings.imagesCatsUrls;
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +83,7 @@ class ScreenStatistics extends StatelessWidget {
                             ),
                           ),
                         ),
-                      if (state is DataState) _dataListView(),
+                      if (state is DataState) _dataListView(state),
                     ],
                   );
                 },
@@ -96,14 +95,15 @@ class ScreenStatistics extends StatelessWidget {
     );
   }
 
-  Widget _dataListView() {
+  Widget _dataListView(StatisticScreenState state) {
     return Flexible(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSizes.paddingListViewItemStatisticScreen),
+        padding: const EdgeInsets.symmetric(
+            horizontal: AppSizes.paddingListViewItemStatisticScreen),
         child: ListView.builder(
           cacheExtent: AppSizes.cacheItemsNumberStatisticScreen,
           scrollDirection: Axis.vertical,
-          itemCount: _images.length ~/ 2,
+          itemCount: StatisticScreenState.loadedImages.length ~/ 2,
           itemBuilder: (context, index) {
             return FittedBox(
               child: Padding(
@@ -116,12 +116,12 @@ class ScreenStatistics extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(
                             right: AppSizes.paddingListViewItemStatisticScreen),
-                        child: Image.network(_images[index * 2]),
+                        child: StatisticScreenState.loadedImages[index * 2],
                       ),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height,
-                      child: Image.network(_images[index * 2 + 1]),
+                      child: StatisticScreenState.loadedImages[index * 2 + 1],
                     ),
                   ],
                 ),
