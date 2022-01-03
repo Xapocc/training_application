@@ -15,6 +15,10 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
     startTimer();
   }
 
+  static Future<Map<String, dynamic>> getStateCountersMap() {
+    return StatisticDomain.getStateCountersMap();
+  }
+
   void startTimer() async {
     while ((state as TimerState).time > 0) {
       await Future.delayed(const Duration(seconds: 1));

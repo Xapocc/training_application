@@ -5,7 +5,6 @@ import 'package:training_application/app/scene/statistic/cubit/statistic_cubit.d
 import 'package:training_application/app/scene/statistic/cubit/statistic_state.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/app/string.dart';
-import 'package:training_application/domain/statistic/statistic_domain.dart';
 
 class ScreenStatistics extends StatelessWidget {
   const ScreenStatistics({
@@ -60,7 +59,7 @@ class ScreenStatistics extends StatelessWidget {
             );
           } else {
             return FutureBuilder(
-              future: StatisticDomain.getStateCountersMap(),
+              future: StatisticScreenCubit.getStateCountersMap(),
               builder: (context, snapshot) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.start,

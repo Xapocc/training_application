@@ -6,8 +6,6 @@ import 'package:training_application/app/scene/task4/cubit/task4_cubit.dart';
 import 'package:training_application/app/scene/task4/cubit/task4_state.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/app/string.dart';
-import 'package:training_application/domain/statistic/statistic_domain.dart';
-import 'package:training_application/domain/task4/task4_timer_domain.dart';
 
 class ScreenTask4 extends StatelessWidget {
   const ScreenTask4(
@@ -33,7 +31,7 @@ class ScreenTask4 extends StatelessWidget {
             color: AppColors.colorBgTask4Screen,
             child: Center(
               child: FutureBuilder(
-                future: Task4TimerDomain.getTime(),
+                future: Task4ScreenCubit.getTime(),
                 builder: (context, snapshot) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -96,7 +94,7 @@ class ScreenTask4 extends StatelessWidget {
                         child: _startButton(state, seconds),
                       ),
                       FutureBuilder(
-                        future: StatisticDomain.getStateCountersMap(),
+                        future: Task4ScreenCubit.getStateCountersMap(),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             return FittedBox(
@@ -169,7 +167,7 @@ class ScreenTask4 extends StatelessWidget {
         ),
         child: const Text(AppStrings.textButtonStartTimerTask4Screen),
         onPressed: () {
-          Task4TimerDomain.saveTime(seconds);
+          Task4ScreenCubit.saveTime(seconds);
           _routerCubit.goToScreenStatistics(seconds);
         },
       );
