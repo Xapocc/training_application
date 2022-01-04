@@ -24,76 +24,45 @@ class ScreenStatistics extends StatelessWidget {
         child: BlocBuilder<StatisticScreenCubit, StatisticScreenState>(
           builder: (context, state) {
             if (state is TimerState) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Flexible(
-                    child: FractionallySizedBox(
-                      widthFactor: AppSizes
-                          .coefficientWidthProgressIndicatorStatisticScreen,
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: CircularProgressIndicator(
-                          color:
-                              AppColors.colorProgressIndicatorStatisticScreen,
-                          strokeWidth: AppSizes
-                              .widthStrokeProgressIndicatorStatisticScreen,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: AppSizes
-                            .paddingTextProgressIndicatorStatisticScreen),
-                    child: Text(
-                      AppStrings.spinnerTextStatisticScreen(state.time),
-                      style: const TextStyle(
-                        fontSize: AppSizes
-                            .fontSizeTextProgressIndicatorStatisticScreen,
-                        inherit: false,
-                        color: AppColors.colorProgressTextStatisticScreen,
-                      ),
-                    ),
-                  ),
-                ],
-              );
+              return _timerState(state, context);
             } else {
-              return FutureBuilder(
-                future: StatisticScreenCubit.getStateCountersMap(),
-                builder: (context, snapshot) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      if (snapshot.hasData)
-                        Padding(
-                          padding: const EdgeInsets.all(
-                              AppSizes.paddingTextStateCounterStatisticScreen),
-                          child: Text(
-                            AppStrings.stateCountersTextStatisticScreen(
-                                (snapshot.data as Map)[state is DataState
-                                    ? AppStrings
-                                        .dataStateFieldNameStatisticScreen
-                                    : AppStrings
-                                        .errorStateFieldNameStatisticScreen],
-                                state is DataState),
-                            style: TextStyle(
-                              inherit: false,
-                              color: (state is ErrorState)
-                                  ? AppColors.colorTextErrorStateStatisticScreen
-                                  : AppColors.colorTextDataStateStatisticScreen,
-                            ),
-                          ),
-                        ),
-                      if (state is DataState) _dataListView(state, context),
-                    ],
-                  );
-                },
-              );
+              return _dataOrErrorState(state, context);
             }
           },
         ),
       ),
+    );
+  }
+
+  Widget _dataOrErrorState(state, context) {
+    return FutureBuilder(
+      future: StatisticScreenCubit.getStateCountersMap(),
+      builder: (context, snapshot) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            if (snapshot.hasData)
+              Padding(
+                padding: const EdgeInsets.all(
+                    AppSizes.paddingTextStateCounterStatisticScreen),
+                child: Text(
+                  AppStrings.stateCountersTextStatisticScreen(
+                      (snapshot.data as Map)[state is DataState
+                          ? AppStrings.dataStateFieldNameStatisticScreen
+                          : AppStrings.errorStateFieldNameStatisticScreen],
+                      state is DataState),
+                  style: TextStyle(
+                    inherit: false,
+                    color: (state is ErrorState)
+                        ? AppColors.colorTextErrorStateStatisticScreen
+                        : AppColors.colorTextDataStateStatisticScreen,
+                  ),
+                ),
+              ),
+            if (state is DataState) _dataListView(state, context),
+          ],
+        );
+      },
     );
   }
 
@@ -132,6 +101,40 @@ class ScreenStatistics extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+
+  Widget _timerState(state, context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Flexible(
+          child: FractionallySizedBox(
+            widthFactor:
+                AppSizes.coefficientWidthProgressIndicatorStatisticScreen,
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: CircularProgressIndicator(
+                color: AppColors.colorProgressIndicatorStatisticScreen,
+                strokeWidth:
+                    AppSizes.widthStrokeProgressIndicatorStatisticScreen,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+              top: AppSizes.paddingTextProgressIndicatorStatisticScreen),
+          child: Text(
+            AppStrings.spinnerTextStatisticScreen(state.time),
+            style: const TextStyle(
+              fontSize: AppSizes.fontSizeTextProgressIndicatorStatisticScreen,
+              inherit: false,
+              color: AppColors.colorProgressTextStatisticScreen,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
