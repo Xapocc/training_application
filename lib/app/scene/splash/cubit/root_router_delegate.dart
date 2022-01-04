@@ -36,7 +36,7 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
       return [const MaterialPage(child: ScreenSplash())];
     }
 
-    return [MaterialPage(child: ScreenChoose(_routerCubit)), ..._finalPage];
+    return [const MaterialPage(child: ScreenChoose()), ..._finalPage];
   }
 
   List<Page> get _finalPage {

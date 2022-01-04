@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
 import 'package:training_application/app/colors.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/app/string.dart';
 
 class ScreenChoose extends StatelessWidget {
-  const ScreenChoose(
-    RouterCubit rCubit, {
+  const ScreenChoose({
     Key? key,
-  })  : routerCubit = rCubit,
-        super(key: key);
-
-  final RouterCubit routerCubit;
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +21,7 @@ class ScreenChoose extends StatelessWidget {
             Flexible(
               child: _chooseScreenButton(
                   context, AppStrings.textButton0ChooseScreen, () {
-                routerCubit.goToScreenTask3();
+                BlocProvider.of<RouterCubit>(context).goToScreenTask3();
               }),
             ),
             const Padding(
@@ -33,7 +30,7 @@ class ScreenChoose extends StatelessWidget {
             Flexible(
               child: _chooseScreenButton(
                   context, AppStrings.textButton1ChooseScreen, () {
-                routerCubit.goToScreenTask4();
+                BlocProvider.of<RouterCubit>(context).goToScreenTask4();
               }),
             ),
           ],
