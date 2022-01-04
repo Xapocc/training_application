@@ -5,7 +5,6 @@ import 'package:training_application/app/scene/task3/screen_task3.dart';
 import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
 import 'package:training_application/app/scene/splash/cubit/router_state.dart';
 import 'package:training_application/app/scene/splash/screen_splash.dart';
-import 'package:training_application/app/scene/task4/screen_task4.dart';
 
 class RootRouterDelegate extends RouterDelegate<RouterState> {
   final GlobalKey<NavigatorState> _navigatorKey;
@@ -46,11 +45,7 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
     if (_routerCubit.state is RouterStateTask4Screen) {
       return [
         MaterialPage(
-          child: FutureBuilder(
-            future: RouterCubit.getTime(),
-            builder: (context, snapshot) => ScreenTask4(
-                _routerCubit, RouterCubit.getTimeFromFile(snapshot)),
-          ),
+          child: _routerCubit.getTask4Screen(),
         ),
       ];
     }

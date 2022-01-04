@@ -9,14 +9,11 @@ import 'package:training_application/app/string.dart';
 
 class ScreenTask4 extends StatelessWidget {
   const ScreenTask4(
-    RouterCubit rCubit,
     int seconds, {
     Key? key,
-  })  : _routerCubit = rCubit,
-        _seconds = seconds,
+  })  : _seconds = seconds,
         super(key: key);
 
-  final RouterCubit _routerCubit;
   final int _seconds;
 
   @override
@@ -89,7 +86,7 @@ class ScreenTask4 extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(
                             bottom: AppSizes.paddingButtonStartTask4Screen),
-                        child: _startButton(state, seconds),
+                        child: _startButton(context, state, seconds),
                       ),
                       FutureBuilder(
                         future: Task4ScreenCubit.getStateCountersMap(),
@@ -152,7 +149,7 @@ class ScreenTask4 extends StatelessWidget {
     );
   }
 
-  Widget _startButton(Task4ScreenState state, int seconds) {
+  Widget _startButton(context, Task4ScreenState state, int seconds) {
     if (state is EnabledButtonState) {
       return ElevatedButton(
         style: ButtonStyle(
@@ -166,7 +163,7 @@ class ScreenTask4 extends StatelessWidget {
         child: const Text(AppStrings.textButtonStartTimerTask4Screen),
         onPressed: () {
           Task4ScreenCubit.saveTime(seconds);
-          _routerCubit.goToScreenStatistics(seconds);
+          BlocProvider.of<RouterCubit>(context).goToScreenStatistics(seconds);
         },
       );
     } else {
