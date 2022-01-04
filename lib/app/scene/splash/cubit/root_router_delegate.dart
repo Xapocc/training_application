@@ -68,7 +68,6 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
 
   @override
   Future<bool> popRoute() async {
-
     _routerCubit.goToScreenChoose();
 
     return true;
