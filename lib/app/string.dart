@@ -28,6 +28,7 @@ abstract class AppStrings {
   ];
   static String spinnerTextStatisticScreen(time) => "Please wait $time second${time == 1 ? "" : "s"}";
   static String stateCountersTextStatisticScreen(counter, hasData) => "${hasData ? "Data" : "Error"} state appeared $counter time${counter == 1 ? "" : "s"} now";
+  static const String timeFieldNameStatisticScreen = "time";
   static const String dataStateFieldNameStatisticScreen = "dataStateCounter";
   static const String errorStateFieldNameStatisticScreen = "errorStateCounter";
 }

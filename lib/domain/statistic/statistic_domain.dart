@@ -1,23 +1,23 @@
-import 'package:training_application/data/statistic/statistic_offline_repository.dart';
+import 'package:training_application/data/shared_preferences/shared_preferences_repository.dart';
 
 abstract class StatisticDomain {
   static Future<int> getDataStateCounter() {
-    return StatisticOfflineRepository.getDataStateCounterFromFile();
+    return SharedPreferencesRepository.getDataStateCounterFromFile();
   }
 
   static Future<int> getErrorStateCounter() {
-    return StatisticOfflineRepository.getErrorStateCounterFromFile();
+    return SharedPreferencesRepository.getErrorStateCounterFromFile();
   }
 
   static Future<Map<String, dynamic>> getStateCountersMap() {
-    return StatisticOfflineRepository.getStateCountersMapFromFile();
+    return SharedPreferencesRepository.getStateCountersMapFromFile();
   }
 
   static void incrementDataStateCounter() {
-    StatisticOfflineRepository.incrementDataStateCounterInFile();
+    SharedPreferencesRepository.incrementDataStateCounterInFile();
   }
 
   static void incrementErrorStateCounter() {
-    StatisticOfflineRepository.incrementErrorStateCounterInFile();
+    SharedPreferencesRepository.incrementErrorStateCounterInFile();
   }
 }
