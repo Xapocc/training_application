@@ -7,6 +7,7 @@ class RouterCubit extends Cubit<RouterState> {
   RouterCubit() : super(const RouterStateSplashScreen()) {
     startApp();
   }
+  void goToScreenChoose() => emit(const RouterStateChooseScreen());
 
   void goToScreenTask3() => emit(const RouterStateTask3Screen());
 

@@ -7,6 +7,11 @@ import 'package:training_application/domain/statistic/statistic_domain.dart';
 
 class StatisticScreenCubit extends Cubit<StatisticScreenState> {
   StatisticScreenCubit(int seconds) : super(TimerState(seconds)) {
+    if (StatisticScreenState.images.isNotEmpty) {
+      StatisticScreenState.images
+          .removeRange(0, StatisticScreenState.images.length);
+    }
+
     for (String item in StatisticScreenState.imagesUrls) {
       StatisticScreenState.images.add(Image.network(item));
     }
