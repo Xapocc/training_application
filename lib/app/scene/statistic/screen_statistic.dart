@@ -27,18 +27,20 @@ class ScreenStatistics extends StatelessWidget {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    child: const CircularProgressIndicator(
-                      color: AppColors.colorProgressIndicatorStatisticScreen,
-                      strokeWidth:
-                          AppSizes.widthStrokeProgressIndicatorStatisticScreen,
+                  const Flexible(
+                    child: FractionallySizedBox(
+                      widthFactor: AppSizes
+                          .coefficientWidthProgressIndicatorStatisticScreen,
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: CircularProgressIndicator(
+                          color:
+                              AppColors.colorProgressIndicatorStatisticScreen,
+                          strokeWidth: AppSizes
+                              .widthStrokeProgressIndicatorStatisticScreen,
+                        ),
+                      ),
                     ),
-                    width: MediaQuery.of(context).size.width *
-                        AppSizes
-                            .coefficientWidthProgressIndicatorStatisticScreen,
-                    height: MediaQuery.of(context).size.width *
-                        AppSizes
-                            .coefficientWidthProgressIndicatorStatisticScreen,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(

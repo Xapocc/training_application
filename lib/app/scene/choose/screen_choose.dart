@@ -21,17 +21,21 @@ class ScreenChoose extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(AppSizes.paddingButtonChooseScreen),
+            Flexible(
               child: _chooseScreenButton(
                   context, AppStrings.textButton0ChooseScreen, () {
                 routerCubit.goToScreenTask3();
               }),
             ),
-            _chooseScreenButton(context, AppStrings.textButton1ChooseScreen,
-                () {
-              routerCubit.goToScreenTask4();
-            }),
+            const Padding(
+                padding:
+                    EdgeInsets.only(top: AppSizes.paddingButtonChooseScreen)),
+            Flexible(
+              child: _chooseScreenButton(
+                  context, AppStrings.textButton1ChooseScreen, () {
+                routerCubit.goToScreenTask4();
+              }),
+            ),
           ],
         ),
       ),
@@ -40,20 +44,19 @@ class ScreenChoose extends StatelessWidget {
 
   Widget _chooseScreenButton(context, String text, VoidCallback callback) {
     // already has the ripple effect as default
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-          fixedSize: Size(
-              MediaQuery.of(context).size.width *
-                  AppSizes.coefficientWidthButtonChooseScreen,
-              MediaQuery.of(context).size.width *
-                  AppSizes.coefficientHeightButtonChooseScreen),
-          primary: AppColors.colorBgButtonChooseScreen),
-      onPressed: callback,
-      child: Text(text,
-          style: const TextStyle(
-              inherit: false,
-              fontSize: AppSizes.fontSizeButtonChooseScreen,
-              color: AppColors.colorTextButtonChooseScreen)),
+    return FractionallySizedBox(
+      widthFactor: AppSizes.coefficientWidthButtonChooseScreen,
+      heightFactor: AppSizes.coefficientHeightButtonChooseScreen,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            primary: AppColors.colorBgButtonChooseScreen),
+        onPressed: callback,
+        child: Text(text,
+            style: const TextStyle(
+                inherit: false,
+                fontSize: AppSizes.fontSizeButtonChooseScreen,
+                color: AppColors.colorTextButtonChooseScreen)),
+      ),
     );
   }
 }
