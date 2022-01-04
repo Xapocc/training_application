@@ -85,7 +85,7 @@ class ScreenStatistics extends StatelessWidget {
                             ),
                           ),
                         ),
-                      if (state is DataState) _dataListView(state),
+                      if (state is DataState) _dataListView(state, context),
                     ],
                   );
                 },
@@ -97,7 +97,7 @@ class ScreenStatistics extends StatelessWidget {
     );
   }
 
-  Widget _dataListView(StatisticScreenState state) {
+  Widget _dataListView(StatisticScreenState state, context) {
     return Flexible(
       child: Padding(
         padding: const EdgeInsets.symmetric(
