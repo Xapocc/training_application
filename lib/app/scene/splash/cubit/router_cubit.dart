@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/scene/splash/cubit/router_state.dart';
 import 'package:training_application/app/scene/task4/screen_task4.dart';
 import 'package:training_application/app/size.dart';
-import 'package:training_application/domain/task4/task4_timer_domain.dart';
+import 'package:training_application/domain/entities/task4_entity.dart';
+import 'package:training_application/domain/use_cases/use_case_time.dart';
+import 'package:training_application/main.dart';
 
 class RouterCubit extends Cubit<RouterState> {
   RouterCubit() : super(const RouterStateSplashScreen()) {
@@ -37,11 +39,11 @@ class RouterCubit extends Cubit<RouterState> {
     return snapshot.hasData
         ? snapshot.hasError
             ? AppSizes.parserExReplacerTextFieldTask4Screen
-            : (snapshot.data as int)
+            : (snapshot.data as Task4Entity).time
         : AppSizes.parserExReplacerTextFieldTask4Screen;
   }
 
   static getTime() {
-    return Task4TimerDomain.getTime();
+    return Task4TimerUseCase.getTime(task4OfflineRepository);
   }
 }

@@ -5,6 +5,7 @@ import 'package:training_application/app/scene/statistic/cubit/statistic_cubit.d
 import 'package:training_application/app/scene/statistic/cubit/statistic_state.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/app/string.dart';
+import 'package:training_application/domain/entities/statistic_entity.dart';
 
 class ScreenStatistics extends StatelessWidget {
   const ScreenStatistics({
@@ -47,9 +48,10 @@ class ScreenStatistics extends StatelessWidget {
                     AppSizes.paddingTextStateCounterStatisticScreen),
                 child: Text(
                   AppStrings.stateCountersTextStatisticScreen(
-                      (snapshot.data as Map)[state is DataState
-                          ? AppStrings.dataStateFieldNameStatisticScreen
-                          : AppStrings.errorStateFieldNameStatisticScreen],
+                      state is DataState
+                          ? (snapshot.data as StatisticEntity).dataStateCounter
+                          : (snapshot.data as StatisticEntity)
+                              .errorStateCounter,
                       state is DataState),
                   style: TextStyle(
                     inherit: false,
