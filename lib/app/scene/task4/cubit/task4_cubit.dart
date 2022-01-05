@@ -3,8 +3,6 @@ import 'package:training_application/app/scene/task4/cubit/task4_state.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/domain/entities/statistic_entity.dart';
 import 'package:training_application/domain/entities/task4_entity.dart';
-import 'package:training_application/domain/use_cases/use_case_statistic.dart';
-import 'package:training_application/domain/use_cases/use_case_time.dart';
 import 'package:training_application/main.dart';
 
 class Task4ScreenCubit extends Cubit<Task4ScreenState> {
@@ -13,15 +11,15 @@ class Task4ScreenCubit extends Cubit<Task4ScreenState> {
             AppSizes.parserExReplacerTextFieldTask4Screen));
 
   static void saveTime(int time) {
-    Task4TimerUseCase.saveTime(task4OfflineRepository, time);
+    task4TimerUseCase.saveTime(time);
   }
 
   static Future<Task4Entity> getTime() {
-    return Task4TimerUseCase.getTime(task4OfflineRepository);
+    return task4TimerUseCase.getTime();
   }
 
   static Future<StatisticEntity> getStateCountersMap() {
-    return StatisticUseCase.getStateCountersMap(statisticOfflineRepository);
+    return statisticUseCase.getStateCountersMap();
   }
 
   void checkIfSecondsInRange(int seconds) {
