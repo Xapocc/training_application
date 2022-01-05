@@ -4,7 +4,8 @@ import 'package:training_application/data/repositories/statistic_offline_reposit
 import 'package:training_application/data/repositories/task4_offline_repository.dart';
 
 Task4OfflineRepository task4OfflineRepository = Task4OfflineRepository();
-StatisticOfflineRepository statisticOfflineRepository = StatisticOfflineRepository();
+StatisticOfflineRepository statisticOfflineRepository =
+    StatisticOfflineRepository();
 
 void main() {
   runApp(AppRoot());
