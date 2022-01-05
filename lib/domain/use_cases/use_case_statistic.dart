@@ -1,20 +1,24 @@
 import 'package:training_application/domain/entities/statistic_entity.dart';
 import 'package:training_application/domain/repositories/statistic_repository_interface.dart';
 
-abstract class StatisticUseCase {
+class StatisticUseCase {
+  StatisticUseCase({required this.repository});
+
+  final IStatisticRepository repository;
+
   // get
 
-  static Future<StatisticEntity> getStateCountersMap(IStatisticRepository repository) {
+  Future<StatisticEntity> getStateCountersMap() {
     return repository.getStateCountersMapFromFile();
   }
 
   // set
 
-  static void incrementDataStateCounter(IStatisticRepository repository) {
+  void incrementDataStateCounter() {
     repository.incrementDataStateCounterInFile();
   }
 
-  static void incrementErrorStateCounter(IStatisticRepository repository) {
+  void incrementErrorStateCounter() {
     repository.incrementErrorStateCounterInFile();
   }
 }

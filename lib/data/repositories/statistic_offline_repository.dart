@@ -4,7 +4,7 @@ import 'package:training_application/data/models/statistic_model.dart';
 import 'package:training_application/domain/entities/statistic_entity.dart';
 import 'package:training_application/domain/repositories/statistic_repository_interface.dart';
 
-class StatisticOfflineRepository implements IStatisticRepository {
+class StatisticOfflineRepositoryImpl implements IStatisticRepository {
   // get
 
   @override

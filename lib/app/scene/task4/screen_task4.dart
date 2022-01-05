@@ -30,7 +30,7 @@ class ScreenTask4 extends StatelessWidget {
             color: AppColors.colorBgTask4Screen,
             child: Center(
               child: FutureBuilder(
-                future: Task4ScreenCubit.getTime(),
+                future: BlocProvider.of<Task4ScreenCubit>(context).getTime(),
                 builder: (context, snapshot) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -95,7 +95,8 @@ class ScreenTask4 extends StatelessWidget {
                         child: _startButton(context, state, seconds),
                       ),
                       FutureBuilder(
-                        future: Task4ScreenCubit.getStateCountersMap(),
+                        future: BlocProvider.of<Task4ScreenCubit>(context)
+                            .getStateCountersMap(),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             return FittedBox(
@@ -168,7 +169,7 @@ class ScreenTask4 extends StatelessWidget {
         ),
         child: const Text(AppStrings.textButtonStartTimerTask4Screen),
         onPressed: () {
-          Task4ScreenCubit.saveTime(seconds);
+          BlocProvider.of<Task4ScreenCubit>(context).saveTime(seconds);
           BlocProvider.of<RouterCubit>(context).goToScreenStatistics(seconds);
         },
       );

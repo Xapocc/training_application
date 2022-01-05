@@ -4,25 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/scene/statistic/cubit/statistic_state.dart';
 import 'package:training_application/domain/entities/statistic_entity.dart';
-import 'package:training_application/domain/use_cases/use_case_statistic.dart';
 import 'package:training_application/main.dart';
 
 class StatisticScreenCubit extends Cubit<StatisticScreenState> {
   StatisticScreenCubit(int seconds) : super(TimerState(seconds)) {
-    if (StatisticScreenState.images.isNotEmpty) {
-      StatisticScreenState.images
-          .removeRange(0, StatisticScreenState.images.length);
+    imagesUrls = imageUrlsUseCase.getImageUls().urls;
+
+    if (images.isNotEmpty) {
+      images.removeRange(0, images.length);
     }
 
-    for (String item in StatisticScreenState.imagesUrls) {
-      StatisticScreenState.images.add(Image.network(item));
+    for (String item in imagesUrls) {
+      images.add(Image.network(item));
     }
 
     startTimer();
   }
 
-  static Future<StatisticEntity> getStateCountersMap() {
-    return StatisticUseCase.getStateCountersMap(statisticOfflineRepository);
+  List<String> imagesUrls = List<String>.empty(growable: true);
+  final List<Image> _images = List<Image>.empty(growable: true);
+
+  List<Image> get images => _images;
+
+  Future<StatisticEntity> getStateCountersMap() {
+    return statisticUseCase.getStateCountersMap();
   }
 
   void startTimer() async {
@@ -35,10 +40,10 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
       var rnd = Random();
 
       if (rnd.nextInt(99) % 2 == 0) {
-        StatisticUseCase.incrementDataStateCounter(statisticOfflineRepository);
+        statisticUseCase.incrementDataStateCounter();
         emit(DataState());
       } else {
-        StatisticUseCase.incrementErrorStateCounter(statisticOfflineRepository);
+        statisticUseCase.incrementErrorStateCounter();
         emit(ErrorState());
       }
     }

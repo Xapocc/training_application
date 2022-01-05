@@ -5,8 +5,7 @@ import 'package:training_application/data/models/task4_model.dart';
 import 'package:training_application/domain/entities/task4_entity.dart';
 import 'package:training_application/domain/repositories/task4_repository_interface.dart';
 
-class Task4OfflineRepository implements ITask4Repository {
-
+class Task4OfflineRepositoryImpl implements ITask4Repository {
   // get
 
   @override

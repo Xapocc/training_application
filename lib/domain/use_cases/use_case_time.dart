@@ -1,16 +1,20 @@
 import 'package:training_application/domain/entities/task4_entity.dart';
 import 'package:training_application/domain/repositories/task4_repository_interface.dart';
 
-abstract class Task4TimerUseCase {
+class Task4TimerUseCase {
+  Task4TimerUseCase({required this.repository});
+
+  final ITask4Repository repository;
+
   // get
 
-  static Future<Task4Entity> getTime(ITask4Repository repository) {
+  Future<Task4Entity> getTime() {
     return repository.getTimeFromFile();
   }
 
   // set
 
-  static void saveTime(ITask4Repository repository, int time) {
+  void saveTime(int time) {
     repository.saveTimeToFile(time);
   }
 }
