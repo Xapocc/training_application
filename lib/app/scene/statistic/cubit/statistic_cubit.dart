@@ -8,17 +8,23 @@ import 'package:training_application/main.dart';
 
 class StatisticScreenCubit extends Cubit<StatisticScreenState> {
   StatisticScreenCubit(int seconds) : super(TimerState(seconds)) {
-    if (StatisticScreenState.images.isNotEmpty) {
-      StatisticScreenState.images
-          .removeRange(0, StatisticScreenState.images.length);
+    imagesUrls = imageUrlsUseCase.getImageUls().urls;
+
+    if (images.isNotEmpty) {
+      images.removeRange(0, images.length);
     }
 
-    for (String item in StatisticScreenState.imagesUrls) {
-      StatisticScreenState.images.add(Image.network(item));
+    for (String item in imagesUrls) {
+      images.add(Image.network(item));
     }
 
     startTimer();
   }
+
+  List<String> imagesUrls = List<String>.empty(growable: true);
+  final List<Image> _images = List<Image>.empty(growable: true);
+
+  List<Image> get images => _images;
 
   Future<StatisticEntity> getStateCountersMap() {
     return statisticUseCase.getStateCountersMap();

@@ -1,13 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-import 'package:training_application/app/string.dart';
 
-abstract class StatisticScreenState extends Equatable {
-  static const List<String> imagesUrls = AppStrings.imagesCatsUrls;
-  static final List<Image> _images = List<Image>.empty(growable: true);
-
-  static List<Image> get images => _images;
-}
+abstract class StatisticScreenState extends Equatable {}
 
 class TimerState extends StatisticScreenState {
   TimerState(int time)
