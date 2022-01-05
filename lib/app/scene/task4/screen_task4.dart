@@ -6,8 +6,6 @@ import 'package:training_application/app/scene/task4/cubit/task4_cubit.dart';
 import 'package:training_application/app/scene/task4/cubit/task4_state.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/app/string.dart';
-import 'package:training_application/domain/entities/statistic_entity.dart';
-import 'package:training_application/domain/entities/task4_entity.dart';
 
 class ScreenTask4 extends StatelessWidget {
   const ScreenTask4(
@@ -46,9 +44,7 @@ class ScreenTask4 extends StatelessWidget {
                             maxLength: AppSizes.maxLengthTextFieldTask4Screen,
                             decoration: InputDecoration(
                               hintText: snapshot.hasData
-                                  ? (snapshot.data as Task4Entity)
-                                      .time
-                                      .toString()
+                                  ? snapshot.data.toString()
                                   : AppStrings.textHintDefaultTask4Screen,
                               hintStyle: const TextStyle(
                                   color: AppColors
@@ -74,9 +70,7 @@ class ScreenTask4 extends StatelessWidget {
                             onChanged: (text) {
                               try {
                                 seconds = int.parse(text.isEmpty
-                                    ? (snapshot.data as Task4Entity)
-                                        .time
-                                        .toString()
+                                    ? snapshot.data.toString()
                                     : text);
                               } catch (ex) {
                                 seconds = AppSizes
@@ -116,13 +110,13 @@ class ScreenTask4 extends StatelessWidget {
                                           right: AppSizes
                                               .paddingDataStateCounterTask4Screen),
                                       child: _stateCounterText(
-                                          (snapshot.data as StatisticEntity)
-                                              .dataStateCounter,
+                                          (snapshot.data as Map)[AppStrings
+                                              .dataStateFieldNameStatisticScreen],
                                           true),
                                     ),
                                     _stateCounterText(
-                                        (snapshot.data as StatisticEntity)
-                                            .errorStateCounter,
+                                        (snapshot.data as Map)[AppStrings
+                                            .errorStateFieldNameStatisticScreen],
                                         false),
                                   ],
                                 ),
