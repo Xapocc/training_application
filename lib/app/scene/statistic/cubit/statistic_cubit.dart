@@ -20,7 +20,7 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
     startTimer();
   }
 
-  static Future<StatisticEntity> getStateCountersMap() {
+  Future<StatisticEntity> getStateCountersMap() {
     return statisticUseCase.getStateCountersMap();
   }
 

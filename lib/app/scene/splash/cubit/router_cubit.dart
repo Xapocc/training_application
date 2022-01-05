@@ -28,13 +28,13 @@ class RouterCubit extends Cubit<RouterState> {
 
   getTask4Screen() {
     return FutureBuilder(
-        future: RouterCubit.getTime(),
+        future: _getTime(),
         builder: (context, snapshot) {
-          return ScreenTask4(RouterCubit.getTimeFromFile(snapshot));
+          return ScreenTask4(_getTimeFromFile(snapshot));
         });
   }
 
-  static int getTimeFromFile(snapshot) {
+  int _getTimeFromFile(snapshot) {
     return snapshot.hasData
         ? snapshot.hasError
             ? AppSizes.parserExReplacerTextFieldTask4Screen
@@ -42,7 +42,7 @@ class RouterCubit extends Cubit<RouterState> {
         : AppSizes.parserExReplacerTextFieldTask4Screen;
   }
 
-  static getTime() {
+  _getTime() {
     return task4TimerUseCase.getTime();
   }
 }

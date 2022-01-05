@@ -10,15 +10,15 @@ class Task4ScreenCubit extends Cubit<Task4ScreenState> {
       : super(const EnabledButtonState(
             AppSizes.parserExReplacerTextFieldTask4Screen));
 
-  static void saveTime(int time) {
+  void saveTime(int time) {
     task4TimerUseCase.saveTime(time);
   }
 
-  static Future<Task4Entity> getTime() {
+  Future<Task4Entity> getTime() {
     return task4TimerUseCase.getTime();
   }
 
-  static Future<StatisticEntity> getStateCountersMap() {
+  Future<StatisticEntity> getStateCountersMap() {
     return statisticUseCase.getStateCountersMap();
   }
 

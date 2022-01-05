@@ -37,7 +37,8 @@ class ScreenStatistics extends StatelessWidget {
 
   Widget _dataOrErrorState(state, context) {
     return FutureBuilder(
-      future: StatisticScreenCubit.getStateCountersMap(),
+      future:
+          BlocProvider.of<StatisticScreenCubit>(context).getStateCountersMap(),
       builder: (context, snapshot) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
