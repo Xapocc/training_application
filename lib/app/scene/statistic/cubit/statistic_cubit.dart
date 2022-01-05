@@ -3,9 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/scene/statistic/cubit/statistic_state.dart';
-import 'package:training_application/domain/entities/statistic_entity.dart';
-import 'package:training_application/domain/use_cases/use_case_statistic.dart';
-import 'package:training_application/main.dart';
+import 'package:training_application/domain/statistic/statistic_domain.dart';
 
 class StatisticScreenCubit extends Cubit<StatisticScreenState> {
   StatisticScreenCubit(int seconds) : super(TimerState(seconds)) {
@@ -21,8 +19,8 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
     startTimer();
   }
 
-  static Future<StatisticEntity> getStateCountersMap() {
-    return StatisticUseCase.getStateCountersMap(statisticOfflineRepository);
+  static Future<Map<String, dynamic>> getStateCountersMap() {
+    return StatisticDomain.getStateCountersMap();
   }
 
   void startTimer() async {
@@ -35,10 +33,10 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
       var rnd = Random();
 
       if (rnd.nextInt(99) % 2 == 0) {
-        StatisticUseCase.incrementDataStateCounter(statisticOfflineRepository);
+        StatisticDomain.incrementDataStateCounter();
         emit(DataState());
       } else {
-        StatisticUseCase.incrementErrorStateCounter(statisticOfflineRepository);
+        StatisticDomain.incrementErrorStateCounter();
         emit(ErrorState());
       }
     }
