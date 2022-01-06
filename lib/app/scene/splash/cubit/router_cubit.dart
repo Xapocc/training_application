@@ -43,6 +43,6 @@ class RouterCubit extends Cubit<RouterState> {
   }
 
   _getTime() {
-    return task4TimerUseCase.getTime();
+    return task4TimerUseCase!.getTime();
   }
 }

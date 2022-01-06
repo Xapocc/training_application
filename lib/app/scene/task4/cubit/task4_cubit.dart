@@ -11,15 +11,15 @@ class Task4ScreenCubit extends Cubit<Task4ScreenState> {
             AppSizes.parserExReplacerTextFieldTask4Screen));
 
   void saveTime(int time) {
-    task4TimerUseCase.saveTime(time);
+    task4TimerUseCase!.saveTime(time);
   }
 
   Future<Task4Entity> getTime() {
-    return task4TimerUseCase.getTime();
+    return task4TimerUseCase!.getTime();
   }
 
   Future<StatisticEntity> getStateCountersMap() {
-    return statisticUseCase.getStateCountersMap();
+    return statisticUseCase!.getStateCountersMap();
   }
 
   void checkIfSecondsInRange(int seconds) {

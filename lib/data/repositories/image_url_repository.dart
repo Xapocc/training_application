@@ -1,11 +1,17 @@
-import 'package:training_application/data/models/image_urls_model.dart';
-import 'package:training_application/domain/entities/image_urls_entity.dart';
-import 'package:training_application/domain/repositories/image_urls_repository_interface.dart';
+import 'package:training_application/data/models/image_url_model.dart';
+import 'package:training_application/domain/entities/image_url_entity.dart';
+import 'package:training_application/domain/repositories/image_url_repository_interface.dart';
 
-class ImageUrlsRepositoryImpl implements IImageUrlsRepository {
+class ImageUrlsRepositoryImpl implements IImageUrlRepository {
   @override
-  ImageUrlsEntity getImageUls() {
-    return ImageUrlsEntity.fromModel(ImageUrlsModel(urls: _imagesCatsUrls));
+  List<ImageUrlEntity> getImageUls() {
+    List<ImageUrlEntity> imageUrls = List.empty(growable: true);
+
+    for (String item in _imagesCatsUrls) {
+      imageUrls.add(ImageUrlEntity.fromModel(ImageUrlModel(url: item)));
+    }
+
+    return imageUrls;
   }
 
   final List<String> _imagesCatsUrls = [
