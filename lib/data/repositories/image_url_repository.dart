@@ -1,5 +1,6 @@
 import 'package:training_application/data/models/image_url_model.dart';
 import 'package:training_application/domain/entities/image_url_entity.dart';
+import 'package:training_application/domain/mappers/image_url_mapper.dart';
 import 'package:training_application/domain/repositories/image_url_repository_interface.dart';
 
 class ImageUrlsRepositoryImpl implements IImageUrlRepository {
@@ -8,7 +9,9 @@ class ImageUrlsRepositoryImpl implements IImageUrlRepository {
     List<ImageUrlEntity> imageUrls = List.empty(growable: true);
 
     for (String item in _imagesCatsUrls) {
-      imageUrls.add(ImageUrlEntity.fromModel(ImageUrlModel(url: item)));
+      ImageUrlMapper imageUrlMapper = ImageUrlMapper();
+
+      imageUrls.add(imageUrlMapper.mapImageUrl(ImageUrlModel(url: item)));
     }
 
     return imageUrls;
