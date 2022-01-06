@@ -39,5 +39,8 @@ abstract class AppSizes {
   static const double fontSizeTextProgressIndicatorStatisticScreen = 24.0;
   static const double paddingTextStateCounterStatisticScreen = 16.0;
   static const double paddingListViewItemStatisticScreen = 8.0;
-  static const double cacheItemsNumberStatisticScreen = 1000;
+  static const double cacheItemsNumberStatisticScreen = 999999999.0;
+  static const double scaleImageStatisticScreen = 0.2;
+  static const int numberOfImagesInRowStatisticScreen = 2;
+  static const bool showUncompletedRowStatisticScreen = true;
 }

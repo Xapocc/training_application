@@ -62,51 +62,15 @@ class ScreenStatistics extends StatelessWidget {
                   ),
                 ),
               ),
-            if (state is DataState) _dataListView(state, context),
+            if (state is DataState)
+              _dataListView(
+                  context,
+                  state,
+                  AppSizes.numberOfImagesInRowStatisticScreen,
+                  AppSizes.showUncompletedRowStatisticScreen),
           ],
         );
       },
-    );
-  }
-
-  Widget _dataListView(StatisticScreenState state, context) {
-    return Flexible(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppSizes.paddingListViewItemStatisticScreen),
-        child: ListView.builder(
-          cacheExtent: AppSizes.cacheItemsNumberStatisticScreen,
-          scrollDirection: Axis.vertical,
-          itemCount:
-              BlocProvider.of<StatisticScreenCubit>(context).images.length ~/ 2,
-          itemBuilder: (context, index) {
-            return FittedBox(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    bottom: AppSizes.paddingListViewItemStatisticScreen),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            right: AppSizes.paddingListViewItemStatisticScreen),
-                        child: BlocProvider.of<StatisticScreenCubit>(context)
-                            .images[index * 2],
-                      ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: BlocProvider.of<StatisticScreenCubit>(context)
-                          .images[index * 2 + 1],
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
-      ),
     );
   }
 
@@ -142,5 +106,112 @@ class ScreenStatistics extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  /// Returns Flexible with ListView of Rows of Images [state.imagesUrls].
+  ///
+  /// Set [showUncompletedRow] to 'true' if you want to display row
+  /// with number of items lesser than [itemsInRow].
+  /// Don't set [numberOfItemsToDisplay] to use the whole list.
+  Widget _dataListView(context, DataState state, int imagesInRow,
+      [bool showUncompletedRow = false, int numberOfItemsToDisplay = -1]) {
+    return Flexible(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            horizontal: AppSizes.paddingListViewItemStatisticScreen),
+        child: ListView.builder(
+          cacheExtent: AppSizes.cacheItemsNumberStatisticScreen,
+          scrollDirection: Axis.vertical,
+          itemCount: getNumberOfRows(context, state, imagesInRow,
+              showUncompletedRow, numberOfItemsToDisplay),
+          itemBuilder: (context, index) {
+            return getImagesRow(
+                context, state, index, imagesInRow, numberOfItemsToDisplay);
+          },
+        ),
+      ),
+    );
+  }
+
+  /// Returns the number of rows for [state.imagesUrls] list.
+  ///
+  /// Set [showUncompletedRow] to 'true' if you want to display row
+  /// with number of items lesser than [itemsInRow].
+  /// Don't set [numberOfItemsToDisplay] to use the whole list.
+  int getNumberOfRows(context, DataState state, itemsInRow,
+      [bool showUncompletedRow = false, int numberOfItemsToDisplay = -1]) {
+    if (itemsInRow <= 0) itemsInRow = 1;
+    if (numberOfItemsToDisplay < 0) {
+      numberOfItemsToDisplay = state.imagesUrls.length;
+    }
+
+    // number of completed rows
+    int numberOfRows = numberOfItemsToDisplay ~/ itemsInRow;
+
+    // add 1 for uncompleted row if necessary
+    if (numberOfItemsToDisplay % itemsInRow != 0) {
+      numberOfRows += showUncompletedRow ? 1 : 0;
+    }
+
+    return numberOfRows;
+  }
+
+  /// Returns the row for the itemBuilder of ListView.
+  ///
+  /// Don't set [numberOfItemsToDisplay] to use the whole list.
+  Widget getImagesRow(context, DataState state, int index, int itemsInRow,
+      [int numberOfItemsToDisplay = -1]) {
+    if (itemsInRow <= 0) itemsInRow = 1;
+    if (numberOfItemsToDisplay < 0) {
+      numberOfItemsToDisplay = state.imagesUrls.length;
+    }
+
+    return FittedBox(
+      child: Padding(
+        padding: const EdgeInsets.only(
+            bottom: AppSizes.paddingListViewItemStatisticScreen),
+        child: Container(
+          constraints: const BoxConstraints(
+              minWidth: AppSizes.paddingListViewItemStatisticScreen),
+          child: Row(
+            children: _getRowItems(
+                context, state, index, itemsInRow, numberOfItemsToDisplay),
+          ),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _getRowItems(context, DataState state, int index, int itemsInRow,
+      int numberOfItemsToDisplay) {
+    List<Widget> itemsList = List.empty(growable: true);
+    int itemInRowIndex = 0;
+
+    while (itemInRowIndex < itemsInRow) {
+      int itemIndex = index * itemsInRow + itemInRowIndex;
+      itemsList.add(
+        SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Padding(
+              padding: EdgeInsets.only(
+                  // if current item is the last one in a row padding = 0
+                  right: (itemInRowIndex == itemsInRow - 1 ||
+                          itemIndex >= numberOfItemsToDisplay - 1)
+                      ? 0
+                      : AppSizes.paddingListViewItemStatisticScreen),
+              // if out of items uses a Container() as a placeholder
+              child: (itemIndex < numberOfItemsToDisplay)
+                  ? Image.network(
+                      state.imagesUrls[itemIndex],
+                      scale: AppSizes.scaleImageStatisticScreen,
+                    )
+                  : Container()),
+        ),
+      );
+
+      itemInRowIndex++;
+    }
+
+    return itemsList;
   }
 }
