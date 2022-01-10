@@ -50,11 +50,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCCw9FLTEOiG6IghG1FaTNRGFT_V-V2-SU',
-    appId: '1:1046234896813:ios:f9cc2b5656ba61fd766924',
+    appId: '1:1046234896813:ios:f8f6b076df1275be766924',
     messagingSenderId: '1046234896813',
     projectId: 'training-application-dd0dd',
     storageBucket: 'training-application-dd0dd.appspot.com',
-    iosClientId: '1046234896813-cv7rul7gaaie32dru6hp0cb4nilogqlb.apps.googleusercontent.com',
-    iosBundleId: 'com.evernetica.training.app',
+    iosClientId: '1046234896813-7vj5khbphvl8ia8ottjrv9hdhmlqcd92.apps.googleusercontent.com',
+    iosBundleId: 'com.evernetica.training.application',
   );
 }
