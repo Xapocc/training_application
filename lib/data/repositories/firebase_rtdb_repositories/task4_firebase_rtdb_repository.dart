@@ -12,13 +12,13 @@ class Task4FirebaseRepositoryImpl implements ITask4Repository {
 
   @override
   Future<Task4Entity> getTimeFromFile() async {
-    DatabaseReference ref = database!.ref(
-        "${AppStrings.basePathRepositories}/${AppStrings.timeFieldNameStatisticScreen}");
+    DatabaseReference ref = database!.ref(AppStrings.timePathRepositories);
 
     DataSnapshot snapshot;
 
     try {
-      snapshot = await ref.get().timeout(Duration(milliseconds: 300));
+      snapshot = await ref.get().timeout(const Duration(
+          milliseconds: AppSizes.millisecondsTimeoutDurationFirebaseRtdb));
     } catch (ex) {
       setDefaultTime();
 

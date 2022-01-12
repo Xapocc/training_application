@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:training_application/app/size.dart';
 import 'package:training_application/app/string.dart';
 import 'package:training_application/data/models/image_url_model.dart';
 import 'package:training_application/domain/entities/image_url_entity.dart';
@@ -11,13 +12,13 @@ class ImageUrlsFirebaseRepositoryImpl implements IImageUrlRepository {
 
   @override
   Future<List<ImageUrlEntity>> getImageUls() async {
-    DatabaseReference ref = database!.ref(
-        "${AppStrings.basePathRepositories}/${AppStrings.imagesUrlsFieldNameStatisticScreen}");
+    DatabaseReference ref = database!.ref(AppStrings.imagesPathRepositories);
 
     DataSnapshot snapshot;
 
     try {
-      snapshot = await ref.get().timeout(Duration(milliseconds: 300));
+      snapshot = await ref.get().timeout(const Duration(
+          milliseconds: AppSizes.millisecondsTimeoutDurationFirebaseRtdb));
     } catch (ex) {
       setDefaultImageUrls();
 
@@ -42,8 +43,7 @@ class ImageUrlsFirebaseRepositoryImpl implements IImageUrlRepository {
       AppStrings.imagesUrlsFieldNameStatisticScreen: "",
     });
 
-    ref = database!.ref(
-        "${AppStrings.basePathRepositories}/${AppStrings.imagesUrlsFieldNameStatisticScreen}");
+    ref = database!.ref(AppStrings.imagesPathRepositories);
 
     int index = 0;
     for (String item in _imagesCatsUrls) {

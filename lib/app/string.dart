@@ -23,4 +23,6 @@ abstract class AppStrings {
 
   // repositories
   static const String basePathRepositories = "data";
+  static const String imagesPathRepositories = "$basePathRepositories/$imagesUrlsFieldNameStatisticScreen";
+  static const String timePathRepositories = "$basePathRepositories/$timeFieldNameStatisticScreen";
 }

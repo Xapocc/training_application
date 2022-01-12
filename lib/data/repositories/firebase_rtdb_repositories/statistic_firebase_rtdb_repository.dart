@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:training_application/app/size.dart';
 import 'package:training_application/app/string.dart';
 import 'package:training_application/data/models/statistic_model.dart';
 import 'package:training_application/domain/entities/statistic_entity.dart';
@@ -18,7 +19,8 @@ class StatisticFirebaseRepositoryImpl implements IStatisticRepository {
       dataStateSnapshot = await ref
           .child(AppStrings.dataStateFieldNameStatisticScreen)
           .get()
-          .timeout(Duration(milliseconds: 300));
+          .timeout(const Duration(
+              milliseconds: AppSizes.millisecondsTimeoutDurationFirebaseRtdb));
     } catch (ex) {
       setDefaultDataStateCounter();
 
@@ -31,7 +33,8 @@ class StatisticFirebaseRepositoryImpl implements IStatisticRepository {
       errorStateSnapshot = await ref
           .child(AppStrings.errorStateFieldNameStatisticScreen)
           .get()
-          .timeout(Duration(milliseconds: 300));
+          .timeout(const Duration(
+              milliseconds: AppSizes.millisecondsTimeoutDurationFirebaseRtdb));
     } catch (ex) {
       setDefaultErrorStateCounter();
 

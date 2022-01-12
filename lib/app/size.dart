@@ -43,4 +43,7 @@ abstract class AppSizes {
   static const double scaleImageStatisticScreen = 0.2;
   static const int numberOfImagesInRowStatisticScreen = 2;
   static const bool showUncompletedRowStatisticScreen = true;
+
+  // repositories
+  static const int millisecondsTimeoutDurationFirebaseRtdb = 300;
 }
