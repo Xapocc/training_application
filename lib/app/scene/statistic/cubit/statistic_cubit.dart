@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/scene/statistic/cubit/statistic_state.dart';
 import 'package:training_application/domain/entities/image_url_entity.dart';
 import 'package:training_application/domain/entities/statistic_entity.dart';
+import 'package:training_application/domain/entities/statistic_last_date_entity.dart';
 import 'package:training_application/main.dart';
 
 class StatisticScreenCubit extends Cubit<StatisticScreenState> {
@@ -17,6 +18,10 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
 
   Future<StatisticEntity> getStateCountersMap() {
     return statisticUseCase!.getStateCountersMap();
+  }
+
+  Future<StatisticLastDateEntity> getStateLastDateMap() {
+    return statisticLastDateUseCase!.getStateLastDatesMap();
   }
 
   void startTimer() async {
@@ -37,9 +42,11 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
           imageUrlsStrings.add(item.url);
         }
 
+        statisticLastDateUseCase!.saveNewDataStateDate();
         emit(DataState(imageUrlsStrings));
       } else {
         statisticUseCase!.incrementErrorStateCounter();
+        statisticLastDateUseCase!.saveNewErrorStateDate();
         emit(ErrorState());
       }
     }

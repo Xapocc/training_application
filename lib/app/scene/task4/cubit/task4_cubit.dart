@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/scene/task4/cubit/task4_state.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/domain/entities/statistic_entity.dart';
+import 'package:training_application/domain/entities/statistic_last_date_entity.dart';
 import 'package:training_application/domain/entities/task4_entity.dart';
 import 'package:training_application/main.dart';
 
@@ -20,6 +21,10 @@ class Task4ScreenCubit extends Cubit<Task4ScreenState> {
 
   Future<StatisticEntity> getStateCountersMap() {
     return statisticUseCase!.getStateCountersMap();
+  }
+
+  Future<StatisticLastDateEntity> getStateLastDateMap() {
+    return statisticLastDateUseCase!.getStateLastDatesMap();
   }
 
   void checkIfSecondsInRange(int seconds) {

@@ -6,6 +6,7 @@ import 'package:training_application/app/scene/statistic/cubit/statistic_state.d
 import 'package:training_application/app/size.dart';
 import 'package:training_application/app/string.dart';
 import 'package:training_application/domain/entities/statistic_entity.dart';
+import 'package:training_application/domain/entities/statistic_last_date_entity.dart';
 
 class ScreenStatistics extends StatelessWidget {
   const ScreenStatistics({
@@ -37,9 +38,11 @@ class ScreenStatistics extends StatelessWidget {
 
   Widget _dataOrErrorState(state, context) {
     return FutureBuilder(
-      future:
-          BlocProvider.of<StatisticScreenCubit>(context).getStateCountersMap(),
-      builder: (context, snapshot) {
+      future: Future.wait([
+        BlocProvider.of<StatisticScreenCubit>(context).getStateCountersMap(),
+        BlocProvider.of<StatisticScreenCubit>(context).getStateLastDateMap(),
+      ]),
+      builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -49,11 +52,20 @@ class ScreenStatistics extends StatelessWidget {
                     AppSizes.paddingTextStateCounterStatisticScreen),
                 child: Text(
                   AppStrings.stateCountersTextStatisticScreen(
-                      state is DataState
-                          ? (snapshot.data as StatisticEntity).dataStateCounter
-                          : (snapshot.data as StatisticEntity)
-                              .errorStateCounter,
-                      state is DataState),
+                          state is DataState
+                              ? (snapshot.data![0] as StatisticEntity)
+                                  .dataStateCounter
+                              : (snapshot.data![0] as StatisticEntity)
+                                  .errorStateCounter,
+                          state is DataState) +
+                      AppStrings.stateLastDateTextStatisticScreen(
+                        state is DataState
+                            ? (snapshot.data![1] as StatisticLastDateEntity)
+                                .dataStateLastDate
+                            : (snapshot.data![1] as StatisticLastDateEntity)
+                                .errorStateLastDate,
+                      ),
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     inherit: false,
                     color: (state is ErrorState)

@@ -7,6 +7,7 @@ import 'package:training_application/app/scene/task4/cubit/task4_state.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/app/string.dart';
 import 'package:training_application/domain/entities/statistic_entity.dart';
+import 'package:training_application/domain/entities/statistic_last_date_entity.dart';
 import 'package:training_application/domain/entities/task4_entity.dart';
 
 class ScreenTask4 extends StatelessWidget {
@@ -94,9 +95,14 @@ class ScreenTask4 extends StatelessWidget {
                         child: _startButton(context, state, seconds),
                       ),
                       FutureBuilder(
-                        future: BlocProvider.of<Task4ScreenCubit>(context)
-                            .getStateCountersMap(),
-                        builder: (context, snapshot) {
+                        future: Future.wait([
+                          BlocProvider.of<Task4ScreenCubit>(context)
+                              .getStateCountersMap(),
+                          BlocProvider.of<Task4ScreenCubit>(context)
+                              .getStateLastDateMap(),
+                        ]),
+                        builder:
+                            (context, AsyncSnapshot<List<dynamic>> snapshot) {
                           if (snapshot.hasData) {
                             return FittedBox(
                               child: Container(
@@ -107,23 +113,56 @@ class ScreenTask4 extends StatelessWidget {
                                       color: AppColors
                                           .colorBgTextStateCounterTaskScreen),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          right: AppSizes
-                                              .paddingDataStateCounterTask4Screen),
-                                      child: _stateCounterText(
-                                          (snapshot.data as StatisticEntity)
-                                              .dataStateCounter,
-                                          true),
+                                          bottom: AppSizes
+                                              .paddingContainerStatisticsTask4Screen),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: AppSizes
+                                                    .paddingDataStateCounterTask4Screen),
+                                            child: _stateCounterText(
+                                                (snapshot.data![0]
+                                                        as StatisticEntity)
+                                                    .dataStateCounter,
+                                                true),
+                                          ),
+                                          _stateCounterText(
+                                              (snapshot.data![0]
+                                                      as StatisticEntity)
+                                                  .errorStateCounter,
+                                              false),
+                                        ],
+                                      ),
                                     ),
-                                    _stateCounterText(
-                                        (snapshot.data as StatisticEntity)
-                                            .errorStateCounter,
-                                        false),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: AppSizes
+                                                  .paddingDataStateCounterTask4Screen),
+                                          child: _stateLastDateText(
+                                              (snapshot.data![1]
+                                                      as StatisticLastDateEntity)
+                                                  .dataStateLastDate,
+                                              true),
+                                        ),
+                                        _stateLastDateText(
+                                            (snapshot.data![1]
+                                                    as StatisticLastDateEntity)
+                                                .errorStateLastDate,
+                                            false),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),
@@ -144,9 +183,20 @@ class ScreenTask4 extends StatelessWidget {
     );
   }
 
-  Widget _stateCounterText(counter, hasData) {
+  Widget _stateCounterText(counter, isDataState) {
     return Text(
-      AppStrings.stateCountersTextTask4Screen(counter, hasData),
+      AppStrings.stateCountersTextTask4Screen(counter, isDataState),
+      style: const TextStyle(
+          inherit: false,
+          color: AppColors.colorFgTextStateCounterTaskScreen,
+          fontSize: AppSizes.fontSizeTextStateCounterTask4Screen),
+      textAlign: TextAlign.center,
+    );
+  }
+
+  Widget _stateLastDateText(date, isDataState) {
+    return Text(
+      AppStrings.stateLastDateTextTask4Screen(date, isDataState),
       style: const TextStyle(
           inherit: false,
           color: AppColors.colorFgTextStateCounterTaskScreen,
