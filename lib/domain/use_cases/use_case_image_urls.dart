@@ -6,7 +6,7 @@ class ImageUrlsUseCase {
 
   final IImageUrlRepository repository;
 
-  List<ImageUrlEntity> getImageUls() {
+  Future<List<ImageUrlEntity>> getImageUls() {
     return repository.getImageUls();
   }
 }

@@ -11,7 +11,7 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
     startTimer();
   }
 
-  List<ImageUrlEntity> getImageUrls() {
+  Future<List<ImageUrlEntity>> getImageUrls() {
     return imageUrlsUseCase!.getImageUls();
   }
 
@@ -31,7 +31,7 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
       if (rnd.nextInt(99) % 2 == 0) {
         statisticUseCase!.incrementDataStateCounter();
 
-        List<ImageUrlEntity> imageUrlsEntities = getImageUrls();
+        List<ImageUrlEntity> imageUrlsEntities = await getImageUrls();
         List<String> imageUrlsStrings = List.empty(growable: true);
         for (ImageUrlEntity item in imageUrlsEntities) {
           imageUrlsStrings.add(item.url);

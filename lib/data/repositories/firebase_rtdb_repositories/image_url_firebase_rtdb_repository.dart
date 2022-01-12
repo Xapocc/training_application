@@ -1,18 +1,57 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:training_application/app/string.dart';
 import 'package:training_application/data/models/image_url_model.dart';
 import 'package:training_application/domain/entities/image_url_entity.dart';
 import 'package:training_application/domain/mappers/image_url_mapper.dart';
 import 'package:training_application/domain/repositories/image_url_repository_interface.dart';
+import 'package:training_application/main.dart';
 
-class ImageUrlsOfflineRepositoryImpl implements IImageUrlRepository {
+class ImageUrlsFirebaseRepositoryImpl implements IImageUrlRepository {
+  //get
+
   @override
   Future<List<ImageUrlEntity>> getImageUls() async {
-    List<ImageUrlEntity> imageUrls = List.empty(growable: true);
+    DatabaseReference ref = database!.ref(
+        "${AppStrings.basePathRepositories}/${AppStrings.imagesUrlsFieldNameStatisticScreen}");
 
-    for (String item in _imagesCatsUrls) {
-      imageUrls.add(ImageUrlMapper().mapImageUrl(ImageUrlModel(url: item)));
+    DataSnapshot snapshot;
+
+    try {
+      snapshot = await ref.get().timeout(Duration(milliseconds: 300));
+    } catch (ex) {
+      setDefaultImageUrls();
+
+      snapshot = await ref.get();
     }
 
-    return imageUrls;
+    List<ImageUrlEntity> imagesUrls =
+        List<ImageUrlEntity>.empty(growable: true);
+
+    for (DataSnapshot item in snapshot.children) {
+      imagesUrls.add(ImageUrlMapper()
+          .mapImageUrl(ImageUrlModel(url: item.value.toString())));
+    }
+
+    return imagesUrls;
+  }
+
+  Future<void> setDefaultImageUrls() async {
+    DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
+
+    ref.update({
+      AppStrings.imagesUrlsFieldNameStatisticScreen: "",
+    });
+
+    ref = database!.ref(
+        "${AppStrings.basePathRepositories}/${AppStrings.imagesUrlsFieldNameStatisticScreen}");
+
+    int index = 0;
+    for (String item in _imagesCatsUrls) {
+      ref.update({
+        "image_$index": item,
+      });
+      index++;
+    }
   }
 
   final List<String> _imagesCatsUrls = [
