@@ -8,14 +8,12 @@ import 'package:training_application/main.dart';
 
 class StatisticScreenCubit extends Cubit<StatisticScreenState> {
   StatisticScreenCubit(int seconds) : super(TimerState(seconds)) {
-    for (ImageUrlEntity item in imageUrlsUseCase!.getImageUls()) {
-      _imagesUrls.add(item.url);
-    }
-
     startTimer();
   }
 
-  final List<String> _imagesUrls = List<String>.empty(growable: true);
+  List<ImageUrlEntity> getImageUrls() {
+    return imageUrlsUseCase!.getImageUls();
+  }
 
   Future<StatisticEntity> getStateCountersMap() {
     return statisticUseCase!.getStateCountersMap();
@@ -32,7 +30,14 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
 
       if (rnd.nextInt(99) % 2 == 0) {
         statisticUseCase!.incrementDataStateCounter();
-        emit(DataState(_imagesUrls));
+
+        List<ImageUrlEntity> imageUrlsEntities = getImageUrls();
+        List<String> imageUrlsStrings = List.empty(growable: true);
+        for (ImageUrlEntity item in imageUrlsEntities) {
+          imageUrlsStrings.add(item.url);
+        }
+
+        emit(DataState(imageUrlsStrings));
       } else {
         statisticUseCase!.incrementErrorStateCounter();
         emit(ErrorState());

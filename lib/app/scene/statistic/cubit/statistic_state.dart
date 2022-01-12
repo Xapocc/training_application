@@ -16,7 +16,7 @@ class TimerState extends StatisticScreenState {
 }
 
 class DataState extends StatisticScreenState {
-  DataState(imagesUrls)
+  DataState(List<String> imagesUrls)
       : _imagesUrls = imagesUrls,
         super();
 

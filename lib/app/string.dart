@@ -19,4 +19,8 @@ abstract class AppStrings {
   static const String timeFieldNameStatisticScreen = "time";
   static const String dataStateFieldNameStatisticScreen = "dataStateCounter";
   static const String errorStateFieldNameStatisticScreen = "errorStateCounter";
+  static const String imagesUrlsFieldNameStatisticScreen = "imagesUrls";
+
+  // repositories
+  static const String basePathRepositories = "data";
 }

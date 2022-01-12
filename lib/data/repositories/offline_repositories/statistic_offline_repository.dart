@@ -12,9 +12,7 @@ class StatisticOfflineRepositoryImpl implements IStatisticRepository {
   Future<StatisticEntity> getStateCountersMapFromFile() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    StatisticMapper statisticMapper = StatisticMapper();
-
-    return statisticMapper.mapStatistic(StatisticModel(
+    return StatisticMapper().mapStatistic(StatisticModel(
         dataStateCounter:
             prefs.getInt(AppStrings.dataStateFieldNameStatisticScreen) ?? 0,
         errorStateCounter:

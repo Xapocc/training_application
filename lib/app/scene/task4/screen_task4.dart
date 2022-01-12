@@ -79,8 +79,7 @@ class ScreenTask4 extends StatelessWidget {
                                         .toString()
                                     : text);
                               } catch (ex) {
-                                seconds = AppSizes
-                                    .parserExReplacerTextFieldTask4Screen;
+                                seconds = 0;
                               }
                               context
                                   .read<Task4ScreenCubit>()

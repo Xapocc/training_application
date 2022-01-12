@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:training_application/app/app_root.dart';
-import 'package:training_application/data/repositories/offline_repositories/image_url_repository.dart';
-import 'package:training_application/data/repositories/offline_repositories/statistic_offline_repository.dart';
-import 'package:training_application/data/repositories/offline_repositories/task4_offline_repository.dart';
+import 'package:training_application/data/repositories/firebase_rtdb_repositories/statistic_firebase_rtdb_repository.dart';
+import 'package:training_application/data/repositories/firebase_rtdb_repositories/task4_firebase_rtdb_repository.dart';
+import 'package:training_application/data/repositories/offline_repositories/image_url_offline_repository.dart';
 import 'package:training_application/domain/use_cases/use_case_image_urls.dart';
 import 'package:training_application/domain/use_cases/use_case_statistic.dart';
 import 'package:training_application/domain/use_cases/use_case_time.dart';
@@ -21,10 +21,11 @@ FirebaseDatabase? database;
 
 void main() async {
   task4TimerUseCase =
-      Task4TimerUseCase(repository: Task4OfflineRepositoryImpl());
+      Task4TimerUseCase(repository: Task4FirebaseRepositoryImpl());
   statisticUseCase =
-      StatisticUseCase(repository: StatisticOfflineRepositoryImpl());
-  imageUrlsUseCase = ImageUrlsUseCase(repository: ImageUrlsRepositoryImpl());
+      StatisticUseCase(repository: StatisticFirebaseRepositoryImpl());
+  imageUrlsUseCase =
+      ImageUrlsUseCase(repository: ImageUrlsOfflineRepositoryImpl());
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
