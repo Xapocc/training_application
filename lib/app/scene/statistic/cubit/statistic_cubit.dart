@@ -1,14 +1,24 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/scene/statistic/cubit/statistic_state.dart';
+import 'package:training_application/app/string.dart';
 import 'package:training_application/domain/entities/image_url_entity.dart';
 import 'package:training_application/domain/entities/statistic_entity.dart';
 import 'package:training_application/domain/entities/statistic_last_date_entity.dart';
 import 'package:training_application/main.dart';
 
 class StatisticScreenCubit extends Cubit<StatisticScreenState> {
+  late StreamController _controllerCounter;
+  late StreamController _controllerLastDate;
+  StreamSubscription? _subscriptionCounter;
+  StreamSubscription? _subscriptionLastDate;
+
   StatisticScreenCubit(int seconds) : super(TimerState(seconds)) {
+    _controllerCounter = StreamController<int>();
+    _controllerLastDate = StreamController<String>();
+
     startTimer();
   }
 
@@ -18,6 +28,28 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
 
   Future<StatisticEntity> getStateCountersMap() {
     return statisticUseCase!.getStateCountersMap();
+  }
+
+  Future<void> getStateCountersMapStream(stateType) async {
+    if (stateType is DataState) {
+      _controllerCounter.add(
+          (await statisticUseCase!.getStateCountersMap()).dataStateCounter);
+    } else {
+      _controllerCounter.add(
+          (await statisticUseCase!.getStateCountersMap()).errorStateCounter);
+    }
+  }
+
+  Future<void> getStateLastDateMapStream(stateType) async {
+    if (stateType is DataState) {
+      _controllerLastDate.add(
+          (await statisticLastDateUseCase!.getStateLastDatesMap())
+              .dataStateLastDate);
+    } else {
+      _controllerLastDate.add(
+          (await statisticLastDateUseCase!.getStateLastDatesMap())
+              .errorStateLastDate);
+    }
   }
 
   Future<StatisticLastDateEntity> getStateLastDateMap() {
@@ -33,6 +65,7 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
     if ((state as TimerState).time == 0) {
       var rnd = Random();
 
+      // data state
       if (rnd.nextInt(99) % 2 == 0) {
         statisticUseCase!.incrementDataStateCounter();
 
@@ -42,12 +75,33 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
           imageUrlsStrings.add(item.url);
         }
 
+        _subscriptionCounter = _controllerCounter.stream.listen((event) {
+          emit(DataState((state as DataState).imagesUrls, event,
+              (state as DataState).lastDate));
+          _subscriptionCounter?.cancel();
+        });
+        _subscriptionLastDate = _controllerLastDate.stream.listen((event) {
+          emit(DataState((state as DataState).imagesUrls,
+              (state as DataState).counter, event));
+          _subscriptionLastDate?.cancel();
+        });
+
         statisticLastDateUseCase!.saveNewDataStateDate();
-        emit(DataState(imageUrlsStrings));
+        emit(DataState(imageUrlsStrings, 0, AppStrings.lastDateDefault));
+        // error state
       } else {
+        _subscriptionCounter = _controllerCounter.stream.listen((event) {
+          emit(ErrorState(event, (state as ErrorState).lastDate));
+          _subscriptionCounter?.cancel();
+        });
+        _subscriptionLastDate = _controllerLastDate.stream.listen((event) {
+          emit(ErrorState((state as ErrorState).counter, event));
+          _subscriptionLastDate?.cancel();
+        });
+
         statisticUseCase!.incrementErrorStateCounter();
         statisticLastDateUseCase!.saveNewErrorStateDate();
-        emit(ErrorState());
+        emit(ErrorState(0, "0"));
       }
     }
   }
