@@ -58,4 +58,5 @@ abstract class AppSizes {
 
   // repositories
   static const int millisecondsTimeoutDurationFirebaseRtdb = 300;
+  static const int lastDateDefaultMilliseconds = 0;
 }

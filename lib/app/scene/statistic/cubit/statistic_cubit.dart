@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:training_application/app/scene/statistic/cubit/statistic_state.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/domain/entities/image_url_entity.dart';
@@ -15,7 +16,7 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
 
   StatisticScreenCubit(int seconds) : super(TimerState(seconds)) {
     _controllerCounter = StreamController<int>();
-    _controllerLastDate = StreamController<String>();
+    _controllerLastDate = StreamController<int>();
 
     startTimer();
   }
@@ -72,8 +73,13 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
         _subscriptionCounter?.cancel();
       });
       _subscriptionLastDate = _controllerLastDate.stream.listen((event) {
-        emit(DataState((state as DataState).imagesUrls,
-            (state as DataState).counter, event));
+        DateTime lastDate = DateTime.fromMillisecondsSinceEpoch(event);
+
+        emit(DataState(
+          (state as DataState).imagesUrls,
+          (state as DataState).counter,
+          DateFormat('dd MMM yyyy').format(lastDate),
+        ));
         _subscriptionLastDate?.cancel();
       });
 
@@ -86,7 +92,12 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
         _subscriptionCounter?.cancel();
       });
       _subscriptionLastDate = _controllerLastDate.stream.listen((event) {
-        emit(ErrorState((state as ErrorState).counter, event));
+        DateTime lastDate = DateTime.fromMillisecondsSinceEpoch(event);
+
+        emit(ErrorState(
+          (state as ErrorState).counter,
+          DateFormat('dd MMM yyyy').format(lastDate),
+        ));
         _subscriptionLastDate?.cancel();
       });
 

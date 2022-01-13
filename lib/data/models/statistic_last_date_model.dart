@@ -2,6 +2,6 @@ class StatisticLastDateModel {
   StatisticLastDateModel(
       {required this.dataStateLastDate, required this.errorStateLastDate});
 
-  final String dataStateLastDate;
-  final String errorStateLastDate;
+  final int dataStateLastDate;
+  final int errorStateLastDate;
 }

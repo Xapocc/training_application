@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:training_application/app/scene/task4/cubit/task4_state.dart';
 import 'package:training_application/app/size.dart';
+import 'package:training_application/app/string.dart';
 import 'package:training_application/domain/entities/statistic_entity.dart';
 import 'package:training_application/domain/entities/statistic_last_date_entity.dart';
 import 'package:training_application/domain/entities/task4_entity.dart';
@@ -39,10 +41,22 @@ class Task4ScreenCubit extends Cubit<Task4ScreenState> {
     });
 
     _subscriptionLastDate = _controllerLastDate.stream.listen((event) {
-      emit(Task4ScreenState.fromState(state,
-          dataStateLastDate:
-              (event as StatisticLastDateEntity).dataStateLastDate,
-          errorStateLastDate: event.errorStateLastDate));
+      DateTime lastDataDate = DateTime.fromMillisecondsSinceEpoch(
+          (event as StatisticLastDateEntity).dataStateLastDate);
+      DateTime lastErrorDate =
+          DateTime.fromMillisecondsSinceEpoch(event.errorStateLastDate);
+
+      emit(Task4ScreenState.fromState(
+        state,
+        dataStateLastDate:
+            event.dataStateLastDate != AppSizes.lastDateDefaultMilliseconds
+                ? DateFormat(AppStrings.formatLastDate).format(lastDataDate)
+                : AppStrings.lastDateDefault,
+        errorStateLastDate:
+            event.errorStateLastDate != AppSizes.lastDateDefaultMilliseconds
+                ? DateFormat(AppStrings.formatLastDate).format(lastErrorDate)
+                : AppStrings.lastDateDefault,
+      ));
 
       _subscriptionLastDate?.cancel();
     });

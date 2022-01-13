@@ -44,14 +44,14 @@ class StatisticLastDateFirebaseRepositoryImpl
     }
 
     return StatisticLastDateMapper().mapStatistic(StatisticLastDateModel(
-      dataStateLastDate: (dataStateLastDateSnapshot.exists
+      dataStateLastDate: int.parse((dataStateLastDateSnapshot.exists
               ? dataStateLastDateSnapshot.value
               : AppStrings.lastDateDefault)
-          .toString(),
-      errorStateLastDate: (errorStateLastDateSnapshot.exists
+          .toString()),
+      errorStateLastDate: int.parse((errorStateLastDateSnapshot.exists
               ? errorStateLastDateSnapshot.value
               : AppStrings.lastDateDefault)
-          .toString(),
+          .toString()),
     ));
   }
 
@@ -63,8 +63,10 @@ class StatisticLastDateFirebaseRepositoryImpl
       (isDataState
               ? AppStrings.dataStateLastDateFieldNameStatisticScreen
               : AppStrings.errorStateLastDateFieldNameStatisticScreen):
-          "${now.day}.${now.month}.${now.year}",
+          now.millisecondsSinceEpoch,
     });
+
+    print("${now.millisecondsSinceEpoch}");
   }
 
   @override
@@ -82,7 +84,7 @@ class StatisticLastDateFirebaseRepositoryImpl
 
     await ref.update({
       AppStrings.dataStateLastDateFieldNameStatisticScreen:
-          AppStrings.lastDateDefault,
+          AppSizes.lastDateDefaultMilliseconds,
     });
   }
 
@@ -91,7 +93,7 @@ class StatisticLastDateFirebaseRepositoryImpl
 
     await ref.update({
       AppStrings.errorStateLastDateFieldNameStatisticScreen:
-          AppStrings.lastDateDefault,
+          AppSizes.lastDateDefaultMilliseconds,
     });
   }
 }
