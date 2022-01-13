@@ -36,6 +36,8 @@ class ImageUrlsFirebaseRepositoryImpl implements IImageUrlRepository {
     return imagesUrls;
   }
 
+  //set
+
   Future<void> setDefaultImageUrls() async {
     DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
 

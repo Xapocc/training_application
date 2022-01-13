@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/scene/statistic/cubit/statistic_state.dart';
+import 'package:training_application/app/size.dart';
 import 'package:training_application/domain/entities/image_url_entity.dart';
 import 'package:training_application/main.dart';
 
@@ -46,52 +47,52 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
   }
 
   void startTimer() async {
+    // rotation of CircularProgressIndicator
     while ((state as TimerState).time > 0) {
       await Future.delayed(const Duration(seconds: 1));
       emit(TimerState((state as TimerState).time - 1));
     }
 
-    if ((state as TimerState).time == 0) {
-      var rnd = Random();
+    var rnd = Random();
 
-      // data state
-      if (rnd.nextInt(99) % 2 == 0) {
-        statisticUseCase!.incrementDataStateCounter();
+    // data state
+    if (rnd.nextInt(AppSizes.randomMaxValue) % AppSizes.randomDivider ==
+        AppSizes.randomDataStateDivRem) {
+      statisticUseCase!.incrementDataStateCounter();
 
-        List<ImageUrlEntity> imageUrlsEntities = await getImageUrls();
-        List<String> imageUrlsStrings = List.empty(growable: true);
-        for (ImageUrlEntity item in imageUrlsEntities) {
-          imageUrlsStrings.add(item.url);
-        }
-
-        _subscriptionCounter = _controllerCounter.stream.listen((event) {
-          emit(DataState((state as DataState).imagesUrls, event,
-              (state as DataState).lastDate));
-          _subscriptionCounter?.cancel();
-        });
-        _subscriptionLastDate = _controllerLastDate.stream.listen((event) {
-          emit(DataState((state as DataState).imagesUrls,
-              (state as DataState).counter, event));
-          _subscriptionLastDate?.cancel();
-        });
-
-        statisticLastDateUseCase!.saveNewDataStateDate();
-        emit(DataState(imageUrlsStrings));
-        // error state
-      } else {
-        _subscriptionCounter = _controllerCounter.stream.listen((event) {
-          emit(ErrorState(event, (state as ErrorState).lastDate));
-          _subscriptionCounter?.cancel();
-        });
-        _subscriptionLastDate = _controllerLastDate.stream.listen((event) {
-          emit(ErrorState((state as ErrorState).counter, event));
-          _subscriptionLastDate?.cancel();
-        });
-
-        statisticUseCase!.incrementErrorStateCounter();
-        statisticLastDateUseCase!.saveNewErrorStateDate();
-        emit(ErrorState());
+      List<ImageUrlEntity> imageUrlsEntities = await getImageUrls();
+      List<String> imageUrlsStrings = List.empty(growable: true);
+      for (ImageUrlEntity item in imageUrlsEntities) {
+        imageUrlsStrings.add(item.url);
       }
+
+      _subscriptionCounter = _controllerCounter.stream.listen((event) {
+        emit(DataState((state as DataState).imagesUrls, event,
+            (state as DataState).lastDate));
+        _subscriptionCounter?.cancel();
+      });
+      _subscriptionLastDate = _controllerLastDate.stream.listen((event) {
+        emit(DataState((state as DataState).imagesUrls,
+            (state as DataState).counter, event));
+        _subscriptionLastDate?.cancel();
+      });
+
+      statisticLastDateUseCase!.saveNewDataStateDate();
+      emit(DataState(imageUrlsStrings));
+    } else {
+      // error state
+      _subscriptionCounter = _controllerCounter.stream.listen((event) {
+        emit(ErrorState(event, (state as ErrorState).lastDate));
+        _subscriptionCounter?.cancel();
+      });
+      _subscriptionLastDate = _controllerLastDate.stream.listen((event) {
+        emit(ErrorState((state as ErrorState).counter, event));
+        _subscriptionLastDate?.cancel();
+      });
+
+      statisticUseCase!.incrementErrorStateCounter();
+      statisticLastDateUseCase!.saveNewErrorStateDate();
+      emit(ErrorState());
     }
   }
 }

@@ -55,33 +55,34 @@ class StatisticLastDateFirebaseRepositoryImpl
     ));
   }
 
-  @override
-  Future<void> saveNewDataStateLastDate() async {
+  Future<void> saveNewStateLastDate(bool isDataState) async {
     DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
     DateTime now = DateTime.now();
 
     await ref.update({
-      AppStrings.dataStateLastDateFieldNameStatisticScreen:
+      (isDataState
+              ? AppStrings.dataStateLastDateFieldNameStatisticScreen
+              : AppStrings.errorStateLastDateFieldNameStatisticScreen):
           "${now.day}.${now.month}.${now.year}",
     });
   }
 
   @override
-  Future<void> saveNewErrorStateLastDate() async {
-    DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
-    DateTime now = DateTime.now();
+  Future<void> saveNewDataStateLastDate() async {
+    saveNewStateLastDate(true);
+  }
 
-    await ref.update({
-      AppStrings.errorStateLastDateFieldNameStatisticScreen:
-          "${now.day}.${now.month}.${now.year}",
-    });
+  @override
+  Future<void> saveNewErrorStateLastDate() async {
+    saveNewStateLastDate(false);
   }
 
   Future<void> setDefaultDataStateLastDate() async {
     DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
 
     await ref.update({
-      AppStrings.dataStateLastDateFieldNameStatisticScreen: "never",
+      AppStrings.dataStateLastDateFieldNameStatisticScreen:
+          AppStrings.lastDateDefault,
     });
   }
 
@@ -89,7 +90,8 @@ class StatisticLastDateFirebaseRepositoryImpl
     DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
 
     await ref.update({
-      AppStrings.errorStateLastDateFieldNameStatisticScreen: "never",
+      AppStrings.errorStateLastDateFieldNameStatisticScreen:
+          AppStrings.lastDateDefault,
     });
   }
 }

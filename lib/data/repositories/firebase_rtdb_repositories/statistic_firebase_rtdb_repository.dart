@@ -43,11 +43,14 @@ class StatisticFirebaseRepositoryImpl implements IStatisticRepository {
     }
 
     return StatisticMapper().mapStatistic(StatisticModel(
-      dataStateCounter: int.parse(
-          (dataStateSnapshot.exists ? dataStateSnapshot.value : 0).toString()),
-      errorStateCounter: int.parse(
-          (errorStateSnapshot.exists ? errorStateSnapshot.value : 0)
-              .toString()),
+      dataStateCounter: int.parse((dataStateSnapshot.exists
+              ? dataStateSnapshot.value
+              : AppSizes.defaultCounterValueStatisticScreen)
+          .toString()),
+      errorStateCounter: int.parse((errorStateSnapshot.exists
+              ? errorStateSnapshot.value
+              : AppSizes.defaultCounterValueStatisticScreen)
+          .toString()),
     ));
   }
 
@@ -75,7 +78,8 @@ class StatisticFirebaseRepositoryImpl implements IStatisticRepository {
     DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
 
     await ref.update({
-      AppStrings.dataStateFieldNameStatisticScreen: 0,
+      AppStrings.dataStateFieldNameStatisticScreen:
+          AppSizes.defaultCounterValueStatisticScreen,
     });
   }
 
@@ -83,7 +87,8 @@ class StatisticFirebaseRepositoryImpl implements IStatisticRepository {
     DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
 
     await ref.update({
-      AppStrings.errorStateFieldNameStatisticScreen: 0,
+      AppStrings.errorStateFieldNameStatisticScreen:
+          AppSizes.defaultCounterValueStatisticScreen,
     });
   }
 }

@@ -5,6 +5,7 @@ abstract class AppSizes {
   // task 3 screen
   static const double widthBorderTask3Screen = 5.0;
   static const double radiusBorderTask3Screen = 45.0;
+  static const int secondsLoadingTimeTask3Screen = 2;
 
   // error screen
   static const double widthBorderErrorCircle = 5.0;
@@ -34,6 +35,13 @@ abstract class AppSizes {
   static const double paddingContainerStatisticsTask4Screen = 8.0;
   static const double paddingDataStateCounterTask4Screen = 16.0;
   static const double fontSizeTextStateCounterTask4Screen = 16.0;
+  static const int secondsMinAllowedTask4Screen = 1;
+  static const int secondsMaxAllowedTask4Screen = 10;
+
+  // randomizer
+  static const int randomMaxValue = 100;
+  static const int randomDivider = 2;
+  static const int randomDataStateDivRem = 0;
 
   // statistic screen
   static const double widthStrokeProgressIndicatorStatisticScreen = 16.0;
@@ -46,6 +54,7 @@ abstract class AppSizes {
   static const double scaleImageStatisticScreen = 0.2;
   static const int numberOfImagesInRowStatisticScreen = 2;
   static const bool showUncompletedRowStatisticScreen = true;
+  static const int defaultCounterValueStatisticScreen = 0;
 
   // repositories
   static const int millisecondsTimeoutDurationFirebaseRtdb = 300;

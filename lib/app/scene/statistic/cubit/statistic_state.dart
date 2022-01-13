@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:training_application/app/size.dart';
 import 'package:training_application/app/string.dart';
 
 abstract class StatisticScreenState extends Equatable {}
@@ -35,7 +36,8 @@ class PostTimerState extends StatisticScreenState {
 
 class DataState extends PostTimerState {
   DataState(List<String> imagesUrls,
-      [int counter = 0, String lastDate = AppStrings.lastDateDefault])
+      [int counter = AppSizes.defaultCounterValueStatisticScreen,
+      String lastDate = AppStrings.lastDateDefault])
       : _imagesUrls = imagesUrls,
         super(counter, lastDate);
 
@@ -48,7 +50,9 @@ class DataState extends PostTimerState {
 }
 
 class ErrorState extends PostTimerState {
-  ErrorState([int counter = 0, String lastDate = AppStrings.lastDateDefault])
+  ErrorState(
+      [int counter = AppSizes.defaultCounterValueStatisticScreen,
+      String lastDate = AppStrings.lastDateDefault])
       : super(counter, lastDate);
 
   @override
