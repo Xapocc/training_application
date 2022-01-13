@@ -1,4 +1,7 @@
 abstract class AppSizes {
+  // splash screen
+  static const int delayStart = 3;
+
   // task 3 screen
   static const double widthBorderTask3Screen = 5.0;
   static const double radiusBorderTask3Screen = 45.0;

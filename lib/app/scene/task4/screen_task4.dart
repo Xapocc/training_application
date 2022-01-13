@@ -6,23 +6,14 @@ import 'package:training_application/app/scene/task4/cubit/task4_cubit.dart';
 import 'package:training_application/app/scene/task4/cubit/task4_state.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/app/string.dart';
-import 'package:training_application/domain/entities/statistic_entity.dart';
-import 'package:training_application/domain/entities/statistic_last_date_entity.dart';
-import 'package:training_application/domain/entities/task4_entity.dart';
 
 class ScreenTask4 extends StatelessWidget {
-  const ScreenTask4(
-    int seconds, {
+  const ScreenTask4({
     Key? key,
-  })  : _seconds = seconds,
-        super(key: key);
-
-  final int _seconds;
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    int seconds = _seconds;
-
     return BlocProvider(
       create: (context) => Task4ScreenCubit(),
       child: BlocBuilder<Task4ScreenCubit, Task4ScreenState>(
@@ -30,151 +21,110 @@ class ScreenTask4 extends StatelessWidget {
           return Container(
             color: AppColors.colorBgTask4Screen,
             child: Center(
-              child: FutureBuilder(
-                future: BlocProvider.of<Task4ScreenCubit>(context).getTime(),
-                builder: (context, snapshot) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: AppSizes.fontSizeTextFieldTask4Screen *
-                            AppSizes.coefficientWidthTextFieldTask4Screen,
-                        child: Material(
-                          color: AppColors.colorBgTextFieldTask4Screen,
-                          child: TextField(
-                            enableSuggestions: false,
-                            cursorColor: AppColors.colorFgTextFieldTask4Screen,
-                            maxLength: AppSizes.maxLengthTextFieldTask4Screen,
-                            decoration: InputDecoration(
-                              hintText: snapshot.hasData
-                                  ? (snapshot.data as Task4Entity)
-                                      .time
-                                      .toString()
-                                  : AppStrings.textHintDefaultTask4Screen,
-                              hintStyle: const TextStyle(
-                                  color: AppColors
-                                      .colorFgHintTextFieldTask4Screen),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color:
-                                        AppColors.colorFgTextFieldTask4Screen),
-                              ),
-                              enabledBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: AppColors
-                                        .colorFgHintTextFieldTask4Screen),
-                              ),
-                            ),
-                            style: const TextStyle(
-                              fontSize: AppSizes.fontSizeTextFieldTask4Screen,
-                              color: AppColors.colorFgTextFieldTask4Screen,
-                              backgroundColor:
-                                  AppColors.colorBgTextFieldTask4Screen,
-                            ),
-                            textAlign: TextAlign.center,
-                            onChanged: (text) {
-                              try {
-                                seconds = int.parse(text.isEmpty
-                                    ? (snapshot.data as Task4Entity)
-                                        .time
-                                        .toString()
-                                    : text);
-                              } catch (ex) {
-                                seconds = 0;
-                              }
-                              context
-                                  .read<Task4ScreenCubit>()
-                                  .checkIfSecondsInRange(seconds);
-                            },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: AppSizes.fontSizeTextFieldTask4Screen *
+                        AppSizes.coefficientWidthTextFieldTask4Screen,
+                    child: Material(
+                      color: AppColors.colorBgTextFieldTask4Screen,
+                      child: TextField(
+                        enableSuggestions: false,
+                        cursorColor: AppColors.colorFgTextFieldTask4Screen,
+                        maxLength: AppSizes.maxLengthTextFieldTask4Screen,
+                        decoration: InputDecoration(
+                          hintText: state.secondsStart.toString(),
+                          hintStyle: const TextStyle(
+                              color: AppColors.colorFgHintTextFieldTask4Screen),
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: AppColors.colorFgTextFieldTask4Screen),
+                          ),
+                          enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color:
+                                    AppColors.colorFgHintTextFieldTask4Screen),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: AppSizes.paddingButtonStartTask4Screen),
-                        child: _startButton(context, state, seconds),
-                      ),
-                      FutureBuilder(
-                        future: Future.wait([
-                          BlocProvider.of<Task4ScreenCubit>(context)
-                              .getStateCountersMap(),
-                          BlocProvider.of<Task4ScreenCubit>(context)
-                              .getStateLastDateMap(),
-                        ]),
-                        builder:
-                            (context, AsyncSnapshot<List<dynamic>> snapshot) {
-                          if (snapshot.hasData) {
-                            return FittedBox(
-                              child: Container(
-                                padding: const EdgeInsets.all(AppSizes
-                                    .paddingContainerStatisticsTask4Screen),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: AppColors
-                                          .colorBgTextStateCounterTaskScreen),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: AppSizes
-                                              .paddingContainerStatisticsTask4Screen),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: AppSizes
-                                                    .paddingDataStateCounterTask4Screen),
-                                            child: _stateCounterText(
-                                                (snapshot.data![0]
-                                                        as StatisticEntity)
-                                                    .dataStateCounter,
-                                                true),
-                                          ),
-                                          _stateCounterText(
-                                              (snapshot.data![0]
-                                                      as StatisticEntity)
-                                                  .errorStateCounter,
-                                              false),
-                                        ],
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: AppSizes
-                                                  .paddingDataStateCounterTask4Screen),
-                                          child: _stateLastDateText(
-                                              (snapshot.data![1]
-                                                      as StatisticLastDateEntity)
-                                                  .dataStateLastDate,
-                                              true),
-                                        ),
-                                        _stateLastDateText(
-                                            (snapshot.data![1]
-                                                    as StatisticLastDateEntity)
-                                                .errorStateLastDate,
-                                            false),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          } else {
-                            return Container();
+                        style: const TextStyle(
+                          fontSize: AppSizes.fontSizeTextFieldTask4Screen,
+                          color: AppColors.colorFgTextFieldTask4Screen,
+                          backgroundColor:
+                              AppColors.colorBgTextFieldTask4Screen,
+                        ),
+                        textAlign: TextAlign.center,
+                        onChanged: (text) {
+                          int seconds;
+
+                          try {
+                            seconds = int.parse(text.isEmpty
+                                ? state.secondsStart.toString()
+                                : text);
+                          } catch (ex) {
+                            seconds = 0;
                           }
+                          context
+                              .read<Task4ScreenCubit>()
+                              .checkIfSecondsInRange(seconds);
                         },
-                      )
-                    ],
-                  );
-                },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: AppSizes.paddingButtonStartTask4Screen),
+                    child: _startButton(context, state),
+                  ),
+                  FittedBox(
+                    child: Container(
+                      padding: const EdgeInsets.all(
+                          AppSizes.paddingContainerStatisticsTask4Screen),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: AppColors.colorBgTextStateCounterTaskScreen),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                bottom: AppSizes
+                                    .paddingContainerStatisticsTask4Screen),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: AppSizes
+                                          .paddingDataStateCounterTask4Screen),
+                                  child: _stateCounterText(
+                                      state.dataStateCounter, true),
+                                ),
+                                _stateCounterText(
+                                    state.errorStateCounter, false),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    right: AppSizes
+                                        .paddingDataStateCounterTask4Screen),
+                                child: _stateLastDateText(
+                                    state.dataStateLastDate, true),
+                              ),
+                              _stateLastDateText(
+                                  state.errorStateLastDate, false),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           );
@@ -205,8 +155,8 @@ class ScreenTask4 extends StatelessWidget {
     );
   }
 
-  Widget _startButton(context, Task4ScreenState state, int seconds) {
-    if (state is EnabledButtonState) {
+  Widget _startButton(context, Task4ScreenState state) {
+    if (state.isButtonEnabled) {
       return ElevatedButton(
         style: ButtonStyle(
           foregroundColor: MaterialStateColor.resolveWith(
@@ -218,8 +168,9 @@ class ScreenTask4 extends StatelessWidget {
         ),
         child: const Text(AppStrings.textButtonStartTimerTask4Screen),
         onPressed: () {
-          BlocProvider.of<Task4ScreenCubit>(context).saveTime(seconds);
-          BlocProvider.of<RouterCubit>(context).goToScreenStatistics(seconds);
+          BlocProvider.of<Task4ScreenCubit>(context).saveTime(state.seconds);
+          BlocProvider.of<RouterCubit>(context)
+              .goToScreenStatistics(state.seconds);
         },
       );
     } else {
