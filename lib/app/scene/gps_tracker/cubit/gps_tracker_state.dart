@@ -1,14 +1,20 @@
 import 'package:equatable/equatable.dart';
+import 'package:location/location.dart';
 
-abstract class GpsTrackerScreenState extends Equatable {
-  const GpsTrackerScreenState();
+class GpsTrackerScreenState extends Equatable {
+  GpsTrackerScreenState();
+
+  final List<LocationData> _locationPoints =
+      List<LocationData>.empty(growable: true);
+
+  List<LocationData> get locationPoints => _locationPoints;
 
   @override
   List<Object?> get props => [];
 }
 
 class TrackingState extends GpsTrackerScreenState {
-  const TrackingState([bool isTracking = false])
+  TrackingState([bool isTracking = false])
       : _isTracking = isTracking,
         super();
 
@@ -21,7 +27,9 @@ class TrackingState extends GpsTrackerScreenState {
 }
 
 class PauseState extends GpsTrackerScreenState {
-  const PauseState() : super();
+  PauseState(GpsTrackerScreenState state) : super() {
+    locationPoints.addAll(state.locationPoints);
+  }
 
   @override
   List<Object?> get props => [];

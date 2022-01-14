@@ -45,7 +45,7 @@ class ScreenGpsTracker extends StatelessWidget {
             Flexible(
                 child: Padding(
               padding: EdgeInsets.all(mediaQueryData.size.width * 0.03),
-              child: StartStopButton(context),
+              child: _startStopButton(context, state),
             )),
             (state as TrackingState).isTracking
                 ? _trackingIndicator(context, state)
@@ -68,21 +68,21 @@ class ScreenGpsTracker extends StatelessWidget {
       children: [
         Flexible(
           child: _pauseScreenButton(context, state, "Show Path", () {
-            BlocProvider.of<RouterCubit>(context).goToScreenGpsPathMap();
+            BlocProvider.of<RouterCubit>(context).goToScreenGpsPathMap((state as PauseState).locationPoints);
           }),
         ),
         const Padding(padding: EdgeInsets.only(bottom: 8.0)),
         Flexible(
           child: _pauseScreenButton(context, state, "Start Again", () {
             BlocProvider.of<GpsTrackerScreenCubit>(context).goToTrackingState();
-          }),
+          }, true),
         ),
       ],
     ));
   }
 
-  Widget _pauseScreenButton(
-      context, state, String text, VoidCallback callback) {
+  Widget _pauseScreenButton(context, state, String text, VoidCallback callback,
+      [bool isSecondary = false]) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
 
     return FractionallySizedBox(
@@ -90,8 +90,8 @@ class ScreenGpsTracker extends StatelessWidget {
       widthFactor: 0.7,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor:
-              MaterialStateColor.resolveWith((states) => Colors.blue),
+          backgroundColor: MaterialStateColor.resolveWith(
+              (states) => !isSecondary ? Colors.blue : Colors.blueGrey),
         ),
         onPressed: callback,
         child: AutoSizeText(
@@ -134,27 +134,8 @@ class ScreenGpsTracker extends StatelessWidget {
       ),
     );
   }
-}
 
-class StartStopButton extends StatefulWidget {
-  const StartStopButton(BuildContext context, {Key? key})
-      : _context = context,
-        super(key: key);
-  final BuildContext _context;
-
-  BuildContext get context => _context;
-
-  @override
-  State<StatefulWidget> createState() => StateStartStopButton();
-}
-
-class StateStartStopButton extends State<StartStopButton> {
-  @override
-  BuildContext get context => super.widget.context;
-  bool isStarted = false;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _startStopButton(BuildContext context, TrackingState state) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
 
     return AspectRatio(
@@ -163,20 +144,13 @@ class StateStartStopButton extends State<StartStopButton> {
         clipBehavior: Clip.antiAlias,
         style: ButtonStyle(
             backgroundColor: MaterialStateColor.resolveWith(
-                (states) => !isStarted ? Colors.blue : Colors.white),
+                    (states) => !state.isTracking ? Colors.blue : Colors.white),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(mediaQueryData.size.width),
-            ))),
+                  borderRadius: BorderRadius.circular(mediaQueryData.size.width),
+                ))),
         onPressed: () {
-          if (isStarted) {
-            BlocProvider.of<GpsTrackerScreenCubit>(context).goToPauseState();
-            return;
-          }
-          setState(() {
-            isStarted = !isStarted;
-            BlocProvider.of<GpsTrackerScreenCubit>(context).startTracking();
-          });
+          BlocProvider.of<GpsTrackerScreenCubit>(context).onPressStartStopButton();
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -188,10 +162,10 @@ class StateStartStopButton extends State<StartStopButton> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      !isStarted ? "START\nTRACKING" : "STOP\nTRACKING",
+                      !state.isTracking ? "START\nTRACKING" : "STOP\nTRACKING",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: isStarted ? Colors.blue : Colors.white),
+                          color: state.isTracking ? Colors.blue : Colors.white),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -202,5 +176,5 @@ class StateStartStopButton extends State<StartStopButton> {
         ),
       ),
     );
-  }
+}
 }

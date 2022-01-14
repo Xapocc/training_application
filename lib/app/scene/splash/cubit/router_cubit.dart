@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:location/location.dart';
 import 'package:training_application/app/scene/splash/cubit/router_state.dart';
 import 'package:training_application/app/size.dart';
 
@@ -16,7 +17,7 @@ class RouterCubit extends Cubit<RouterState> {
 
   void goToScreenGpsTracker() => emit(const RouterStateGpsTracker());
 
-  void goToScreenGpsPathMap() => emit(const RouterStateGpsPathMap());
+  void goToScreenGpsPathMap(List<LocationData> locationPoints) => emit(RouterStateGpsPathMap(locationPoints));
 
   void goToScreenStatistics(int seconds) =>
       emit(RouterStateStatisticScreen(seconds));
