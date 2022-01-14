@@ -31,8 +31,34 @@ class ScreenGpsPathMap extends StatelessWidget {
         body: TabBarView(children: [
           const MapSample(),
           Container(
-            color: Colors.green,
-            child: Text("${_locationPoints.length}"),
+            color: Colors.white,
+            child: ListView.builder(
+                itemCount: _locationPoints.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    color: (index % 2 == 0) ? Colors.white : Colors.black12,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                              flex: 1,
+                              child: Center(child: Text("${index + 1}. "))),
+                          Expanded(
+                            flex: 4,
+                            child:
+                                Text("Lat. ${_locationPoints[index].latitude}"),
+                          ),
+                          Expanded(
+                            flex: 4,
+                            child: Text(
+                                "Long. ${_locationPoints[index].longitude}"),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
           )
         ]),
       ),
