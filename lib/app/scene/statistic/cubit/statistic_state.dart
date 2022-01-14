@@ -16,8 +16,16 @@ class TimerState extends StatisticScreenState {
 }
 
 class DataState extends StatisticScreenState {
+  DataState(imagesUrls)
+      : _imagesUrls = imagesUrls,
+        super();
+
+  final List<String> _imagesUrls;
+
+  List<String> get imagesUrls => _imagesUrls;
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [_imagesUrls];
 }
 
 class ErrorState extends StatisticScreenState {
