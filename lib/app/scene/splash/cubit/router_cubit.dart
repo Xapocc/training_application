@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/scene/splash/cubit/router_state.dart';
-import 'package:training_application/app/scene/task4/screen_task4.dart';
 import 'package:training_application/app/size.dart';
-import 'package:training_application/domain/entities/task4_entity.dart';
-import 'package:training_application/main.dart';
+
 
 class RouterCubit extends Cubit<RouterState> {
   RouterCubit() : super(const RouterStateSplashScreen()) {
@@ -21,28 +18,8 @@ class RouterCubit extends Cubit<RouterState> {
       emit(RouterStateStatisticScreen(seconds));
 
   void startApp() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: AppSizes.delayStart));
 
     emit(const RouterStateChooseScreen());
-  }
-
-  getTask4Screen() {
-    return FutureBuilder(
-        future: _getTime(),
-        builder: (context, snapshot) {
-          return ScreenTask4(_getTimeFromFile(snapshot));
-        });
-  }
-
-  int _getTimeFromFile(snapshot) {
-    return snapshot.hasData
-        ? snapshot.hasError
-            ? AppSizes.parserExReplacerTextFieldTask4Screen
-            : (snapshot.data as Task4Entity).time
-        : AppSizes.parserExReplacerTextFieldTask4Screen;
-  }
-
-  _getTime() {
-    return task4TimerUseCase!.getTime();
   }
 }

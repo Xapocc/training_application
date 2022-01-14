@@ -5,7 +5,6 @@ import 'package:training_application/app/scene/statistic/cubit/statistic_cubit.d
 import 'package:training_application/app/scene/statistic/cubit/statistic_state.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/app/string.dart';
-import 'package:training_application/domain/entities/statistic_entity.dart';
 
 class ScreenStatistics extends StatelessWidget {
   const ScreenStatistics({
@@ -36,41 +35,38 @@ class ScreenStatistics extends StatelessWidget {
   }
 
   Widget _dataOrErrorState(state, context) {
-    return FutureBuilder(
-      future:
-          BlocProvider.of<StatisticScreenCubit>(context).getStateCountersMap(),
-      builder: (context, snapshot) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            if (snapshot.hasData)
-              Padding(
-                padding: const EdgeInsets.all(
-                    AppSizes.paddingTextStateCounterStatisticScreen),
-                child: Text(
-                  AppStrings.stateCountersTextStatisticScreen(
-                      state is DataState
-                          ? (snapshot.data as StatisticEntity).dataStateCounter
-                          : (snapshot.data as StatisticEntity)
-                              .errorStateCounter,
-                      state is DataState),
-                  style: TextStyle(
-                    inherit: false,
-                    color: (state is ErrorState)
-                        ? AppColors.colorTextErrorStateStatisticScreen
-                        : AppColors.colorTextDataStateStatisticScreen,
-                  ),
+    BlocProvider.of<StatisticScreenCubit>(context)
+        .getStateCountersMapStream(state);
+    BlocProvider.of<StatisticScreenCubit>(context)
+        .getStateLastDateMapStream(state);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(
+              AppSizes.paddingTextStateCounterStatisticScreen),
+          child: Text(
+            AppStrings.stateCountersTextStatisticScreen(
+                    (state as PostTimerState).counter, state is DataState) +
+                AppStrings.stateLastDateTextStatisticScreen(
+                  state.lastDate,
                 ),
-              ),
-            if (state is DataState)
-              _dataListView(
-                  context,
-                  state,
-                  AppSizes.numberOfImagesInRowStatisticScreen,
-                  AppSizes.showUncompletedRowStatisticScreen),
-          ],
-        );
-      },
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              inherit: false,
+              color: (state is ErrorState)
+                  ? AppColors.colorTextErrorStateStatisticScreen
+                  : AppColors.colorTextDataStateStatisticScreen,
+            ),
+          ),
+        ),
+        if (state is DataState)
+          _dataListView(
+              context,
+              state,
+              AppSizes.numberOfImagesInRowStatisticScreen,
+              AppSizes.showUncompletedRowStatisticScreen),
+      ],
     );
   }
 

@@ -1,24 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:training_application/app/app_root.dart';
-import 'package:training_application/data/repositories/image_url_repository.dart';
-import 'package:training_application/data/repositories/statistic_offline_repository.dart';
-import 'package:training_application/data/repositories/task4_offline_repository.dart';
+import 'package:training_application/data/repositories/firebase_rtdb_repositories/image_url_firebase_rtdb_repository.dart';
+import 'package:training_application/data/repositories/firebase_rtdb_repositories/statistic_firebase_rtdb_repository.dart';
+import 'package:training_application/data/repositories/firebase_rtdb_repositories/statistic_last_date_firebase_rtdb_repository.dart';
+import 'package:training_application/data/repositories/firebase_rtdb_repositories/task4_firebase_rtdb_repository.dart';
 import 'package:training_application/domain/use_cases/use_case_image_urls.dart';
 import 'package:training_application/domain/use_cases/use_case_statistic.dart';
+import 'package:training_application/domain/use_cases/use_case_statistic_last_date.dart';
 import 'package:training_application/domain/use_cases/use_case_time.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+import 'firebase_options.dart';
 
 Task4TimerUseCase? task4TimerUseCase;
 
 StatisticUseCase? statisticUseCase;
+StatisticLastDateUseCase? statisticLastDateUseCase;
 
 ImageUrlsUseCase? imageUrlsUseCase;
 
-void main() {
+FirebaseDatabase? database;
+
+void main() async {
   task4TimerUseCase =
-      Task4TimerUseCase(repository: Task4OfflineRepositoryImpl());
+      Task4TimerUseCase(repository: Task4FirebaseRepositoryImpl());
   statisticUseCase =
-      StatisticUseCase(repository: StatisticOfflineRepositoryImpl());
-  imageUrlsUseCase = ImageUrlsUseCase(repository: ImageUrlsRepositoryImpl());
+      StatisticUseCase(repository: StatisticFirebaseRepositoryImpl());
+
+  statisticLastDateUseCase = StatisticLastDateUseCase(
+      repository: StatisticLastDateFirebaseRepositoryImpl());
+
+  imageUrlsUseCase =
+      ImageUrlsUseCase(repository: ImageUrlsFirebaseRepositoryImpl());
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  database = FirebaseDatabase.instance;
+  database!.setPersistenceEnabled(true);
 
   runApp(AppRoot());
 }

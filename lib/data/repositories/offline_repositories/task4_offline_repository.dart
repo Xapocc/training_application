@@ -12,9 +12,8 @@ class Task4OfflineRepositoryImpl implements ITask4Repository {
   @override
   Future<Task4Entity> getTimeFromFile() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    Task4Mapper task4mapper = Task4Mapper();
 
-    return task4mapper.mapTask4(Task4Model(
+    return Task4Mapper().mapTask4(Task4Model(
         time: prefs.getInt(AppStrings.timeFieldNameStatisticScreen) ??
             AppSizes.parserExReplacerTextFieldTask4Screen));
   }
