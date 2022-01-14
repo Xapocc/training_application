@@ -39,6 +39,7 @@ class RouterStateStatisticScreen extends RouterState {
   const RouterStateStatisticScreen(int sec) : _seconds = sec;
 
   final int _seconds;
+
   int get seconds => _seconds;
 
   @override
@@ -47,6 +48,13 @@ class RouterStateStatisticScreen extends RouterState {
 
 class RouterStateGpsTracker extends RouterState {
   const RouterStateGpsTracker();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class RouterStateGpsPathMap extends RouterState {
+  const RouterStateGpsPathMap();
 
   @override
   List<Object?> get props => [];

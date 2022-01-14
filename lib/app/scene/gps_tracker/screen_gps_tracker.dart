@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/scene/gps_tracker/cubit/gps_tracker_cubit.dart';
 import 'package:training_application/app/scene/gps_tracker/cubit/gps_tracker_state.dart';
+import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
 
 class ScreenGpsTracker extends StatelessWidget {
   const ScreenGpsTracker({
@@ -67,7 +68,7 @@ class ScreenGpsTracker extends StatelessWidget {
       children: [
         Flexible(
           child: _pauseScreenButton(context, state, "Show Path", () {
-            print("showing path...");
+            BlocProvider.of<RouterCubit>(context).goToScreenGpsPathMap();
           }),
         ),
         const Padding(padding: EdgeInsets.only(bottom: 8.0)),
@@ -90,7 +91,7 @@ class ScreenGpsTracker extends StatelessWidget {
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor:
-              MaterialStateColor.resolveWith((states) => Colors.cyan),
+              MaterialStateColor.resolveWith((states) => Colors.blue),
         ),
         onPressed: callback,
         child: AutoSizeText(
@@ -162,7 +163,7 @@ class StateStartStopButton extends State<StartStopButton> {
         clipBehavior: Clip.antiAlias,
         style: ButtonStyle(
             backgroundColor: MaterialStateColor.resolveWith(
-                (states) => !isStarted ? Colors.cyan : Colors.white),
+                (states) => !isStarted ? Colors.blue : Colors.white),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(mediaQueryData.size.width),
@@ -190,7 +191,7 @@ class StateStartStopButton extends State<StartStopButton> {
                       !isStarted ? "START\nTRACKING" : "STOP\nTRACKING",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: isStarted ? Colors.cyan : Colors.white),
+                          color: isStarted ? Colors.blue : Colors.white),
                       textAlign: TextAlign.center,
                     ),
                   ],
