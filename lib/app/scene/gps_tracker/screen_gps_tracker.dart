@@ -1,0 +1,205 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:training_application/app/scene/gps_tracker/cubit/gps_tracker_cubit.dart';
+import 'package:training_application/app/scene/gps_tracker/cubit/gps_tracker_state.dart';
+
+class ScreenGpsTracker extends StatelessWidget {
+  const ScreenGpsTracker({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => GpsTrackerScreenCubit(),
+      child: BlocBuilder<GpsTrackerScreenCubit, GpsTrackerScreenState>(
+        builder: (context, state) {
+          return Container(
+            color: Colors.black,
+            child: _stateBuilder(context, state),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _stateBuilder(context, state) {
+    if (state is TrackingState) {
+      return _trackingState(context, state);
+    } else {
+      return _pauseState(context, state);
+    }
+  }
+
+  Widget _trackingState(context, state) {
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
+
+    return Center(
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+                child: Padding(
+              padding: EdgeInsets.all(mediaQueryData.size.width * 0.03),
+              child: StartStopButton(context),
+            )),
+            (state as TrackingState).isTracking
+                ? _trackingIndicator(context, state)
+                : Visibility(
+                    visible: false,
+                    maintainSize: true,
+                    maintainAnimation: true,
+                    maintainState: true,
+                    child: _trackingIndicator(context, state)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _pauseState(context, state) {
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Flexible(
+          child: _pauseScreenButton(context, state, "Show Path", () {
+            print("showing path...");
+          }),
+        ),
+        const Padding(padding: EdgeInsets.only(bottom: 8.0)),
+        Flexible(
+          child: _pauseScreenButton(context, state, "Start Again", () {
+            BlocProvider.of<GpsTrackerScreenCubit>(context).goToTrackingState();
+          }),
+        ),
+      ],
+    ));
+  }
+
+  Widget _pauseScreenButton(
+      context, state, String text, VoidCallback callback) {
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
+
+    return FractionallySizedBox(
+      heightFactor: 0.2,
+      widthFactor: 0.7,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor:
+              MaterialStateColor.resolveWith((states) => Colors.cyan),
+        ),
+        onPressed: callback,
+        child: AutoSizeText(
+          text,
+          wrapWords: false,
+          style: TextStyle(
+            inherit: false,
+            fontSize: mediaQueryData.size.height * 0.1,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _trackingIndicator(context, state) {
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: mediaQueryData.size.width * 0.03),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const FittedBox(
+            child: Text(
+              "Tracking...",
+              style: TextStyle(
+                  inherit: false, color: Colors.white, fontSize: 24.0),
+            ),
+          ),
+          Padding(
+              padding:
+                  EdgeInsets.only(right: mediaQueryData.size.width * 0.03)),
+          const CircularProgressIndicator(
+            color: Colors.white,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class StartStopButton extends StatefulWidget {
+  const StartStopButton(BuildContext context, {Key? key})
+      : _context = context,
+        super(key: key);
+  final BuildContext _context;
+
+  BuildContext get context => _context;
+
+  @override
+  State<StatefulWidget> createState() => StateStartStopButton();
+}
+
+class StateStartStopButton extends State<StartStopButton> {
+  @override
+  BuildContext get context => super.widget.context;
+  bool isStarted = false;
+
+  @override
+  Widget build(BuildContext context) {
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
+
+    return AspectRatio(
+      aspectRatio: 1,
+      child: ElevatedButton(
+        clipBehavior: Clip.antiAlias,
+        style: ButtonStyle(
+            backgroundColor: MaterialStateColor.resolveWith(
+                (states) => !isStarted ? Colors.cyan : Colors.white),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(mediaQueryData.size.width),
+            ))),
+        onPressed: () {
+          if (isStarted) {
+            BlocProvider.of<GpsTrackerScreenCubit>(context).goToPauseState();
+            return;
+          }
+          setState(() {
+            isStarted = !isStarted;
+            BlocProvider.of<GpsTrackerScreenCubit>(context).startTracking();
+          });
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: FittedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      !isStarted ? "START\nTRACKING" : "STOP\nTRACKING",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: isStarted ? Colors.cyan : Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

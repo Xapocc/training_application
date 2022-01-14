@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
@@ -33,6 +34,15 @@ class ScreenChoose extends StatelessWidget {
                 BlocProvider.of<RouterCubit>(context).goToScreenTask4();
               }),
             ),
+            const Padding(
+                padding:
+                    EdgeInsets.only(top: AppSizes.paddingButtonChooseScreen)),
+            Flexible(
+              child: _chooseScreenButton(
+                  context, AppStrings.textButton2ChooseScreen, () {
+                BlocProvider.of<RouterCubit>(context).goToScreenGpsTracker();
+              }),
+            ),
           ],
         ),
       ),
@@ -48,11 +58,14 @@ class ScreenChoose extends StatelessWidget {
         style: ElevatedButton.styleFrom(
             primary: AppColors.colorBgButtonChooseScreen),
         onPressed: callback,
-        child: Text(text,
-            style: const TextStyle(
-                inherit: false,
-                fontSize: AppSizes.fontSizeButtonChooseScreen,
-                color: AppColors.colorTextButtonChooseScreen)),
+        child: AutoSizeText(
+          text,
+          style: const TextStyle(
+            inherit: false,
+            fontSize: AppSizes.fontSizeButtonChooseScreen,
+            color: AppColors.colorTextButtonChooseScreen,
+          ),
+        ),
       ),
     );
   }

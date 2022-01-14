@@ -22,7 +22,7 @@ abstract class AppSizes {
 
   // choose screen
   static const double coefficientWidthButtonChooseScreen = 0.7;
-  static const double coefficientHeightButtonChooseScreen = 0.11;
+  static const double coefficientHeightButtonChooseScreen = 0.2;
   static const double fontSizeButtonChooseScreen = 32.0;
   static const double paddingButtonChooseScreen = 8.0;
 

@@ -44,3 +44,10 @@ class RouterStateStatisticScreen extends RouterState {
   @override
   List<Object?> get props => [];
 }
+
+class RouterStateGpsTracker extends RouterState {
+  const RouterStateGpsTracker();
+
+  @override
+  List<Object?> get props => [];
+}

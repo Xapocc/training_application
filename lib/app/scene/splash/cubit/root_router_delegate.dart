@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:training_application/app/scene/choose/screen_choose.dart';
+import 'package:training_application/app/scene/gps_tracker/screen_gps_tracker.dart';
 import 'package:training_application/app/scene/statistic/screen_statistic.dart';
 import 'package:training_application/app/scene/task3/screen_task3.dart';
 import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
@@ -59,6 +60,14 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
         )
       ];
     }
+    if (_routerCubit.state is RouterStateGpsTracker) {
+      return [
+        const MaterialPage(
+          child: ScreenGpsTracker(),
+        )
+      ];
+    }
+
     return [];
   }
 

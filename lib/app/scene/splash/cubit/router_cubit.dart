@@ -14,6 +14,8 @@ class RouterCubit extends Cubit<RouterState> {
 
   void goToScreenTask4() => emit(const RouterStateTask4Screen());
 
+  void goToScreenGpsTracker() => emit(const RouterStateGpsTracker());
+
   void goToScreenStatistics(int seconds) =>
       emit(RouterStateStatisticScreen(seconds));
 

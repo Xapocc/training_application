@@ -2,6 +2,7 @@ abstract class AppStrings {
   // choose screen
   static const String textButton0ChooseScreen = "Task 3 Screen";
   static const String textButton1ChooseScreen = "Task 4 Screen";
+  static const String textButton2ChooseScreen = "Gps Tracker Screen";
 
   // task 3 screen
   static const String dataTask3Screen = "data";
