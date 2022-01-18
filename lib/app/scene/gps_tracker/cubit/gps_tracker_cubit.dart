@@ -48,7 +48,7 @@ class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
 
       if (!permissionStatus.isGranted) return;
     }
-    await location.changeSettings(distanceFilter: 0.1);
+
     _subscriptionLocation = location.onLocationChanged.listen((event) {
       _savePoint(event, distanceFilter: 0.0005);
     });
@@ -63,6 +63,11 @@ class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
 
     if ((state as TrackingState).locationsData.isEmpty) {
       (state as TrackingState).locationsData.add(point);
+      emit(TrackingState(
+          true,
+          (state as TrackingState).locationPointsCounter + 1,
+          state.locationsData));
+      return;
     }
 
     // latitude/longitude null is impossible due to check in beginning of this method
@@ -76,7 +81,13 @@ class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
                 2)) >=
         distanceFilter;
 
-    if (add) (state as TrackingState).locationsData.add(point);
+    if (add) {
+      (state as TrackingState).locationsData.add(point);
+      emit(TrackingState(
+          true,
+          (state as TrackingState).locationPointsCounter + 1,
+          state.locationsData));
+    }
   }
 
   void stopTracking() {

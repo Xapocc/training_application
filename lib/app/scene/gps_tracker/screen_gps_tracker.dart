@@ -36,27 +36,29 @@ class ScreenGpsTracker extends StatelessWidget {
   Widget _trackingState(context, state) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
 
-    return Center(
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(
-                child: Padding(
-              padding: EdgeInsets.all(mediaQueryData.size.width * 0.03),
-              child: _startStopButton(context, state),
-            )),
-            (state as TrackingState).isTracking
-                ? _trackingIndicator(context, state)
-                : Visibility(
-                    visible: false,
+    return AspectRatio(
+      aspectRatio: 1,
+      child: Stack(
+        children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                    child: Padding(
+                  padding: EdgeInsets.all(mediaQueryData.size.width * 0.03),
+                  child: _startStopButton(context, state),
+                )),
+                Visibility(
+                    visible: (state as TrackingState).isTracking,
                     maintainSize: true,
                     maintainAnimation: true,
                     maintainState: true,
                     child: _trackingIndicator(context, state)),
-          ],
-        ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -68,8 +70,12 @@ class ScreenGpsTracker extends StatelessWidget {
       children: [
         Flexible(
           child: _pauseScreenButton(context, state, "Show Path", () {
-            BlocProvider.of<RouterCubit>(context).goToScreenGpsPathMap((state as PauseState).locationsData);
-          }, false, BlocProvider.of<GpsTrackerScreenCubit>(context).isLocationsDataEmpty()),
+            BlocProvider.of<RouterCubit>(context)
+                .goToScreenGpsPathMap((state as PauseState).locationsData);
+          },
+              false,
+              BlocProvider.of<GpsTrackerScreenCubit>(context)
+                  .isLocationsDataEmpty()),
         ),
         const Padding(padding: EdgeInsets.only(bottom: 8.0)),
         Flexible(
@@ -115,27 +121,21 @@ class ScreenGpsTracker extends StatelessWidget {
 
   Widget _trackingIndicator(context, state) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
+    const TextStyle textStyle =
+        TextStyle(inherit: false, color: Colors.white, fontSize: 24.0);
 
     return Padding(
       padding: EdgeInsets.only(bottom: mediaQueryData.size.width * 0.03),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
+      child: Column(
         children: [
           const FittedBox(
             child: Text(
               "Tracking...",
-              style: TextStyle(
-                  inherit: false, color: Colors.white, fontSize: 24.0),
+              style: textStyle,
             ),
           ),
-          Padding(
-              padding:
-                  EdgeInsets.only(right: mediaQueryData.size.width * 0.03)),
-          const CircularProgressIndicator(
-            color: Colors.white,
-          ),
+          Text("GPS points saved: ${state.locationPointsCounter}",
+              style: textStyle),
         ],
       ),
     );
@@ -146,41 +146,65 @@ class ScreenGpsTracker extends StatelessWidget {
 
     return AspectRatio(
       aspectRatio: 1,
-      child: ElevatedButton(
-        clipBehavior: Clip.antiAlias,
-        style: ButtonStyle(
-            backgroundColor: MaterialStateColor.resolveWith(
-                    (states) => !state.isTracking ? Colors.blue : Colors.white),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(mediaQueryData.size.width),
-                ))),
-        onPressed: () {
-          BlocProvider.of<GpsTrackerScreenCubit>(context).onPressStartStopButton();
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: FittedBox(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      !state.isTracking ? "START\nTRACKING" : "STOP\nTRACKING",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: state.isTracking ? Colors.blue : Colors.white),
-                      textAlign: TextAlign.center,
+      child: Stack(
+        children: [
+          Visibility(
+            visible: state.isTracking,
+            child: const Align(
+                alignment: Alignment.center,
+                child: FractionallySizedBox(
+                    widthFactor: 1,
+                    heightFactor: 1,
+                    child: CircularProgressIndicator(
+                      color: Colors.blue,
+                    ))),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              clipBehavior: Clip.antiAlias,
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateColor.resolveWith((states) =>
+                      !state.isTracking ? Colors.blue : Colors.white),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(mediaQueryData.size.width),
+                  ))),
+              onPressed: () {
+                BlocProvider.of<GpsTrackerScreenCubit>(context)
+                    .onPressStartStopButton();
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: FittedBox(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            !state.isTracking
+                                ? "START\nTRACKING"
+                                : "STOP\nTRACKING",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: state.isTracking
+                                    ? Colors.blue
+                                    : Colors.white),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
-}
+  }
 }
