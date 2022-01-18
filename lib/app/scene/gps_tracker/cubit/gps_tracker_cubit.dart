@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:location/location.dart';
@@ -14,11 +15,15 @@ class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
   void goToTrackingState() {
     emit(TrackingState());
 
-    (state as TrackingState).locationPoints.clear();
+    (state as TrackingState).locationsData.clear();
   }
 
   void goToPauseState() {
     emit(PauseState(state));
+  }
+
+  bool isLocationsDataEmpty() {
+    return state.locationsData.length >= 2 ? false : true;
   }
 
   void onPressStartStopButton() {
@@ -43,18 +48,35 @@ class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
 
       if (!permissionStatus.isGranted) return;
     }
-
-    location.changeSettings(distanceFilter: 0.00001);
+    await location.changeSettings(distanceFilter: 0.1);
     _subscriptionLocation = location.onLocationChanged.listen((event) {
-      _savePoint(event);
-      print("$event count: ${(state as TrackingState).locationPoints.length}");
+      _savePoint(event, distanceFilter: 0.0005);
     });
 
     emit(TrackingState(true));
   }
 
-  void _savePoint(LocationData point) {
-    (state as TrackingState).locationPoints.add(point);
+  void _savePoint(LocationData point, {double distanceFilter = 0}) {
+    if (point.latitude == null || point.longitude == null) {
+      return;
+    }
+
+    if ((state as TrackingState).locationsData.isEmpty) {
+      (state as TrackingState).locationsData.add(point);
+    }
+
+    // latitude/longitude null is impossible due to check in beginning of this method
+    bool add = sqrt(pow(
+                (state as TrackingState).locationsData.last.latitude! -
+                    point.latitude!,
+                2) +
+            pow(
+                (state as TrackingState).locationsData.last.longitude! -
+                    point.longitude!,
+                2)) >=
+        distanceFilter;
+
+    if (add) (state as TrackingState).locationsData.add(point);
   }
 
   void stopTracking() {

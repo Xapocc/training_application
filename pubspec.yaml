@@ -30,6 +30,9 @@ dependencies:
   permission_handler: ^8.3.0
   location: ^4.3.0
   google_maps_flutter: ^2.1.1
+  google_map_polyline_new: ^0.3.0+2
+  flutter_google_places: ^0.3.0
+  google_maps_webservice: ^0.0.19
   intl: ^0.17.0
   shared_preferences: ^2.0.11
   path_provider: ^2.0.8

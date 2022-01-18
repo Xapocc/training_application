@@ -68,8 +68,8 @@ class ScreenGpsTracker extends StatelessWidget {
       children: [
         Flexible(
           child: _pauseScreenButton(context, state, "Show Path", () {
-            BlocProvider.of<RouterCubit>(context).goToScreenGpsPathMap((state as PauseState).locationPoints);
-          }),
+            BlocProvider.of<RouterCubit>(context).goToScreenGpsPathMap((state as PauseState).locationsData);
+          }, false, BlocProvider.of<GpsTrackerScreenCubit>(context).isLocationsDataEmpty()),
         ),
         const Padding(padding: EdgeInsets.only(bottom: 8.0)),
         Flexible(
@@ -82,25 +82,31 @@ class ScreenGpsTracker extends StatelessWidget {
   }
 
   Widget _pauseScreenButton(context, state, String text, VoidCallback callback,
-      [bool isSecondary = false]) {
+      [bool isSecondary = false, bool isDisabled = false]) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
 
-    return FractionallySizedBox(
-      heightFactor: 0.2,
-      widthFactor: 0.7,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateColor.resolveWith(
-              (states) => !isSecondary ? Colors.blue : Colors.blueGrey),
-        ),
-        onPressed: callback,
-        child: AutoSizeText(
-          text,
-          wrapWords: false,
-          style: TextStyle(
-            inherit: false,
-            fontSize: mediaQueryData.size.height * 0.1,
-            color: Colors.white,
+    return Visibility(
+      visible: !isDisabled,
+      maintainSize: true,
+      maintainAnimation: true,
+      maintainState: true,
+      child: FractionallySizedBox(
+        heightFactor: 0.2,
+        widthFactor: 0.7,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateColor.resolveWith(
+                (states) => !isSecondary ? Colors.blue : Colors.blueGrey),
+          ),
+          onPressed: callback,
+          child: AutoSizeText(
+            text,
+            wrapWords: false,
+            style: TextStyle(
+              inherit: false,
+              fontSize: mediaQueryData.size.height * 0.1,
+              color: Colors.white,
+            ),
           ),
         ),
       ),

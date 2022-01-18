@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:google_map_polyline_new/google_map_polyline_new.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -28,107 +29,244 @@ class ScreenGpsPathMap extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(children: [
-          const MapSample(),
-          Container(
-            color: Colors.white,
-            child: ListView.builder(
-                itemCount: _locationPoints.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    color: (index % 2 == 0) ? Colors.white : Colors.black12,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                              flex: 1,
-                              child: Center(child: Text("${index + 1}. "))),
-                          Expanded(
-                            flex: 4,
-                            child:
-                                Text("Lat. ${_locationPoints[index].latitude}"),
+        body: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              MapGpsPath(
+                locationData: _locationPoints,
+              ),
+              Container(
+                color: Colors.white,
+                child: ListView.builder(
+                    itemCount: _locationPoints.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        color: (index % 2 == 0) ? Colors.white : Colors.black12,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  flex: 3,
+                                  child: Center(child: Text("${index + 1}. "))),
+                              Expanded(
+                                flex: 12,
+                                child: Text(
+                                    "Lat. ${_locationPoints[index].latitude}"),
+                              ),
+                              Expanded(flex: 1, child: Container()),
+                              Expanded(
+                                flex: 12,
+                                child: Text(
+                                    "Long. ${_locationPoints[index].longitude}"),
+                              ),
+                            ],
                           ),
-                          Expanded(
-                            flex: 4,
-                            child: Text(
-                                "Long. ${_locationPoints[index].longitude}"),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-          )
-        ]),
+                        ),
+                      );
+                    }),
+              )
+            ]),
       ),
     );
   }
 }
 
-class MapSample extends StatefulWidget {
-  const MapSample({Key? key}) : super(key: key);
+class MapGpsPath extends StatefulWidget {
+  const MapGpsPath({Key? key, required List<LocationData> locationData})
+      : _locationData = locationData,
+        super(key: key);
+
+  final List<LocationData> _locationData;
+
+  List<LocationData> get locationData => _locationData;
 
   @override
-  State<MapSample> createState() => MapSampleState();
+  State<MapGpsPath> createState() => MapGpsPathState();
 }
 
-class MapSampleState extends State<MapSample> {
-  final Completer<GoogleMapController> _controller = Completer();
+class MapGpsPathState extends State<MapGpsPath>
+    with AutomaticKeepAliveClientMixin<MapGpsPath> {
+  final Completer<GoogleMapController> _completer = Completer();
+  GoogleMapPolyline googleMapPolyline =
+      GoogleMapPolyline(apiKey: "AIzaSyAHPZ12iDgKw6cAjz88u2OlCDNNtedWBpY");
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
+  final List<Polyline> polyline = List.empty(growable: true);
+  final List<Marker> markers = List.empty(growable: true);
+  final List<Circle> circles = List.empty(growable: true);
 
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+  bool _isPathLoaded = false;
 
-  static const CameraPosition _kHome = CameraPosition(
-      bearing: 260,
-      target: LatLng(47.82461833991857, 35.04240005835698),
-      tilt: 30,
-      zoom: 17);
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-      ),
-      floatingActionButton: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          FloatingActionButton.extended(
-            onPressed: _goToHome,
-            label: const Text('To home!'),
-            icon: const Icon(Icons.directions_boat),
+    super.build(context);
+
+    CameraPosition _kPosition = _computeCameraPosition();
+    Orientation currentOrientation = MediaQuery.of(context).orientation;
+
+    return Stack(alignment: Alignment.center, children: [
+      Visibility(
+        visible: _isPathLoaded,
+        maintainSemantics: true,
+        maintainState: true,
+        maintainSize: true,
+        maintainAnimation: true,
+        child: Scaffold(
+          body: GoogleMap(
+            myLocationButtonEnabled: false,
+            scrollGesturesEnabled: true,
+            rotateGesturesEnabled: true,
+            zoomGesturesEnabled: true,
+            mapType: MapType.hybrid,
+            initialCameraPosition: _kPosition,
+            onCameraIdle: () {
+              setState(() {
+                _isPathLoaded = true;
+              });
+            },
+            onMapCreated: (GoogleMapController controller) async {
+              _completer.complete(controller);
+              await _computePath();
+              setState(() {
+                _isPathLoaded = true;
+              });
+            },
+            polylines: Set.from(polyline),
+            markers: Set.from(markers),
+            circles: Set.from(circles),
           ),
-          const Padding(padding: EdgeInsets.all(4.0)),
-          FloatingActionButton.extended(
-            onPressed: _goToTheLake,
-            label: const Text('To the lake!'),
-            icon: const Icon(Icons.directions_boat),
+          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+          floatingActionButton: FractionallySizedBox(
+            heightFactor:
+                currentOrientation == Orientation.portrait ? 0.1 : null,
+            widthFactor:
+                currentOrientation == Orientation.portrait ? null : 0.1,
+            child: FittedBox(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Container(
+                  clipBehavior: Clip.hardEdge,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  child: TextButton(
+                    style: ButtonStyle(
+                        overlayColor: MaterialStateColor.resolveWith(
+                            (states) => Colors.black26)),
+                    onPressed: () async {
+                      final GoogleMapController controller =
+                          await _completer.future;
+                      controller.animateCamera(
+                          CameraUpdate.newCameraPosition(_kPosition));
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Icon(
+                        Icons.home,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
-        ],
+        ),
       ),
+      Visibility(
+        visible: !_isPathLoaded,
+        child: const CircularProgressIndicator(),
+      )
+    ]);
+  }
+
+  CameraPosition _computeCameraPosition() {
+    double totalLat = 0, totalLng = 0;
+
+    for (int i = 0; i < widget.locationData.length; i++) {
+      totalLat += widget.locationData[i].latitude!;
+      totalLng += widget.locationData[i].longitude!;
+    }
+
+    return CameraPosition(
+      target: LatLng(totalLat / widget.locationData.length,
+          totalLng / widget.locationData.length),
+      zoom: 17.0,
     );
   }
 
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-  }
+  Future<void> _computePath() async {
+    final GoogleMapController controller = await _completer.future;
+    List<LatLng> routeCoords = List.empty(growable: true);
+    List<Circle> newCircles = List.empty(growable: true);
 
-  Future<void> _goToHome() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(_kHome));
+    double totalLat = 0, totalLng = 0;
+
+    // null latitude/longitude is impossible due to check in add method
+    for (int i = 0; i < widget.locationData.length; i++) {
+      if (i != widget.locationData.length - 1) {
+        routeCoords.addAll((await googleMapPolyline.getCoordinatesWithLocation(
+            origin: LatLng(widget.locationData[i].latitude!,
+                widget.locationData[i].longitude!),
+            destination: LatLng(widget.locationData[i + 1].latitude!,
+                widget.locationData[i + 1].longitude!),
+            mode: RouteMode.driving))!);
+      }
+    }
+
+    for (int i = 0; i < routeCoords.length; i++) {
+      newCircles.add(Circle(
+        circleId: CircleId("circle_$i"),
+        strokeWidth: 4,
+        radius: 4,
+        fillColor: i == 0 ? Colors.green : Colors.blue,
+        strokeColor: i == 0 ? Colors.green : Colors.blue,
+        center: LatLng(routeCoords[i].latitude, routeCoords[i].longitude),
+      ));
+
+      totalLat += routeCoords[i].latitude;
+      totalLng += routeCoords[i].longitude;
+    }
+
+    CameraPosition _kNew = CameraPosition(
+      target:
+          LatLng(totalLat / routeCoords.length, totalLng / routeCoords.length),
+      zoom: 17.0,
+    );
+
+    controller.animateCamera(CameraUpdate.newCameraPosition(_kNew));
+
+    setState(() {
+      polyline.clear();
+      markers.clear();
+      circles.clear();
+
+      circles.addAll(newCircles);
+
+      markers.add(
+        Marker(
+          markerId: const MarkerId("end"),
+          position: LatLng(
+            widget.locationData.last.latitude ?? 0,
+            widget.locationData.last.longitude ?? 0,
+          ),
+          alpha: 0.5,
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        ),
+      );
+
+      polyline.add(
+        Polyline(
+          polylineId: const PolylineId('iter'),
+          points: routeCoords,
+          width: 4,
+          color: Colors.blue,
+        ),
+      );
+    });
   }
 }
