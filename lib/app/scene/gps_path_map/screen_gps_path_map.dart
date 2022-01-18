@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_map_polyline_new/google_map_polyline_new.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:training_application/app/scene/gps_path_map/cubit/gps_path_map_cubit.dart';
+import 'package:training_application/app/scene/gps_path_map/cubit/gps_path_map_state.dart';
 
 class ScreenGpsPathMap extends StatelessWidget {
   const ScreenGpsPathMap({Key? key, required List<LocationData> locationPoints})
@@ -14,60 +17,70 @@ class ScreenGpsPathMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          bottom: const TabBar(
-            tabs: [
-              Tab(
-                icon: Icon(Icons.map),
+    return BlocProvider(
+      create: (context) => GpsPathMapScreenCubit(),
+      child: BlocBuilder<GpsPathMapScreenCubit, GpsPathMapScreenState>(
+          builder: (context, state) {
+        return DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            appBar: AppBar(
+              bottom: const TabBar(
+                tabs: [
+                  Tab(
+                    icon: Icon(Icons.map),
+                  ),
+                  Tab(
+                    icon: Icon(Icons.list),
+                  )
+                ],
               ),
-              Tab(
-                icon: Icon(Icons.list),
-              )
-            ],
+            ),
+            body: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  MapGpsPath(
+                    locationData: _locationPoints,
+                  ),
+                  Container(
+                    color: Colors.white,
+                    child: ListView.builder(
+                        itemCount: _locationPoints.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            color: (index % 2 == 0)
+                                ? Colors.white
+                                : Colors.black12,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      flex: 3,
+                                      child: Center(
+                                          child: Text("${index + 1}. "))),
+                                  Expanded(
+                                    flex: 12,
+                                    child: Text(
+                                        "Lat. ${_locationPoints[index].latitude}"),
+                                  ),
+                                  Expanded(flex: 1, child: Container()),
+                                  Expanded(
+                                    flex: 12,
+                                    child: Text(
+                                        "Long. ${_locationPoints[index].longitude}"),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
+                  )
+                ]),
           ),
-        ),
-        body: TabBarView(
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              MapGpsPath(
-                locationData: _locationPoints,
-              ),
-              Container(
-                color: Colors.white,
-                child: ListView.builder(
-                    itemCount: _locationPoints.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        color: (index % 2 == 0) ? Colors.white : Colors.black12,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                  flex: 3,
-                                  child: Center(child: Text("${index + 1}. "))),
-                              Expanded(
-                                flex: 12,
-                                child: Text(
-                                    "Lat. ${_locationPoints[index].latitude}"),
-                              ),
-                              Expanded(flex: 1, child: Container()),
-                              Expanded(
-                                flex: 12,
-                                child: Text(
-                                    "Long. ${_locationPoints[index].longitude}"),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
-              )
-            ]),
-      ),
+        );
+      }),
     );
   }
 }
@@ -122,17 +135,31 @@ class MapGpsPathState extends State<MapGpsPath>
             zoomGesturesEnabled: true,
             mapType: MapType.hybrid,
             initialCameraPosition: _kPosition,
-            onCameraIdle: () {
-              setState(() {
-                _isPathLoaded = true;
-              });
-            },
             onMapCreated: (GoogleMapController controller) async {
               _completer.complete(controller);
-              await _computePath();
-              setState(() {
-                _isPathLoaded = true;
-              });
+
+              // network connection check
+              while (true) {
+                try {
+                  await _computePath();
+                  setState(() {
+                    _isPathLoaded = true;
+                  });
+                  break;
+                } catch (ex) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      duration: Duration(milliseconds: 2500),
+                      content: Text(
+                          "Can't connect to google maps services.\nPlease check your internet connection."),
+                    ),
+                  );
+
+                  await Future.delayed(const Duration(milliseconds: 3000));
+
+                  continue;
+                }
+              }
             },
             polylines: Set.from(polyline),
             markers: Set.from(markers),

@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:location/location.dart';
 
 class GpsTrackerScreenState extends Equatable {
-  GpsTrackerScreenState();
 
   final List<LocationData> _locationsData = List.empty(growable: true);
 
