@@ -79,7 +79,7 @@ class ScreenGpsPathMap extends StatelessWidget {
                                   child: Text(AppStrings
                                       .dataColumnListViewItemGpsPathMapScreen(
                                           AppStrings
-                                              .longitudeShortGpsPathMapScreen,
+                                              .latitudeShortGpsPathMapScreen,
                                           state.locationsDataList[index]
                                               .latitude)),
                                 ),
@@ -136,6 +136,7 @@ class MapGpsPathState extends State<MapGpsPath>
   final List<Marker> markers = [];
   final List<Circle> circles = [];
 
+  CameraPosition _kPosition = const CameraPosition(target: LatLng(0, 0));
   bool _isPathLoaded = false;
 
   @override
@@ -145,7 +146,7 @@ class MapGpsPathState extends State<MapGpsPath>
   Widget build(BuildContext context) {
     super.build(context);
 
-    CameraPosition _kPosition = _computeCameraPosition();
+    _kPosition = _computeCameraPosition();
     Orientation currentOrientation = MediaQuery.of(context).orientation;
 
     return Stack(alignment: Alignment.center, children: [
@@ -186,9 +187,11 @@ class MapGpsPathState extends State<MapGpsPath>
                     ),
                   );
 
-                  await Future.delayed(const Duration(
-                      milliseconds:
-                          AppSizes.millisecondsSnackBarGpsPathMapScreen));
+                  await Future.delayed(
+                    const Duration(
+                        milliseconds:
+                            AppSizes.millisecondsSnackBarGpsPathMapScreen),
+                  );
 
                   continue;
                 }
@@ -265,12 +268,8 @@ class MapGpsPathState extends State<MapGpsPath>
   }
 
   Future<void> _computePath() async {
-    final GoogleMapController controller = await _completer.future;
     List<LatLng> routeCoords = List.empty(growable: true);
     List<Circle> newCircles = List.empty(growable: true);
-
-    double totalLat = 0, totalLng = 0;
-
     // null latitude/longitude is impossible due to check in add method
     for (int i = 0; i < widget.locationData.length; i++) {
       if (i != widget.locationData.length - 1) {
@@ -296,18 +295,7 @@ class MapGpsPathState extends State<MapGpsPath>
             : AppColors.colorPolylineGpsPathMapScreen,
         center: LatLng(routeCoords[i].latitude, routeCoords[i].longitude),
       ));
-
-      totalLat += routeCoords[i].latitude;
-      totalLng += routeCoords[i].longitude;
     }
-
-    CameraPosition _kNew = CameraPosition(
-      target:
-          LatLng(totalLat / routeCoords.length, totalLng / routeCoords.length),
-      zoom: AppSizes.zoomCameraPositionGpsPathMapScreen,
-    );
-
-    controller.animateCamera(CameraUpdate.newCameraPosition(_kNew));
 
     setState(() {
       polyline.clear();

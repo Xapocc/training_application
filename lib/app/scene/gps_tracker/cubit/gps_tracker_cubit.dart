@@ -11,6 +11,7 @@ import 'package:training_application/main.dart';
 
 class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
   StreamSubscription? _subscriptionLocation;
+  Location _location = Location();
 
   GpsTrackerScreenCubit() : super(TrackingState());
 
@@ -41,11 +42,9 @@ class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
   }
 
   void startTracking() async {
-    Location location = Location();
-
-    bool serviceEnabled = await location.serviceEnabled();
+    bool serviceEnabled = await _location.serviceEnabled();
     if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
+      serviceEnabled = await _location.requestService();
 
       if (!serviceEnabled) return;
     }
@@ -59,9 +58,14 @@ class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
       if (!permissionStatus.isGranted) return;
     }
 
-    _subscriptionLocation = location.onLocationChanged.listen((event) {
-      _savePoint(event,
-          distanceFilter: AppSizes.distanceFilterGpsTrackerScreen);
+    _subscriptionLocation = _location.onLocationChanged.listen((event) {
+      try {
+        _savePoint(event,
+            distanceFilter: AppSizes.distanceFilterGpsTrackerScreen);
+      } catch (ex) {
+        _subscriptionLocation?.cancel();
+        return;
+      }
     });
 
     emit(TrackingState(true));
