@@ -69,7 +69,8 @@ class ScreenGpsTracker extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Flexible(
-          child: _pauseScreenButton(context, state, "Show Path", () {
+          child: _pauseScreenButton(context, state, "Show Path", () async {
+            await BlocProvider.of<GpsTrackerScreenCubit>(context).saveLocationsData();
             BlocProvider.of<RouterCubit>(context)
                 .goToScreenGpsPathMap((state as PauseState).locationsData);
           },

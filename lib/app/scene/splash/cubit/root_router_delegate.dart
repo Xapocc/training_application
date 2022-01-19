@@ -70,10 +70,8 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
     }
     if (_routerCubit.state is RouterStateGpsPathMap) {
       return [
-        MaterialPage(
-          child: ScreenGpsPathMap(
-              locationPoints:
-                  (_routerCubit.state as RouterStateGpsPathMap).locationPoints),
+       const MaterialPage(
+          child: ScreenGpsPathMap(),
         ),
       ];
     }

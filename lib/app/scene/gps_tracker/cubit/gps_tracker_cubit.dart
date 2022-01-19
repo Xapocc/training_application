@@ -6,6 +6,7 @@ import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart'
     as permission_handler;
 import 'package:training_application/app/scene/gps_tracker/cubit/gps_tracker_state.dart';
+import 'package:training_application/main.dart';
 
 class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
   StreamSubscription? _subscriptionLocation;
@@ -18,8 +19,12 @@ class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
     (state as TrackingState).locationsData.clear();
   }
 
-  void goToPauseState() {
+  void goToPauseState() async {
     emit(PauseState(state));
+  }
+
+  Future<void> saveLocationsData() async {
+    await locationsDataUseCase!.saveLocationsData((state as PauseState).locationsData);
   }
 
   bool isLocationsDataEmpty() {

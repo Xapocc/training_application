@@ -2,10 +2,13 @@ import 'package:equatable/equatable.dart';
 import 'package:location/location.dart';
 
 class GpsPathMapScreenState extends Equatable {
+  const GpsPathMapScreenState([List<LocationData> locationsDataList = const []])
+      : _locationsDataList = locationsDataList,
+        super();
 
-  final List<LocationData> _locationsData = List.empty(growable: true);
+  final List<LocationData> _locationsDataList;
 
-  List<LocationData> get locationsData => _locationsData;
+  List<LocationData> get locationsDataList => _locationsDataList;
 
   @override
   List<Object?> get props => [];

@@ -9,11 +9,7 @@ import 'package:training_application/app/scene/gps_path_map/cubit/gps_path_map_c
 import 'package:training_application/app/scene/gps_path_map/cubit/gps_path_map_state.dart';
 
 class ScreenGpsPathMap extends StatelessWidget {
-  const ScreenGpsPathMap({Key? key, required List<LocationData> locationPoints})
-      : _locationPoints = locationPoints,
-        super(key: key);
-
-  final List<LocationData> _locationPoints;
+  const ScreenGpsPathMap({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +35,15 @@ class ScreenGpsPathMap extends StatelessWidget {
             body: TabBarView(
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  MapGpsPath(
-                    locationData: _locationPoints,
-                  ),
+                  state.locationsDataList.isNotEmpty
+                      ? MapGpsPath(
+                          locationData: state.locationsDataList,
+                        )
+                      : Center(child: Text("Locations data is missing")),
                   Container(
                     color: Colors.white,
                     child: ListView.builder(
-                        itemCount: _locationPoints.length,
+                        itemCount: state.locationsDataList.length,
                         itemBuilder: (context, index) {
                           return Container(
                             color: (index % 2 == 0)
@@ -63,13 +61,13 @@ class ScreenGpsPathMap extends StatelessWidget {
                                   Expanded(
                                     flex: 12,
                                     child: Text(
-                                        "Lat. ${_locationPoints[index].latitude}"),
+                                        "Lat. ${state.locationsDataList[index].latitude}"),
                                   ),
                                   Expanded(flex: 1, child: Container()),
                                   Expanded(
                                     flex: 12,
                                     child: Text(
-                                        "Long. ${_locationPoints[index].longitude}"),
+                                        "Long. ${state.locationsDataList[index].longitude}"),
                                   ),
                                 ],
                               ),
