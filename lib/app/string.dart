@@ -1,4 +1,7 @@
 abstract class AppStrings {
+  static const String apiKeyGoogleMaps =
+      "AIzaSyAHPZ12iDgKw6cAjz88u2OlCDNNtedWBpY";
+
   // choose screen
   static const String textButton0ChooseScreen = "Task 3 Screen";
   static const String textButton1ChooseScreen = "Task 4 Screen";
@@ -21,14 +24,6 @@ abstract class AppStrings {
       "Last ${hasData ? "data" : "error"} state\nappearance date\nis $date";
 
   // statistic screen
-  static String spinnerTextStatisticScreen(time) =>
-      "Please wait $time second${time == 1 ? "" : "s"}";
-
-  static String stateCountersTextStatisticScreen(counter, hasData) =>
-      "${hasData ? "Data" : "Error"} state appeared $counter time${counter == 1 ? "" : "s"} now";
-
-  static String stateLastDateTextStatisticScreen(lastDate) =>
-      "\nLast appearance date is $lastDate";
   static const String timeFieldNameStatisticScreen = "time";
   static const String dataStateFieldNameStatisticScreen = "dataStateCounter";
   static const String errorStateFieldNameStatisticScreen = "errorStateCounter";
@@ -38,6 +33,47 @@ abstract class AppStrings {
       "errorStateLastDate";
   static const String imagesUrlsFieldNameStatisticScreen = "imagesUrls";
 
+  static String spinnerTextStatisticScreen(time) =>
+      "Please wait $time second${time == 1 ? "" : "s"}";
+
+  static String stateCountersTextStatisticScreen(counter, hasData) =>
+      "${hasData ? "Data" : "Error"} state appeared $counter time${counter == 1 ? "" : "s"} now";
+
+  static String stateLastDateTextStatisticScreen(lastDate) =>
+      "\nLast appearance date is $lastDate";
+
+  // gps tracker screen
+  static const String nextButtonPauseStateGpsTrackerScreen = "Show Path";
+  static const String backButtonPauseStateGpsTrackerScreen = "Start Again";
+  static const String trackingTrackingIndicatorGpsTrackerScreen = "Tracking...";
+
+  static String counterTrackingIndicatorGpsTrackerScreen(count) =>
+      "GPS points saved: $count";
+
+  static String buttonTrackingStateGpsTrackerScreen(bool isTracking) =>
+      !isTracking ? "START\nTRACKING" : "STOP\nTRACKING";
+
+  // gps path map screen
+  static const String latitudeFullGpsPathMapScreen = "latitude";
+  static const String longitudeFullGpsPathMapScreen = "longitude";
+  static const String latitudeShortGpsPathMapScreen = "lat";
+  static const String longitudeShortGpsPathMapScreen = "lng";
+  static const String messageDataIsMissingGpsPathMapScreen =
+      "Locations data is missing";
+  static const String messageInternetConnectionGpsPathMapScreen =
+      "Can't connect to google maps services.\nPlease check your internet connection.";
+  static const String markerIdGpsPathMapScreen = "end";
+  static const String polylineIdGpsPathMapScreen = "path";
+
+  static String indexColumnListViewItemGpsPathMapScreen(index) =>
+      "${index + 1}. ";
+
+  static String dataColumnListViewItemGpsPathMapScreen(
+          String fieldName, double? value) =>
+      "$fieldName. $value";
+
+  static String circleIdGpsPathMapScreen(int index) => "circle_$index";
+
   // repositories
   static const String lastDateDefault = "never";
   static const String basePathRepositories = "data";
@@ -45,4 +81,9 @@ abstract class AppStrings {
       "$basePathRepositories/$imagesUrlsFieldNameStatisticScreen";
   static const String timePathRepositories =
       "$basePathRepositories/$timeFieldNameStatisticScreen";
+  static const String locationDataFileName = "locations_data";
+  static const String locationDataLatFieldName = "latitude";
+  static const String locationDataLngFieldName = "longitude";
+
+  static String locationDataFieldName(index) => "location_data_$index";
 }

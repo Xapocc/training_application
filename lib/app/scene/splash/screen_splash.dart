@@ -20,7 +20,7 @@ class ScreenSplash extends StatelessWidget {
       ),
       child: const Center(
         child: FractionallySizedBox(
-          widthFactor: AppSizes.coefficientSizeIconSplashScreen,
+          widthFactor: AppSizes.factorSizeIconSplashScreen,
           child: FittedBox(
             child: Icon(
               Icons.flight_takeoff,

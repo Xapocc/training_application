@@ -26,7 +26,7 @@ class ScreenTask4 extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: AppSizes.fontSizeTextFieldTask4Screen *
-                        AppSizes.coefficientWidthTextFieldTask4Screen,
+                        AppSizes.factorWidthTextFieldTask4Screen,
                     child: Material(
                       color: AppColors.colorBgTextFieldTask4Screen,
                       child: TextField(
@@ -82,7 +82,7 @@ class ScreenTask4 extends StatelessWidget {
                           AppSizes.paddingContainerStatisticsTask4Screen),
                       decoration: BoxDecoration(
                         border: Border.all(
-                            color: AppColors.colorBgTextStateCounterTaskScreen),
+                            color: AppColors.colorBgTextStateCounterTask4Screen),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -138,7 +138,7 @@ class ScreenTask4 extends StatelessWidget {
       AppStrings.stateCountersTextTask4Screen(counter, isDataState),
       style: const TextStyle(
           inherit: false,
-          color: AppColors.colorFgTextStateCounterTaskScreen,
+          color: AppColors.colorFgTextStateCounterTask4Screen,
           fontSize: AppSizes.fontSizeTextStateCounterTask4Screen),
       textAlign: TextAlign.center,
     );
@@ -149,7 +149,7 @@ class ScreenTask4 extends StatelessWidget {
       AppStrings.stateLastDateTextTask4Screen(date, isDataState),
       style: const TextStyle(
           inherit: false,
-          color: AppColors.colorFgTextStateCounterTaskScreen,
+          color: AppColors.colorFgTextStateCounterTask4Screen,
           fontSize: AppSizes.fontSizeTextStateCounterTask4Screen),
       textAlign: TextAlign.center,
     );

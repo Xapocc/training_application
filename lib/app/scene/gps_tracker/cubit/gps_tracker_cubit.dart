@@ -6,6 +6,7 @@ import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart'
     as permission_handler;
 import 'package:training_application/app/scene/gps_tracker/cubit/gps_tracker_state.dart';
+import 'package:training_application/app/size.dart';
 import 'package:training_application/main.dart';
 
 class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
@@ -24,11 +25,15 @@ class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
   }
 
   Future<void> saveLocationsData() async {
-    await locationsDataUseCase!.saveLocationsData((state as PauseState).locationsData);
+    await locationsDataUseCase!
+        .saveLocationsData((state as PauseState).locationsData);
   }
 
   bool isLocationsDataEmpty() {
-    return state.locationsData.length >= 2 ? false : true;
+    return state.locationsData.length >=
+            AppSizes.minLocationPointsGpsTrackerScreen
+        ? false
+        : true;
   }
 
   void onPressStartStopButton() {
@@ -55,13 +60,16 @@ class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
     }
 
     _subscriptionLocation = location.onLocationChanged.listen((event) {
-      _savePoint(event, distanceFilter: 0.0005);
+      _savePoint(event,
+          distanceFilter: AppSizes.distanceFilterGpsTrackerScreen);
     });
 
     emit(TrackingState(true));
   }
 
-  void _savePoint(LocationData point, {double distanceFilter = 0}) {
+  void _savePoint(LocationData point,
+      {double distanceFilter =
+          AppSizes.distanceFilterDefaultGpsTrackerScreen}) {
     if (point.latitude == null || point.longitude == null) {
       return;
     }

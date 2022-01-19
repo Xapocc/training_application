@@ -52,8 +52,8 @@ class ScreenChoose extends StatelessWidget {
   Widget _chooseScreenButton(context, String text, VoidCallback callback) {
     // already has the ripple effect as default
     return FractionallySizedBox(
-      widthFactor: AppSizes.coefficientWidthButtonChooseScreen,
-      heightFactor: AppSizes.coefficientHeightButtonChooseScreen,
+      widthFactor: AppSizes.factorWidthButtonChooseScreen,
+      heightFactor: AppSizes.factorHeightButtonChooseScreen,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
             primary: AppColors.colorBgButtonChooseScreen),

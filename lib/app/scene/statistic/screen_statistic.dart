@@ -77,7 +77,7 @@ class ScreenStatistics extends StatelessWidget {
         const Flexible(
           child: FractionallySizedBox(
             widthFactor:
-                AppSizes.coefficientWidthProgressIndicatorStatisticScreen,
+                AppSizes.factorWidthProgressIndicatorStatisticScreen,
             child: AspectRatio(
               aspectRatio: 1,
               child: CircularProgressIndicator(

@@ -1,9 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:training_application/app/colors.dart';
 import 'package:training_application/app/scene/gps_tracker/cubit/gps_tracker_cubit.dart';
 import 'package:training_application/app/scene/gps_tracker/cubit/gps_tracker_state.dart';
 import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
+import 'package:training_application/app/size.dart';
+import 'package:training_application/app/string.dart';
 
 class ScreenGpsTracker extends StatelessWidget {
   const ScreenGpsTracker({
@@ -17,7 +20,7 @@ class ScreenGpsTracker extends StatelessWidget {
       child: BlocBuilder<GpsTrackerScreenCubit, GpsTrackerScreenState>(
         builder: (context, state) {
           return Container(
-            color: Colors.black,
+            color: AppColors.colorBgGpsTrackerScreen,
             child: _stateBuilder(context, state),
           );
         },
@@ -45,10 +48,12 @@ class ScreenGpsTracker extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Flexible(
-                    child: Padding(
-                  padding: EdgeInsets.all(mediaQueryData.size.width * 0.03),
-                  child: _startStopButton(context, state),
-                )),
+                  child: Padding(
+                    padding: EdgeInsets.all(mediaQueryData.size.width *
+                        AppSizes.paddingFactorTrackingStateGpsTrackerScreen),
+                    child: _startStopButton(context, state),
+                  ),
+                ),
                 Visibility(
                     visible: (state as TrackingState).isTracking,
                     maintainSize: true,
@@ -65,27 +70,37 @@ class ScreenGpsTracker extends StatelessWidget {
 
   Widget _pauseState(context, state) {
     return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Flexible(
-          child: _pauseScreenButton(context, state, "Show Path", () async {
-            await BlocProvider.of<GpsTrackerScreenCubit>(context).saveLocationsData();
-            BlocProvider.of<RouterCubit>(context)
-                .goToScreenGpsPathMap((state as PauseState).locationsData);
-          },
-              false,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(
+            child: _pauseScreenButton(
+                context, state, AppStrings.nextButtonPauseStateGpsTrackerScreen,
+                () async {
+              await BlocProvider.of<GpsTrackerScreenCubit>(context)
+                  .saveLocationsData();
+              BlocProvider.of<RouterCubit>(context)
+                  .goToScreenGpsPathMap((state as PauseState).locationsData);
+            },
+                false,
+                BlocProvider.of<GpsTrackerScreenCubit>(context)
+                    .isLocationsDataEmpty()),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(
+                bottom: AppSizes.paddingPauseStateGpsTrackerScreen),
+          ),
+          Flexible(
+            child: _pauseScreenButton(
+                context, state, AppStrings.backButtonPauseStateGpsTrackerScreen,
+                () {
               BlocProvider.of<GpsTrackerScreenCubit>(context)
-                  .isLocationsDataEmpty()),
-        ),
-        const Padding(padding: EdgeInsets.only(bottom: 8.0)),
-        Flexible(
-          child: _pauseScreenButton(context, state, "Start Again", () {
-            BlocProvider.of<GpsTrackerScreenCubit>(context).goToTrackingState();
-          }, true),
-        ),
-      ],
-    ));
+                  .goToTrackingState();
+            }, true),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _pauseScreenButton(context, state, String text, VoidCallback callback,
@@ -98,12 +113,14 @@ class ScreenGpsTracker extends StatelessWidget {
       maintainAnimation: true,
       maintainState: true,
       child: FractionallySizedBox(
-        heightFactor: 0.2,
-        widthFactor: 0.7,
+        heightFactor: AppSizes.factorHeightPauseButtonGpsTrackerScreen,
+        widthFactor: AppSizes.factorWidthPauseButtonGpsTrackerScreen,
         child: ElevatedButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateColor.resolveWith(
-                (states) => !isSecondary ? Colors.blue : Colors.blueGrey),
+            backgroundColor: MaterialStateColor.resolveWith((states) =>
+                !isSecondary
+                    ? AppColors.colorBgMainPauseButtonGpsTrackerScreen
+                    : AppColors.colorBgSecondaryPauseButtonGpsTrackerScreen),
           ),
           onPressed: callback,
           child: AutoSizeText(
@@ -111,8 +128,9 @@ class ScreenGpsTracker extends StatelessWidget {
             wrapWords: false,
             style: TextStyle(
               inherit: false,
-              fontSize: mediaQueryData.size.height * 0.1,
-              color: Colors.white,
+              fontSize: mediaQueryData.size.height *
+                  AppSizes.textSizeFactorPauseButtonGpsTrackerScreen,
+              color: AppColors.colorFgPauseButtonGpsTrackerScreen,
             ),
           ),
         ),
@@ -122,20 +140,27 @@ class ScreenGpsTracker extends StatelessWidget {
 
   Widget _trackingIndicator(context, state) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-    const TextStyle textStyle =
-        TextStyle(inherit: false, color: Colors.white, fontSize: 24.0);
+    TextStyle textStyle = TextStyle(
+        inherit: false,
+        color: AppColors.colorFgTrackingIndicatorGpsTrackerScreen,
+        fontSize: mediaQueryData.size.height *
+            AppSizes.textSizeFactorTrackingIndicatorGpsTrackerScreen);
 
     return Padding(
-      padding: EdgeInsets.only(bottom: mediaQueryData.size.width * 0.03),
+      padding: EdgeInsets.only(
+          bottom: mediaQueryData.size.width *
+              AppSizes.paddingFactorTrackingIndicatorGpsTrackerScreen),
       child: Column(
         children: [
-          const FittedBox(
+          FittedBox(
             child: Text(
-              "Tracking...",
+              AppStrings.trackingTrackingIndicatorGpsTrackerScreen,
               style: textStyle,
             ),
           ),
-          Text("GPS points saved: ${state.locationPointsCounter}",
+          Text(
+              AppStrings.counterTrackingIndicatorGpsTrackerScreen(
+                  state.locationPointsCounter),
               style: textStyle),
         ],
       ),
@@ -152,26 +177,36 @@ class ScreenGpsTracker extends StatelessWidget {
           Visibility(
             visible: state.isTracking,
             child: const Align(
-                alignment: Alignment.center,
-                child: FractionallySizedBox(
-                    widthFactor: 1,
-                    heightFactor: 1,
-                    child: CircularProgressIndicator(
-                      color: Colors.blue,
-                    ))),
+              alignment: Alignment.center,
+              child: FractionallySizedBox(
+                widthFactor:
+                    AppSizes.factorWidthStartStopButtonGpsTrackerScreen,
+                heightFactor:
+                    AppSizes.factorHeightStartStopButtonGpsTrackerScreen,
+                child: CircularProgressIndicator(
+                  color: AppColors.colorProgressIndicatorGpsTrackerScreen,
+                ),
+              ),
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(
+                AppSizes.paddingStartStopButtonGpsTrackerScreen),
             child: ElevatedButton(
               clipBehavior: Clip.antiAlias,
               style: ButtonStyle(
-                  backgroundColor: MaterialStateColor.resolveWith((states) =>
-                      !state.isTracking ? Colors.blue : Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
+                backgroundColor: MaterialStateColor.resolveWith((states) =>
+                    !state.isTracking
+                        ? AppColors.colorMainStartStopButtonGpsTrackerScreen
+                        : AppColors
+                            .colorSecondaryStartStopButtonGpsTrackerScreen),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
                     borderRadius:
                         BorderRadius.circular(mediaQueryData.size.width),
-                  ))),
+                  ),
+                ),
+              ),
               onPressed: () {
                 BlocProvider.of<GpsTrackerScreenCubit>(context)
                     .onPressStartStopButton();
@@ -186,14 +221,15 @@ class ScreenGpsTracker extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            !state.isTracking
-                                ? "START\nTRACKING"
-                                : "STOP\nTRACKING",
+                            AppStrings.buttonTrackingStateGpsTrackerScreen(
+                                state.isTracking),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: state.isTracking
-                                    ? Colors.blue
-                                    : Colors.white),
+                                    ? AppColors
+                                        .colorMainStartStopButtonGpsTrackerScreen
+                                    : AppColors
+                                        .colorSecondaryStartStopButtonGpsTrackerScreen),
                             textAlign: TextAlign.center,
                           ),
                         ],

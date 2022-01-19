@@ -5,8 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_map_polyline_new/google_map_polyline_new.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:training_application/app/colors.dart';
 import 'package:training_application/app/scene/gps_path_map/cubit/gps_path_map_cubit.dart';
 import 'package:training_application/app/scene/gps_path_map/cubit/gps_path_map_state.dart';
+import 'package:training_application/app/size.dart';
+import 'package:training_application/app/string.dart';
 
 class ScreenGpsPathMap extends StatelessWidget {
   const ScreenGpsPathMap({Key? key}) : super(key: key);
@@ -16,69 +19,96 @@ class ScreenGpsPathMap extends StatelessWidget {
     return BlocProvider(
       create: (context) => GpsPathMapScreenCubit(),
       child: BlocBuilder<GpsPathMapScreenCubit, GpsPathMapScreenState>(
-          builder: (context, state) {
-        return DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            appBar: AppBar(
-              bottom: const TabBar(
-                tabs: [
-                  Tab(
-                    icon: Icon(Icons.map),
-                  ),
-                  Tab(
-                    icon: Icon(Icons.list),
-                  )
-                ],
+        builder: (context, state) {
+          return DefaultTabController(
+            length: AppSizes.lengthTabControllerGpsPathMapScreen,
+            child: Scaffold(
+              appBar: AppBar(
+                bottom: const TabBar(
+                  tabs: [
+                    Tab(
+                      icon: Icon(Icons.map),
+                    ),
+                    Tab(
+                      icon: Icon(Icons.list),
+                    )
+                  ],
+                ),
               ),
-            ),
-            body: TabBarView(
+              body: TabBarView(
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                   state.locationsDataList.isNotEmpty
                       ? MapGpsPath(
                           locationData: state.locationsDataList,
                         )
-                      : Center(child: Text("Locations data is missing")),
+                      : const Center(
+                          child: Text(
+                              AppStrings.messageDataIsMissingGpsPathMapScreen),
+                        ),
                   Container(
-                    color: Colors.white,
+                    color: AppColors.colorBgListViewGpsPathMapScreen,
                     child: ListView.builder(
-                        itemCount: state.locationsDataList.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            color: (index % 2 == 0)
-                                ? Colors.white
-                                : Colors.black12,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      flex: 3,
-                                      child: Center(
-                                          child: Text("${index + 1}. "))),
-                                  Expanded(
-                                    flex: 12,
+                      itemCount: state.locationsDataList.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          color: (index.isEven)
+                              ? AppColors
+                                  .colorBgEvenListViewItemGpsPathMapScreen
+                              : AppColors
+                                  .colorBgOddListViewItemGpsPathMapScreen,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: AppSizes
+                                    .paddingListViewItemGpsPathMapScreen),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex:
+                                      AppSizes.flexIndexColumnGpsPathMapScreen,
+                                  child: Center(
                                     child: Text(
-                                        "Lat. ${state.locationsDataList[index].latitude}"),
+                                      AppStrings
+                                          .indexColumnListViewItemGpsPathMapScreen(
+                                              index),
+                                    ),
                                   ),
-                                  Expanded(flex: 1, child: Container()),
-                                  Expanded(
-                                    flex: 12,
-                                    child: Text(
-                                        "Long. ${state.locationsDataList[index].longitude}"),
-                                  ),
-                                ],
-                              ),
+                                ),
+                                Expanded(
+                                  flex: AppSizes.flexDataColumnGpsPathMapScreen,
+                                  child: Text(AppStrings
+                                      .dataColumnListViewItemGpsPathMapScreen(
+                                          AppStrings
+                                              .longitudeShortGpsPathMapScreen,
+                                          state.locationsDataList[index]
+                                              .latitude)),
+                                ),
+                                Expanded(
+                                    flex: AppSizes
+                                        .flexPaddingColumnGpsPathMapScreen,
+                                    child: Container()),
+                                Expanded(
+                                  flex: AppSizes.flexDataColumnGpsPathMapScreen,
+                                  child: Text(AppStrings
+                                      .dataColumnListViewItemGpsPathMapScreen(
+                                          AppStrings
+                                              .longitudeShortGpsPathMapScreen,
+                                          state.locationsDataList[index]
+                                              .longitude)),
+                                ),
+                              ],
                             ),
-                          );
-                        }),
+                          ),
+                        );
+                      },
+                    ),
                   )
-                ]),
-          ),
-        );
-      }),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -100,11 +130,11 @@ class MapGpsPathState extends State<MapGpsPath>
     with AutomaticKeepAliveClientMixin<MapGpsPath> {
   final Completer<GoogleMapController> _completer = Completer();
   GoogleMapPolyline googleMapPolyline =
-      GoogleMapPolyline(apiKey: "AIzaSyAHPZ12iDgKw6cAjz88u2OlCDNNtedWBpY");
+      GoogleMapPolyline(apiKey: AppStrings.apiKeyGoogleMaps);
 
-  final List<Polyline> polyline = List.empty(growable: true);
-  final List<Marker> markers = List.empty(growable: true);
-  final List<Circle> circles = List.empty(growable: true);
+  final List<Polyline> polyline = [];
+  final List<Marker> markers = [];
+  final List<Circle> circles = [];
 
   bool _isPathLoaded = false;
 
@@ -147,13 +177,18 @@ class MapGpsPathState extends State<MapGpsPath>
                 } catch (ex) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      duration: Duration(milliseconds: 2500),
+                      duration: Duration(
+                          milliseconds: AppSizes
+                                  .millisecondsSnackBarGpsPathMapScreen -
+                              AppSizes.millisecondsDifferenceGpsPathMapScreen),
                       content: Text(
-                          "Can't connect to google maps services.\nPlease check your internet connection."),
+                          AppStrings.messageInternetConnectionGpsPathMapScreen),
                     ),
                   );
 
-                  await Future.delayed(const Duration(milliseconds: 3000));
+                  await Future.delayed(const Duration(
+                      milliseconds:
+                          AppSizes.millisecondsSnackBarGpsPathMapScreen));
 
                   continue;
                 }
@@ -165,23 +200,27 @@ class MapGpsPathState extends State<MapGpsPath>
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
           floatingActionButton: FractionallySizedBox(
-            heightFactor:
-                currentOrientation == Orientation.portrait ? 0.1 : null,
-            widthFactor:
-                currentOrientation == Orientation.portrait ? null : 0.1,
+            heightFactor: currentOrientation == Orientation.portrait
+                ? AppSizes.factorButtonCameraGpsPathMapScreen
+                : null,
+            widthFactor: currentOrientation == Orientation.portrait
+                ? null
+                : AppSizes.factorButtonCameraGpsPathMapScreen,
             child: FittedBox(
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
+                padding: const EdgeInsets.only(
+                    bottom: AppSizes.paddingButtonCameraGpsPathMapScreen),
                 child: Container(
                   clipBehavior: Clip.hardEdge,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.white,
+                    color: AppColors.colorBgCameraButtonGpsPathMapScreen,
                   ),
                   child: TextButton(
                     style: ButtonStyle(
-                        overlayColor: MaterialStateColor.resolveWith(
-                            (states) => Colors.black26)),
+                        overlayColor: MaterialStateColor.resolveWith((states) =>
+                            AppColors
+                                .colorOverlayCameraButtonGpsPathMapScreen)),
                     onPressed: () async {
                       final GoogleMapController controller =
                           await _completer.future;
@@ -189,10 +228,11 @@ class MapGpsPathState extends State<MapGpsPath>
                           CameraUpdate.newCameraPosition(_kPosition));
                     },
                     child: const Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(
+                          AppSizes.paddingIconButtonCameraGpsPathMapScreen),
                       child: Icon(
                         Icons.home,
-                        color: Colors.black54,
+                        color: AppColors.colorFgCameraButtonGpsPathMapScreen,
                       ),
                     ),
                   ),
@@ -220,7 +260,7 @@ class MapGpsPathState extends State<MapGpsPath>
     return CameraPosition(
       target: LatLng(totalLat / widget.locationData.length,
           totalLng / widget.locationData.length),
-      zoom: 17.0,
+      zoom: AppSizes.zoomCameraPositionGpsPathMapScreen,
     );
   }
 
@@ -245,11 +285,15 @@ class MapGpsPathState extends State<MapGpsPath>
 
     for (int i = 0; i < routeCoords.length; i++) {
       newCircles.add(Circle(
-        circleId: CircleId("circle_$i"),
-        strokeWidth: 4,
-        radius: 4,
-        fillColor: i == 0 ? Colors.green : Colors.blue,
-        strokeColor: i == 0 ? Colors.green : Colors.blue,
+        circleId: CircleId(AppStrings.circleIdGpsPathMapScreen(i)),
+        strokeWidth: AppSizes.strokeWidthCircleGpsPathMapScreen,
+        radius: AppSizes.radiusCircleGpsPathMapScreen,
+        fillColor: i == 0
+            ? AppColors.colorCircleStartGpsPathMapScreen
+            : AppColors.colorPolylineGpsPathMapScreen,
+        strokeColor: i == 0
+            ? AppColors.colorCircleStartGpsPathMapScreen
+            : AppColors.colorPolylineGpsPathMapScreen,
         center: LatLng(routeCoords[i].latitude, routeCoords[i].longitude),
       ));
 
@@ -260,7 +304,7 @@ class MapGpsPathState extends State<MapGpsPath>
     CameraPosition _kNew = CameraPosition(
       target:
           LatLng(totalLat / routeCoords.length, totalLng / routeCoords.length),
-      zoom: 17.0,
+      zoom: AppSizes.zoomCameraPositionGpsPathMapScreen,
     );
 
     controller.animateCamera(CameraUpdate.newCameraPosition(_kNew));
@@ -274,22 +318,23 @@ class MapGpsPathState extends State<MapGpsPath>
 
       markers.add(
         Marker(
-          markerId: const MarkerId("end"),
+          markerId: const MarkerId(AppStrings.markerIdGpsPathMapScreen),
           position: LatLng(
-            widget.locationData.last.latitude ?? 0,
-            widget.locationData.last.longitude ?? 0,
+            widget.locationData.last.latitude!,
+            widget.locationData.last.longitude!,
+            // null value is checked
           ),
-          alpha: 0.5,
+          alpha: AppSizes.alphaMarkerGpsPathMapScreen,
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
         ),
       );
 
       polyline.add(
         Polyline(
-          polylineId: const PolylineId('iter'),
+          polylineId: const PolylineId(AppStrings.polylineIdGpsPathMapScreen),
           points: routeCoords,
-          width: 4,
-          color: Colors.blue,
+          width: AppSizes.widthPolylineGpsPathMapScreen,
+          color: AppColors.colorPolylineGpsPathMapScreen,
         ),
       );
     });

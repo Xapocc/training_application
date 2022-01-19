@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:location/location.dart';
 import 'package:training_application/app/scene/gps_path_map/cubit/gps_path_map_state.dart';
+import 'package:training_application/app/string.dart';
 import 'package:training_application/domain/entities/location_data_entity.dart';
 import 'package:training_application/main.dart';
 
@@ -16,23 +17,25 @@ class GpsPathMapScreenCubit extends Cubit<GpsPathMapScreenState> {
 
     _subscriptionLocationsDataList =
         _controllerLocationsDataList.stream.listen((event) {
-          emit(GpsPathMapScreenState(event));
+      emit(GpsPathMapScreenState(event));
 
-          _subscriptionLocationsDataList?.cancel();
-        });
+      _subscriptionLocationsDataList?.cancel();
+    });
 
     loadLocationsDataList();
   }
 
   void loadLocationsDataList() async {
-    List<LocationDataEntity> locationsDataEntities = await locationsDataUseCase!
-        .getLocationsData();
+    List<LocationDataEntity> locationsDataEntities =
+        await locationsDataUseCase!.getLocationsData();
 
     List<LocationData> locationsDataList = [];
 
     for (LocationDataEntity entity in locationsDataEntities) {
-      LocationData locationData = LocationData.fromMap(
-          {"latitude": entity.latitude, "longitude": entity.longitude});
+      LocationData locationData = LocationData.fromMap({
+        AppStrings.latitudeFullGpsPathMapScreen: entity.latitude,
+        AppStrings.longitudeFullGpsPathMapScreen: entity.longitude
+      });
 
       locationsDataList.add(locationData);
     }

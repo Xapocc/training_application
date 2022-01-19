@@ -15,8 +15,7 @@ class Task3ScreenCubit extends Cubit<Task3ScreenState> {
         const Duration(seconds: AppSizes.secondsLoadingTimeTask3Screen));
 
     var rnd = Random();
-    if (rnd.nextInt(AppSizes.randomMaxValue) % AppSizes.randomDivider ==
-        AppSizes.randomDataStateDivRem) {
+    if (rnd.nextInt(AppSizes.randomMaxValue).isEven) {
       emit(DataState());
     } else {
       emit(ErrorState(AppStrings.errorMessageTestTask3Screen));

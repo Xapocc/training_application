@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:location_platform_interface/location_platform_interface.dart';
+import 'package:training_application/app/string.dart';
 import 'package:training_application/data/models/location_data_model.dart';
 import 'package:training_application/domain/entities/location_data_entity.dart';
 import 'package:training_application/domain/mappers/location_data_mapper.dart';
@@ -14,8 +15,8 @@ class LocationsDataCacheManagerRepositoryImpl
   Future<List<LocationDataEntity>> getLocationsData() async {
     List<LocationDataEntity> locationDataEntitiesList = [];
 
-    FileInfo? file =
-        await DefaultCacheManager().getFileFromCache("locations_data");
+    FileInfo? file = await DefaultCacheManager()
+        .getFileFromCache(AppStrings.locationDataFileName);
 
     if (file == null) return [];
 
@@ -24,16 +25,17 @@ class LocationsDataCacheManagerRepositoryImpl
 
     for (String value in allLocationsDataMap.values) {
       Map<String, dynamic> locationDataMap = jsonDecode(value);
-      if (locationDataMap["latitude"] == null ||
-          locationDataMap["longitude"] == null) return [];
+      if (locationDataMap[AppStrings.locationDataLatFieldName] == null ||
+          locationDataMap[AppStrings.locationDataLngFieldName] == null) {
+        return [];
+      }
 
       locationDataEntitiesList.add(LocationDataMapper().mapLocationData(
           LocationDataModel(
-              latitude: locationDataMap["latitude"]!,
-              longitude: locationDataMap["longitude"]!)));
+              latitude: locationDataMap[AppStrings.locationDataLatFieldName]!,
+              longitude:
+                  locationDataMap[AppStrings.locationDataLngFieldName]!)));
     }
-
-    print("data get");
 
     return locationDataEntitiesList;
   }
@@ -48,20 +50,18 @@ class LocationsDataCacheManagerRepositoryImpl
 
       // null value is checked above
       Map<String, double> locationDataMap = {
-        "latitude": item.latitude!,
-        "longitude": item.longitude!
+        AppStrings.locationDataLatFieldName: item.latitude!,
+        AppStrings.locationDataLngFieldName: item.longitude!
       };
 
       String locationDataJsonString = jsonEncode(locationDataMap);
 
-      allLocationsMap.putIfAbsent(
-          "location_data_$index", () => locationDataJsonString);
+      allLocationsMap.putIfAbsent(AppStrings.locationDataFieldName(index),
+          () => locationDataJsonString);
       index++;
     }
 
-    print("data saved");
-
-    await DefaultCacheManager().putFile("locations_data",
+    await DefaultCacheManager().putFile(AppStrings.locationDataFileName,
         Uint8List.fromList(utf8.encode(jsonEncode(allLocationsMap))));
   }
 }

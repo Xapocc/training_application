@@ -57,8 +57,7 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
     var rnd = Random();
 
     // data state
-    if (rnd.nextInt(AppSizes.randomMaxValue) % AppSizes.randomDivider ==
-        AppSizes.randomDataStateDivRem) {
+    if (rnd.nextInt(AppSizes.randomMaxValue).isEven) {
       statisticUseCase!.incrementDataStateCounter();
 
       List<ImageUrlEntity> imageUrlsEntities = await getImageUrls();
