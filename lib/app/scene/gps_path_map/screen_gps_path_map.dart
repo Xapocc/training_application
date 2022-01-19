@@ -159,6 +159,7 @@ class MapGpsPathState extends State<MapGpsPath>
         child: Scaffold(
           body: GoogleMap(
             myLocationButtonEnabled: false,
+            zoomControlsEnabled: false,
             scrollGesturesEnabled: true,
             rotateGesturesEnabled: true,
             zoomGesturesEnabled: true,
