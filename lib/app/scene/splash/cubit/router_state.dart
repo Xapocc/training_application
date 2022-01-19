@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:location/location.dart';
 
 abstract class RouterState extends Equatable {
   const RouterState();
@@ -55,12 +54,7 @@ class RouterStateGpsTracker extends RouterState {
 }
 
 class RouterStateGpsPathMap extends RouterState {
-  const RouterStateGpsPathMap(List<LocationData> locationPoints)
-      : _locationPoints = locationPoints;
-
-  final List<LocationData> _locationPoints;
-
-  List<LocationData> get locationPoints => _locationPoints;
+  const RouterStateGpsPathMap();
 
   @override
   List<Object?> get props => [];

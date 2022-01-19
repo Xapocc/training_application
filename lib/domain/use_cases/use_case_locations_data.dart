@@ -7,12 +7,12 @@ class LocationsDataUseCase {
 
   final ILocationsDataRepository repository;
 
-  Future<List<LocationDataEntity>> getLocationsData() {
+  Future<List<LocationDataEntity>> getLocationsData() async {
     return repository.getLocationsData();
   }
 
-  saveLocationsData(List<LocationData> locationsDataList) {
-    repository.saveLocationsData(locationsDataList);
+  saveLocationsData(List<LocationData> locationsDataList) async {
+    await repository.saveLocationsData(locationsDataList);
   }
 
 }

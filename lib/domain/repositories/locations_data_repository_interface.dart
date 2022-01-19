@@ -8,5 +8,5 @@ abstract class ILocationsDataRepository {
 
   // set
 
-  void saveLocationsData(List<LocationData> locationsDataList);
+  saveLocationsData(List<LocationData> locationsDataList);
 }

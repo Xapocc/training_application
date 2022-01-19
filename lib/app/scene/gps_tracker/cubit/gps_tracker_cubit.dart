@@ -11,7 +11,7 @@ import 'package:training_application/main.dart';
 
 class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
   StreamSubscription? _subscriptionLocation;
-  Location _location = Location();
+  final Location _location = Location();
 
   GpsTrackerScreenCubit() : super(TrackingState());
 
@@ -31,10 +31,8 @@ class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
   }
 
   bool isLocationsDataEmpty() {
-    return state.locationsData.length >=
-            AppSizes.minLocationPointsGpsTrackerScreen
-        ? false
-        : true;
+    return !(state.locationsData.length >=
+            AppSizes.minLocationPointsGpsTrackerScreen);
   }
 
   void onPressStartStopButton() {

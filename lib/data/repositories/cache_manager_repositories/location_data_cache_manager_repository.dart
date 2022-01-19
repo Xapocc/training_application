@@ -62,6 +62,7 @@ class LocationsDataCacheManagerRepositoryImpl
     }
 
     await DefaultCacheManager().putFile(AppStrings.locationDataFileName,
-        Uint8List.fromList(utf8.encode(jsonEncode(allLocationsMap))));
+        Uint8List.fromList(utf8.encode(jsonEncode(allLocationsMap))),
+        maxAge: const Duration(hours: 1));
   }
 }
