@@ -179,6 +179,7 @@ class MapGpsPathState extends State<MapGpsPath>
               // network connection check
               while (true) {
                 if (!checkConnection) return;
+
                 try {
                   await _computePath();
                   setState(() {
@@ -188,6 +189,9 @@ class MapGpsPathState extends State<MapGpsPath>
                 } catch (ex) {
                   BlocProvider.of<GpsPathMapScreenCubit>(context)
                       .toastNoInternetConnection();
+
+                  await Future.delayed(const Duration(seconds: 3));
+
                   continue;
                 }
               }
