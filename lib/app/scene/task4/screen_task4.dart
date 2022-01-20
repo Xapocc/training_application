@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/colors.dart';
@@ -20,111 +21,118 @@ class ScreenTask4 extends StatelessWidget {
         builder: (context, state) {
           return Container(
             color: AppColors.colorBgTask4Screen,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: AppSizes.fontSizeTextFieldTask4Screen *
-                        AppSizes.factorWidthTextFieldTask4Screen,
-                    child: Material(
-                      color: AppColors.colorBgTextFieldTask4Screen,
-                      child: TextField(
-                        enableSuggestions: false,
-                        cursorColor: AppColors.colorFgTextFieldTask4Screen,
-                        maxLength: AppSizes.maxLengthTextFieldTask4Screen,
-                        decoration: InputDecoration(
-                          hintText: state.secondsStart.toString(),
-                          hintStyle: const TextStyle(
-                              color: AppColors.colorFgHintTextFieldTask4Screen),
-                          focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: AppColors.colorFgTextFieldTask4Screen),
-                          ),
-                          enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color:
-                                    AppColors.colorFgHintTextFieldTask4Screen),
-                          ),
-                        ),
-                        style: const TextStyle(
-                          fontSize: AppSizes.fontSizeTextFieldTask4Screen,
-                          color: AppColors.colorFgTextFieldTask4Screen,
-                          backgroundColor:
-                              AppColors.colorBgTextFieldTask4Screen,
-                        ),
-                        textAlign: TextAlign.center,
-                        onChanged: (text) {
-                          int seconds;
-
-                          try {
-                            seconds = int.parse(text.isEmpty
-                                ? state.secondsStart.toString()
-                                : text);
-                          } catch (ex) {
-                            seconds = 0;
-                          }
-                          context
-                              .read<Task4ScreenCubit>()
-                              .checkIfSecondsInRange(seconds);
-                        },
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: AppSizes.paddingButtonStartTask4Screen),
-                    child: _startButton(context, state),
-                  ),
-                  FittedBox(
-                    child: Container(
-                      padding: const EdgeInsets.all(
-                          AppSizes.paddingContainerStatisticsTask4Screen),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            color: AppColors.colorBgTextStateCounterTask4Screen),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                bottom: AppSizes
-                                    .paddingContainerStatisticsTask4Screen),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: AppSizes
-                                          .paddingDataStateCounterTask4Screen),
-                                  child: _stateCounterText(
-                                      state.dataStateCounter, true),
-                                ),
-                                _stateCounterText(
-                                    state.errorStateCounter, false),
-                              ],
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              resizeToAvoidBottomInset: true,
+              body: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: AppSizes.fontSizeTextFieldTask4Screen *
+                            AppSizes.factorWidthTextFieldTask4Screen,
+                        child: Material(
+                          color: AppColors.colorBgTextFieldTask4Screen,
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            enableSuggestions: false,
+                            cursorColor: AppColors.colorFgTextFieldTask4Screen,
+                            maxLength: AppSizes.maxLengthTextFieldTask4Screen,
+                            decoration: InputDecoration(
+                              hintText: state.secondsStart.toString(),
+                              hintStyle: const TextStyle(
+                                  color: AppColors.colorFgHintTextFieldTask4Screen),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: AppColors.colorFgTextFieldTask4Screen),
+                              ),
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color:
+                                        AppColors.colorFgHintTextFieldTask4Screen),
+                              ),
                             ),
+                            style: const TextStyle(
+                              fontSize: AppSizes.fontSizeTextFieldTask4Screen,
+                              color: AppColors.colorFgTextFieldTask4Screen,
+                              backgroundColor:
+                                  AppColors.colorBgTextFieldTask4Screen,
+                            ),
+                            textAlign: TextAlign.center,
+                            onChanged: (text) {
+                              int seconds;
+
+                              try {
+                                seconds = int.parse(text.isEmpty
+                                    ? state.secondsStart.toString()
+                                    : text);
+                              } catch (ex) {
+                                seconds = 0;
+                              }
+                              context
+                                  .read<Task4ScreenCubit>()
+                                  .checkIfSecondsInRange(seconds);
+                            },
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: AppSizes.paddingButtonStartTask4Screen),
+                        child: _startButton(context, state),
+                      ),
+                      FittedBox(
+                        child: Container(
+                          padding: const EdgeInsets.all(
+                              AppSizes.paddingContainerStatisticsTask4Screen),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: AppColors.colorBgTextStateCounterTask4Screen),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(
-                                    right: AppSizes
-                                        .paddingDataStateCounterTask4Screen),
-                                child: _stateLastDateText(
-                                    state.dataStateLastDate, true),
+                                    bottom: AppSizes
+                                        .paddingContainerStatisticsTask4Screen),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: AppSizes
+                                              .paddingDataStateCounterTask4Screen),
+                                      child: _stateCounterText(
+                                          state.dataStateCounter, true),
+                                    ),
+                                    _stateCounterText(
+                                        state.errorStateCounter, false),
+                                  ],
+                                ),
                               ),
-                              _stateLastDateText(
-                                  state.errorStateLastDate, false),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: AppSizes
+                                            .paddingDataStateCounterTask4Screen),
+                                    child: _stateLastDateText(
+                                        state.dataStateLastDate, true),
+                                  ),
+                                  _stateLastDateText(
+                                      state.errorStateLastDate, false),
+                                ],
+                              ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           );
