@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:location/location.dart';
 import 'package:training_application/app/scene/gps_path_map/cubit/gps_path_map_state.dart';
 import 'package:training_application/app/string.dart';
@@ -41,5 +42,10 @@ class GpsPathMapScreenCubit extends Cubit<GpsPathMapScreenState> {
     }
 
     _controllerLocationsDataList.add(locationsDataList);
+  }
+
+  void toastNoInternetConnection() {
+    Fluttertoast.showToast(
+        msg: AppStrings.messageInternetConnectionGpsPathMapScreen);
   }
 }

@@ -80,8 +80,6 @@ abstract class AppSizes {
   static const int flexIndexColumnGpsPathMapScreen = 3;
   static const int flexDataColumnGpsPathMapScreen = 12;
   static const int flexPaddingColumnGpsPathMapScreen = 1;
-  static const int millisecondsSnackBarGpsPathMapScreen = 3000;
-  static const int millisecondsDifferenceGpsPathMapScreen = 500;
   static const double paddingButtonCameraGpsPathMapScreen = 16.0;
   static const double paddingIconButtonCameraGpsPathMapScreen = 16.0;
   static const double zoomCameraPositionGpsPathMapScreen = 17.0;

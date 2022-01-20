@@ -128,6 +128,14 @@ class MapGpsPath extends StatefulWidget {
 
 class MapGpsPathState extends State<MapGpsPath>
     with AutomaticKeepAliveClientMixin<MapGpsPath> {
+  bool checkConnection = true;
+
+  @override
+  void dispose() {
+    checkConnection = false;
+    super.dispose();
+  }
+
   final Completer<GoogleMapController> _completer = Completer();
   GoogleMapPolyline googleMapPolyline =
       GoogleMapPolyline(apiKey: AppStrings.apiKeyGoogleMaps);
@@ -170,6 +178,7 @@ class MapGpsPathState extends State<MapGpsPath>
 
               // network connection check
               while (true) {
+                if (!checkConnection) return;
                 try {
                   await _computePath();
                   setState(() {
@@ -177,23 +186,8 @@ class MapGpsPathState extends State<MapGpsPath>
                   });
                   break;
                 } catch (ex) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      duration: Duration(
-                          milliseconds: AppSizes
-                                  .millisecondsSnackBarGpsPathMapScreen -
-                              AppSizes.millisecondsDifferenceGpsPathMapScreen),
-                      content: Text(
-                          AppStrings.messageInternetConnectionGpsPathMapScreen),
-                    ),
-                  );
-
-                  await Future.delayed(
-                    const Duration(
-                        milliseconds:
-                            AppSizes.millisecondsSnackBarGpsPathMapScreen),
-                  );
-
+                  BlocProvider.of<GpsPathMapScreenCubit>(context)
+                      .toastNoInternetConnection();
                   continue;
                 }
               }
