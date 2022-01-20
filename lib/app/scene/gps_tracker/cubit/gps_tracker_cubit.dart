@@ -8,6 +8,7 @@ import 'package:permission_handler/permission_handler.dart'
 import 'package:training_application/app/scene/gps_tracker/cubit/gps_tracker_state.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/main.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
   StreamSubscription? _subscriptionLocation;
@@ -49,6 +50,11 @@ class GpsTrackerScreenCubit extends Cubit<GpsTrackerScreenState> {
 
     permission_handler.PermissionStatus permissionStatus =
         await permission_handler.Permission.location.status;
+
+    if(permissionStatus.isPermanentlyDenied) {
+      Fluttertoast.showToast(msg: "Allow access to location in device setting");
+      return;
+    }
 
     if (!permissionStatus.isGranted) {
       permissionStatus = await permission_handler.Permission.location.request();

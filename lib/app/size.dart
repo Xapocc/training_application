@@ -56,7 +56,10 @@ abstract class AppSizes {
 
   // gps tracker
   static const double distanceFilterDefaultGpsTrackerScreen = 0;
+
+  // default: 0.0005
   static const double distanceFilterGpsTrackerScreen = 0.0005;
+
   static const int minLocationPointsGpsTrackerScreen = 2;
   static const double paddingFactorTrackingStateGpsTrackerScreen = 0.03;
   static const double paddingFactorTrackingIndicatorGpsTrackerScreen = 0.03;
