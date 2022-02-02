@@ -62,7 +62,7 @@ class ScreenChoose extends StatelessWidget {
                                 AppColors.colorBgButtonChooseScreen,
                             alignment: Alignment.center),
                         child: const Text(
-                          "en",
+                          "En",
                           style: TextStyle(
                             inherit: false,
                             fontSize: AppSizes.fontSizeButtonChooseScreen,
@@ -81,7 +81,7 @@ class ScreenChoose extends StatelessWidget {
                             backgroundColor:
                                 AppColors.colorBgButtonChooseScreen),
                         child: const Text(
-                          "ru",
+                          "Рус",
                           style: TextStyle(
                             inherit: false,
                             fontSize: AppSizes.fontSizeButtonChooseScreen,

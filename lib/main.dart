@@ -5,7 +5,9 @@ import 'package:training_application/data/repositories/firebase_rtdb_repositorie
 import 'package:training_application/data/repositories/firebase_rtdb_repositories/statistic_firebase_rtdb_repository.dart';
 import 'package:training_application/data/repositories/firebase_rtdb_repositories/statistic_last_date_firebase_rtdb_repository.dart';
 import 'package:training_application/data/repositories/firebase_rtdb_repositories/task4_firebase_rtdb_repository.dart';
+import 'package:training_application/data/repositories/shared_prefs_repositories/l10n_shared_prefs_repository_impl.dart';
 import 'package:training_application/domain/use_cases/use_case_image_urls.dart';
+import 'package:training_application/domain/use_cases/use_case_l10n_choose.dart';
 import 'package:training_application/domain/use_cases/use_case_locations_data.dart';
 import 'package:training_application/domain/use_cases/use_case_statistic.dart';
 import 'package:training_application/domain/use_cases/use_case_statistic_last_date.dart';
@@ -26,6 +28,8 @@ ImageUrlsUseCase? imageUrlsUseCase;
 
 LocationsDataUseCase? locationsDataUseCase;
 
+L10nChoiceUseCase? l10nChoiceUseCase;
+
 // other declarations
 
 FirebaseDatabase? database;
@@ -44,7 +48,11 @@ void main() async {
   imageUrlsUseCase =
       ImageUrlsUseCase(repository: ImageUrlsFirebaseRepositoryImpl());
 
-  locationsDataUseCase = LocationsDataUseCase(repository: LocationsDataCacheManagerRepositoryImpl());
+  locationsDataUseCase = LocationsDataUseCase(
+      repository: LocationsDataCacheManagerRepositoryImpl());
+
+  l10nChoiceUseCase =
+      L10nChoiceUseCase(repository: L10nSharedPrefsRepositoryImpl());
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
