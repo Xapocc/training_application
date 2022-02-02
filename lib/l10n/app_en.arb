@@ -89,5 +89,7 @@
       "isTracking": {}
     }
   },
-  "messageDataIsMissingGpsPathMapScreen": "Locations data is missing"
+  "messageDataIsMissingGpsPathMapScreen": "Locations data is missing",
+  "messageInternetConnectionGpsPathMapScreen": "Can't connect to google maps services.\nPlease check your internet connection.",
+  "lastDateDefault": "never"
 }

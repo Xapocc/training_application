@@ -46,6 +46,7 @@ class GpsPathMapScreenCubit extends Cubit<GpsPathMapScreenState> {
 
   void toastNoInternetConnection() {
     Fluttertoast.showToast(
-        msg: AppStrings.messageInternetConnectionGpsPathMapScreen);
+        msg: l10n.messageInternetConnectionGpsPathMapScreen,
+        toastLength: Toast.LENGTH_LONG);
   }
 }

@@ -19,7 +19,7 @@ class Task4ScreenCubit extends Cubit<Task4ScreenState> {
   StreamSubscription? _subscriptionCounter;
   StreamSubscription? _subscriptionLastDate;
 
-  Task4ScreenCubit() : super(const Task4ScreenState(isButtonEnabled: false)) {
+  Task4ScreenCubit() : super(Task4ScreenState(isButtonEnabled: false)) {
     _controllerTime = StreamController<Task4Entity>();
     _controllerCounter = StreamController<StatisticEntity>();
     _controllerLastDate = StreamController<StatisticLastDateEntity>();
@@ -51,11 +51,11 @@ class Task4ScreenCubit extends Cubit<Task4ScreenState> {
         dataStateLastDate:
             event.dataStateLastDate != AppSizes.lastDateDefaultMilliseconds
                 ? DateFormat(AppStrings.formatLastDate).format(lastDataDate)
-                : AppStrings.lastDateDefault,
+                : l10n.lastDateDefault,
         errorStateLastDate:
             event.errorStateLastDate != AppSizes.lastDateDefaultMilliseconds
                 ? DateFormat(AppStrings.formatLastDate).format(lastErrorDate)
-                : AppStrings.lastDateDefault,
+                : l10n.lastDateDefault,
       ));
 
       _subscriptionLastDate?.cancel();

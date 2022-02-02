@@ -1,22 +1,22 @@
 import 'package:equatable/equatable.dart';
-import 'package:training_application/app/string.dart';
+import 'package:training_application/main.dart';
 
 class Task4ScreenState extends Equatable {
-  const Task4ScreenState(
+  Task4ScreenState(
       {bool isButtonEnabled = false,
       int seconds = 0,
       int secondsStart = 0,
       int dataStateCounter = 0,
       int errorStateCounter = 0,
-      String dataStateLastDate = AppStrings.lastDateDefault,
-      String errorStateLastDate = AppStrings.lastDateDefault})
+      String? dataStateLastDate,
+      String? errorStateLastDate})
       : _isButtonEnabled = isButtonEnabled,
         _seconds = seconds,
         _secondsStart = secondsStart,
         _dataStateCounter = dataStateCounter,
         _errorStateCounter = errorStateCounter,
-        _dataStateLastDate = dataStateLastDate,
-        _errorStateLastDate = errorStateLastDate,
+        _dataStateLastDate = dataStateLastDate ?? l10n.lastDateDefault,
+        _errorStateLastDate = errorStateLastDate ?? l10n.lastDateDefault,
         super();
 
   Task4ScreenState.fromState(Task4ScreenState state,
