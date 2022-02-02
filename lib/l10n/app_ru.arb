@@ -71,5 +71,11 @@
     "placeholders": {
       "date": {}
     }
-  }
+  },
+  "nextButtonPauseStateGpsTrackerScreen": "Показать путь",
+  "backButtonPauseStateGpsTrackerScreen": "Начать заново",
+  "trackingTrackingIndicatorGpsTrackerScreen": "Отслеживание...",
+  "counterTrackingIndicatorGpsTrackerScreen": "GPS точек сохранено: {count}",
+  "buttonTrackingStateGpsTrackerScreen": "{isTracking,plural, =1{НАЧАТЬ\nОТСЛЕЖИВАНИЕ} other{ПРЕКРАТИТЬ\nОТСЛЕЖИВАНИЕ}}",
+  "messageDataIsMissingGpsPathMapScreen": "Данные о местоположениях отсутствуют"
 }

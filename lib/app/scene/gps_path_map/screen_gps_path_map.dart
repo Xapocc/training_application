@@ -10,6 +10,7 @@ import 'package:training_application/app/scene/gps_path_map/cubit/gps_path_map_c
 import 'package:training_application/app/scene/gps_path_map/cubit/gps_path_map_state.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/app/string.dart';
+import 'package:training_application/main.dart';
 
 class ScreenGpsPathMap extends StatelessWidget {
   const ScreenGpsPathMap({Key? key}) : super(key: key);
@@ -42,9 +43,9 @@ class ScreenGpsPathMap extends StatelessWidget {
                       ? MapGpsPath(
                           locationData: state.locationsDataList,
                         )
-                      : const Center(
+                      : Center(
                           child: Text(
-                              AppStrings.messageDataIsMissingGpsPathMapScreen),
+                              l10n.messageDataIsMissingGpsPathMapScreen),
                         ),
                   Container(
                     color: AppColors.colorBgListViewGpsPathMapScreen,

@@ -6,7 +6,7 @@ import 'package:training_application/app/scene/gps_tracker/cubit/gps_tracker_cub
 import 'package:training_application/app/scene/gps_tracker/cubit/gps_tracker_state.dart';
 import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
 import 'package:training_application/app/size.dart';
-import 'package:training_application/app/string.dart';
+import 'package:training_application/main.dart';
 
 class ScreenGpsTracker extends StatelessWidget {
   const ScreenGpsTracker({
@@ -75,10 +75,11 @@ class ScreenGpsTracker extends StatelessWidget {
         children: [
           Flexible(
             child: _pauseScreenButton(
-                context, state, AppStrings.nextButtonPauseStateGpsTrackerScreen,
-                () {
+                context, state, l10n.nextButtonPauseStateGpsTrackerScreen, () {
               BlocProvider.of<GpsTrackerScreenCubit>(context)
-                  .saveLocationsData().then((value) => BlocProvider.of<RouterCubit>(context).goToScreenGpsPathMap());
+                  .saveLocationsData()
+                  .then((value) => BlocProvider.of<RouterCubit>(context)
+                      .goToScreenGpsPathMap());
             },
                 false,
                 BlocProvider.of<GpsTrackerScreenCubit>(context)
@@ -90,8 +91,7 @@ class ScreenGpsTracker extends StatelessWidget {
           ),
           Flexible(
             child: _pauseScreenButton(
-                context, state, AppStrings.backButtonPauseStateGpsTrackerScreen,
-                () {
+                context, state, l10n.backButtonPauseStateGpsTrackerScreen, () {
               BlocProvider.of<GpsTrackerScreenCubit>(context)
                   .goToTrackingState();
             }, true),
@@ -152,12 +152,12 @@ class ScreenGpsTracker extends StatelessWidget {
         children: [
           FittedBox(
             child: Text(
-              AppStrings.trackingTrackingIndicatorGpsTrackerScreen,
+              l10n.trackingTrackingIndicatorGpsTrackerScreen,
               style: textStyle,
             ),
           ),
           Text(
-              AppStrings.counterTrackingIndicatorGpsTrackerScreen(
+              l10n.counterTrackingIndicatorGpsTrackerScreen(
                   state.locationPointsCounter),
               style: textStyle),
         ],
@@ -219,8 +219,8 @@ class ScreenGpsTracker extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            AppStrings.buttonTrackingStateGpsTrackerScreen(
-                                state.isTracking),
+                            l10n.buttonTrackingStateGpsTrackerScreen(
+                                state.isTracking ? 0 : 1),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: state.isTracking
