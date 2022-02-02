@@ -1,10 +1,11 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/colors.dart';
 import 'package:training_application/app/scene/statistic/cubit/statistic_cubit.dart';
 import 'package:training_application/app/scene/statistic/cubit/statistic_state.dart';
 import 'package:training_application/app/size.dart';
-import 'package:training_application/app/string.dart';
+import 'package:training_application/main.dart';
 
 class ScreenStatistics extends StatelessWidget {
   const ScreenStatistics({
@@ -46,9 +47,12 @@ class ScreenStatistics extends StatelessWidget {
           padding: const EdgeInsets.all(
               AppSizes.paddingTextStateCounterStatisticScreen),
           child: Text(
-            AppStrings.stateCountersTextStatisticScreen(
-                    (state as PostTimerState).counter, state is DataState) +
-                AppStrings.stateLastDateTextStatisticScreen(
+            l10n.stateCountersTextStatisticScreen1(
+                    l10n.stateCountersTextStatisticScreen2(
+                        state is DataState ? 1 : 0),
+                    (state as PostTimerState).counter) +
+                "\n" +
+                l10n.stateLastDateTextStatisticScreen(
                   state.lastDate,
                 ),
             textAlign: TextAlign.center,
@@ -62,10 +66,12 @@ class ScreenStatistics extends StatelessWidget {
         ),
         if (state is DataState)
           _dataListView(
-              context,
-              state,
-              AppSizes.numberOfImagesInRowStatisticScreen,
-              AppSizes.showUncompletedRowStatisticScreen),
+            context,
+            state,
+            AppSizes.numberOfImagesInRowStatisticScreen,
+            AppSizes.showUncompletedRowStatisticScreen,
+            2,
+          ),
       ],
     );
   }
@@ -76,8 +82,7 @@ class ScreenStatistics extends StatelessWidget {
       children: [
         const Flexible(
           child: FractionallySizedBox(
-            widthFactor:
-                AppSizes.factorWidthProgressIndicatorStatisticScreen,
+            widthFactor: AppSizes.factorWidthProgressIndicatorStatisticScreen,
             child: AspectRatio(
               aspectRatio: 1,
               child: CircularProgressIndicator(
@@ -91,12 +96,15 @@ class ScreenStatistics extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(
               top: AppSizes.paddingTextProgressIndicatorStatisticScreen),
-          child: Text(
-            AppStrings.spinnerTextStatisticScreen(state.time),
-            style: const TextStyle(
-              fontSize: AppSizes.fontSizeTextProgressIndicatorStatisticScreen,
-              inherit: false,
-              color: AppColors.colorProgressTextStatisticScreen,
+          child: FittedBox(
+            child: AutoSizeText(
+              l10n.spinnerTextStatisticScreen(state.time),
+              wrapWords: false,
+              style: const TextStyle(
+                fontSize: AppSizes.fontSizeTextProgressIndicatorStatisticScreen,
+                inherit: false,
+                color: AppColors.colorProgressTextStatisticScreen,
+              ),
             ),
           ),
         ),

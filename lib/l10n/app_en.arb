@@ -27,5 +27,51 @@
         "type": "int"
       }
     }
+  },
+  "stateLastDateTextTask4Screen1": "Last {isDataState} state\nappearance date\nis {date}",
+  "@stateLastDateTextTask4Screen1": {
+    "placeholders": {
+      "isDataState": {},
+      "date": {}
+    }
+  },
+  "stateLastDateTextTask4Screen2": "{isData,plural, =1{data} other{error}}",
+  "@stateLastDateTextTask4Screen2": {
+    "placeholders": {
+      "isData": {
+        "type": "int"
+      }
+    }
+  },
+  "spinnerTextStatisticScreen": "Please wait {time,plural, =1{{time} second} other{{time} seconds}",
+  "@spinnerTextStatisticScreen": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "stateCountersTextStatisticScreen1": "{count,plural, =1{{isData} state appeared {count} time now} other{{isData} state appeared {count} times now}}",
+  "@stateCountersTextStatisticScreen1": {
+    "placeholders": {
+      "isData": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stateCountersTextStatisticScreen2": "{isData,plural, =1{Data} other{Error}}",
+  "@stateCountersTextStatisticScreen2": {
+    "placeholders": {
+      "isData": {
+        "type": "int"
+      }
+    }
+  },
+  "stateLastDateTextStatisticScreen": "Last appearance date is {date}",
+  "@stateLastDateTextStatisticScreen": {
+    "placeholders": {
+      "date": {}
+    }
   }
 }

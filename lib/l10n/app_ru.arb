@@ -25,5 +25,51 @@
         "type": "int"
       }
     }
+  },
+  "stateLastDateTextTask4Screen1": "Последнее появление\nсостояния с {isDataState}\nбыло {date}",
+  "@stateLastDateTextTask4Screen1": {
+    "placeholders": {
+      "isDataState": {},
+      "date": {}
+    }
+  },
+  "stateLastDateTextTask4Screen2": "{isData,plural, =1{данными} other{ошибкой}}",
+  "@stateLastDateTextTask4Screen2": {
+    "placeholders": {
+      "isData": {
+        "type": "int"
+      }
+    }
+  },
+  "spinnerTextStatisticScreen": "Пожалуйста, подождите {time,plural, =1{{time} секунду} =2{{time} секунды} =few{{time} секунды} other{{time} секунд}",
+  "@spinnerTextStatisticScreen": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "stateCountersTextStatisticScreen1": "{count,plural, =1{Состояние c {isData} появлялось уже {count} раз} =2{Состояние c {isData} появлялось уже {count} раза} few{Состояние c {isData} появлялось уже {count} раза} other{Состояние c {isData} появлялось уже {count} раз}}",
+  "@stateCountersTextStatisticScreen1": {
+    "placeholders": {
+      "isData": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stateCountersTextStatisticScreen2": "{isData,plural, =1{данными} other{ошибкой}}",
+  "@stateCountersTextStatisticScreen2": {
+    "placeholders": {
+      "isData": {
+        "type": "int"
+      }
+    }
+  },
+  "stateLastDateTextStatisticScreen": "Дата последнего появления: {date}",
+  "@stateLastDateTextStatisticScreen": {
+    "placeholders": {
+      "date": {}
+    }
   }
 }

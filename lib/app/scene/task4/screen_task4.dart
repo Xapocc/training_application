@@ -5,7 +5,6 @@ import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
 import 'package:training_application/app/scene/task4/cubit/task4_cubit.dart';
 import 'package:training_application/app/scene/task4/cubit/task4_state.dart';
 import 'package:training_application/app/size.dart';
-import 'package:training_application/app/string.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:training_application/main.dart';
 
@@ -124,10 +123,10 @@ class ScreenTask4 extends StatelessWidget {
                                         right: AppSizes
                                             .paddingDataStateCounterTask4Screen),
                                     child: _stateLastDateText(
-                                        state.dataStateLastDate, true),
+                                        state.dataStateLastDate, 1),
                                   ),
                                   _stateLastDateText(
-                                      state.errorStateLastDate, false),
+                                      state.errorStateLastDate, 0),
                                 ],
                               ),
                             ],
@@ -147,7 +146,8 @@ class ScreenTask4 extends StatelessWidget {
 
   Widget _stateCounterText(counter, isDataState, context) {
     return Text(
-      l10n.stateCountersTextTask4Screen2(l10n.stateCountersTextTask4Screen1(isDataState), counter),
+      l10n.stateCountersTextTask4Screen2(
+          l10n.stateCountersTextTask4Screen1(isDataState), counter),
       style: const TextStyle(
           inherit: false,
           color: AppColors.colorFgTextStateCounterTask4Screen,
@@ -158,7 +158,8 @@ class ScreenTask4 extends StatelessWidget {
 
   Widget _stateLastDateText(date, isDataState) {
     return Text(
-      AppStrings.stateLastDateTextTask4Screen(date, isDataState),
+      l10n.stateLastDateTextTask4Screen1(
+          l10n.stateLastDateTextTask4Screen2(isDataState), date),
       style: const TextStyle(
           inherit: false,
           color: AppColors.colorFgTextStateCounterTask4Screen,
