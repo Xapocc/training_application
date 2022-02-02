@@ -14,7 +14,6 @@ abstract class AppStrings {
 
   // task 4 screen
   static const String textButtonStartTimerTask4Screen = "Start";
-  static const String textHintDefaultTask4Screen = "1";
   static const String formatLastDate = 'dd MMM yyyy';
 
   static String stateCountersTextTask4Screen(counter, hasData) =>

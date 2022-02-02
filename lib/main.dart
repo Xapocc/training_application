@@ -30,6 +30,8 @@ LocationsDataUseCase? locationsDataUseCase;
 
 FirebaseDatabase? database;
 
+dynamic l10n;
+
 void main() async {
   task4TimerUseCase =
       Task4TimerUseCase(repository: Task4FirebaseRepositoryImpl());

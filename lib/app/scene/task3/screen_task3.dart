@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/colors.dart';
 import 'package:training_application/app/size.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'cubit/task3_cubit.dart';
 import 'cubit/task3_state.dart';
@@ -26,7 +27,7 @@ class ScreenTask3 extends StatelessWidget {
               context);
         } else if (state is DataState) {
           return _task3ScreenViewTemplate(
-              Text(state.data,
+              Text(AppLocalizations.of(context)!.dataTask3Screen,
                   style: const TextStyle(
                       color: AppColors.colorFgTask3Screen, inherit: false)),
               AppColors.colorBorderDataScreen,
@@ -50,7 +51,7 @@ class ScreenTask3 extends StatelessWidget {
           Expanded(
               flex: 1,
               child: _errorMessageRow(
-                  state.errorMessage,
+                  AppLocalizations.of(context)!.longErrorMessage,
                   AppColors.colorsTextCircleTask3Screen[0],
                   AppColors.colorsBorderCircleTask3Screen[0],
                   AppColors.colorsTextCircleTask3Screen[1],
@@ -65,8 +66,8 @@ class ScreenTask3 extends StatelessWidget {
                         AppSizes.paddingCentralErrorMessage),
                     color: AppColors.colorBgCentralErrorMessage,
                     child: Center(
-                      child: Text(
-                        state.errorMessage,
+                      child: AutoSizeText(
+                        AppLocalizations.of(context)!.longErrorMessage,
                         style: const TextStyle(
                             color: AppColors.colorFgCentralErrorMessage,
                             inherit: false,
@@ -81,7 +82,7 @@ class ScreenTask3 extends StatelessWidget {
           Expanded(
               flex: 1,
               child: _errorMessageRow(
-                  state.errorMessage,
+                  AppLocalizations.of(context)!.longErrorMessage,
                   AppColors.colorsTextCircleTask3Screen[2],
                   AppColors.colorsBorderCircleTask3Screen[2],
                   AppColors.colorsTextCircleTask3Screen[3],

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/colors.dart';
@@ -7,6 +6,8 @@ import 'package:training_application/app/scene/task4/cubit/task4_cubit.dart';
 import 'package:training_application/app/scene/task4/cubit/task4_state.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/app/string.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:training_application/main.dart';
 
 class ScreenTask4 extends StatelessWidget {
   const ScreenTask4({
@@ -42,15 +43,17 @@ class ScreenTask4 extends StatelessWidget {
                             decoration: InputDecoration(
                               hintText: state.secondsStart.toString(),
                               hintStyle: const TextStyle(
-                                  color: AppColors.colorFgHintTextFieldTask4Screen),
+                                  color: AppColors
+                                      .colorFgHintTextFieldTask4Screen),
                               focusedBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: AppColors.colorFgTextFieldTask4Screen),
+                                    color:
+                                        AppColors.colorFgTextFieldTask4Screen),
                               ),
                               enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                    color:
-                                        AppColors.colorFgHintTextFieldTask4Screen),
+                                    color: AppColors
+                                        .colorFgHintTextFieldTask4Screen),
                               ),
                             ),
                             style: const TextStyle(
@@ -88,7 +91,8 @@ class ScreenTask4 extends StatelessWidget {
                               AppSizes.paddingContainerStatisticsTask4Screen),
                           decoration: BoxDecoration(
                             border: Border.all(
-                                color: AppColors.colorBgTextStateCounterTask4Screen),
+                                color: AppColors
+                                    .colorBgTextStateCounterTask4Screen),
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -105,10 +109,10 @@ class ScreenTask4 extends StatelessWidget {
                                           right: AppSizes
                                               .paddingDataStateCounterTask4Screen),
                                       child: _stateCounterText(
-                                          state.dataStateCounter, true),
+                                          state.dataStateCounter, 1, context),
                                     ),
                                     _stateCounterText(
-                                        state.errorStateCounter, false),
+                                        state.errorStateCounter, 0, context),
                                   ],
                                 ),
                               ),
@@ -141,9 +145,9 @@ class ScreenTask4 extends StatelessWidget {
     );
   }
 
-  Widget _stateCounterText(counter, isDataState) {
+  Widget _stateCounterText(counter, isDataState, context) {
     return Text(
-      AppStrings.stateCountersTextTask4Screen(counter, isDataState),
+      l10n.stateCountersTextTask4Screen2(l10n.stateCountersTextTask4Screen1(isDataState), counter),
       style: const TextStyle(
           inherit: false,
           color: AppColors.colorFgTextStateCounterTask4Screen,
@@ -174,7 +178,8 @@ class ScreenTask4 extends StatelessWidget {
           overlayColor: MaterialStateColor.resolveWith(
               (states) => AppColors.colorOverlayButtonStartTask4Screen),
         ),
-        child: const Text(AppStrings.textButtonStartTimerTask4Screen),
+        child:
+            Text(AppLocalizations.of(context)!.textButtonStartTimerTask4Screen),
         onPressed: () {
           BlocProvider.of<Task4ScreenCubit>(context).saveTime(state.seconds);
           BlocProvider.of<RouterCubit>(context)
@@ -189,7 +194,8 @@ class ScreenTask4 extends StatelessWidget {
           backgroundColor: MaterialStateColor.resolveWith(
               (states) => AppColors.colorBgButtonDisabledStartTask4Screen),
         ),
-        child: const Text(AppStrings.textButtonStartTimerTask4Screen),
+        child:
+            Text(AppLocalizations.of(context)!.textButtonStartTimerTask4Screen),
         onPressed: null,
       );
     }

@@ -1,0 +1,29 @@
+{
+  "helloWorld": "Привет, мир!",
+  "longErrorMessage": "просто длинное сообщение об ошибке с большим количеством символов для тестирования вашего экрана с ошибкой так как он должен отображать любое сообщение об ошибке, вне зависимости от его длины",
+  "dataTask3Screen": "данные",
+  "button0ChooseScreen": "Экран 3-й задачи",
+  "button1ChooseScreen": "Экран 4-й задачи",
+  "button2ChooseScreen": "Экран GPS трекера",
+  "textButtonStartTimerTask4Screen": "Старт",
+  "test": "{value, plural, =1{a} =2{b} other{c}}",
+  "stateCountersTextTask4Screen1": "{isData,plural, =1{данными} other{ошибкой}}",
+  "@stateCountersTextTask4Screen1": {
+    "placeholders": {
+      "isData": {
+        "type": "int"
+      }
+    }
+  },
+  "stateCountersTextTask4Screen2": "{count,plural, =1{Состояние с {isData}\nпоявлялось {count} раз} =2{Состояние с {isData}\nпоявлялось {count} раза} few{Состояние с {isData}\nпоявлялось {count} раза} other{Состояние с {isData}\nпоявлялось {count} раз}}",
+  "@stateCountersTextTask4Screen2": {
+    "placeholders": {
+      "isData": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}

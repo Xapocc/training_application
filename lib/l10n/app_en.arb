@@ -1,0 +1,31 @@
+{
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "longErrorMessage": "some long error text with a lot of symbols and words for testing your error screen as it should display every error`s message despite how long it is",
+  "dataTask3Screen": "data",
+  "button0ChooseScreen": "Task 3 Screen",
+  "button1ChooseScreen": "Task 4 Screen",
+  "button2ChooseScreen": "Gps Tracker Screen",
+  "textButtonStartTimerTask4Screen": "Start",
+  "stateCountersTextTask4Screen1": "{isData,plural, =1{Data} other{Error}}",
+  "@stateCountersTextTask4Screen1": {
+    "placeholders": {
+      "isData": {
+        "type": "int"
+      }
+    }
+  },
+  "stateCountersTextTask4Screen2": "{count,plural, =1{{isData} state\nappeared {count} time} other{{isData} state\nappeared {count} times}}",
+  "@stateCountersTextTask4Screen2": {
+    "placeholders": {
+      "isData": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}

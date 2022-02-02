@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
 import 'package:training_application/app/colors.dart';
 import 'package:training_application/app/size.dart';
-import 'package:training_application/app/string.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ScreenChoose extends StatelessWidget {
   const ScreenChoose({
@@ -21,7 +21,8 @@ class ScreenChoose extends StatelessWidget {
           children: [
             Flexible(
               child: _chooseScreenButton(
-                  context, AppStrings.textButton0ChooseScreen, () {
+                  context, AppLocalizations.of(context)!.button0ChooseScreen,
+                  () {
                 BlocProvider.of<RouterCubit>(context).goToScreenTask3();
               }),
             ),
@@ -30,7 +31,8 @@ class ScreenChoose extends StatelessWidget {
                     EdgeInsets.only(top: AppSizes.paddingButtonChooseScreen)),
             Flexible(
               child: _chooseScreenButton(
-                  context, AppStrings.textButton1ChooseScreen, () {
+                  context, AppLocalizations.of(context)!.button1ChooseScreen,
+                  () {
                 BlocProvider.of<RouterCubit>(context).goToScreenTask4();
               }),
             ),
@@ -39,9 +41,56 @@ class ScreenChoose extends StatelessWidget {
                     EdgeInsets.only(top: AppSizes.paddingButtonChooseScreen)),
             Flexible(
               child: _chooseScreenButton(
-                  context, AppStrings.textButton2ChooseScreen, () {
+                  context, AppLocalizations.of(context)!.button2ChooseScreen,
+                  () {
                 BlocProvider.of<RouterCubit>(context).goToScreenGpsTracker();
               }),
+            ),
+            Flexible(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextButton(
+                        onPressed: () {
+                          BlocProvider.of<RouterCubit>(context)
+                              .changeL10n(const Locale('en'));
+                        },
+                        style: TextButton.styleFrom(
+                            backgroundColor:
+                                AppColors.colorBgButtonChooseScreen,
+                            alignment: Alignment.center),
+                        child: const Text(
+                          "en",
+                          style: TextStyle(
+                            inherit: false,
+                            fontSize: AppSizes.fontSizeButtonChooseScreen,
+                            color: AppColors.colorTextButtonChooseScreen,
+                          ),
+                        )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextButton(
+                        onPressed: () {
+                          BlocProvider.of<RouterCubit>(context)
+                              .changeL10n(const Locale('ru'));
+                        },
+                        style: TextButton.styleFrom(
+                            backgroundColor:
+                                AppColors.colorBgButtonChooseScreen),
+                        child: const Text(
+                          "ru",
+                          style: TextStyle(
+                            inherit: false,
+                            fontSize: AppSizes.fontSizeButtonChooseScreen,
+                            color: AppColors.colorTextButtonChooseScreen,
+                          ),
+                        )),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
