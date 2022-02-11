@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
 import 'package:training_application/app/colors.dart';
+import 'package:training_application/app/router/cubit/router_cubit.dart';
 import 'package:training_application/app/size.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

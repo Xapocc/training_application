@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/colors.dart';
 import 'package:training_application/app/scene/gps_tracker/cubit/gps_tracker_cubit.dart';
 import 'package:training_application/app/scene/gps_tracker/cubit/gps_tracker_state.dart';
-import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
+import 'package:training_application/app/router/cubit/router_cubit.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/main.dart';
 

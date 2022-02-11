@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:training_application/app/scene/splash/cubit/router_state.dart';
+import 'package:training_application/app/router/cubit/router_state.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/domain/entities/l10n_entity.dart';
 import 'package:training_application/main.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:training_application/app/scene/splash/cubit/root_router_delegate.dart';
-import 'package:training_application/app/scene/splash/cubit/router_cubit.dart';
-import 'package:training_application/app/scene/splash/cubit/router_state.dart';
+import 'package:training_application/app/router/root_router_delegate.dart';
+import 'package:training_application/app/router/cubit/router_cubit.dart';
+import 'package:training_application/app/router/cubit/router_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:training_application/main.dart';
 
@@ -29,18 +29,16 @@ class AppRoot extends StatelessWidget {
             locale: state.locale,
             debugShowCheckedModeBanner: false,
             home: SafeArea(
-              child: Builder(
-                builder: (context) {
-                  l10n = AppLocalizations.of(context);
-                  return Router(
-                    routerDelegate: RootRouterDelegate(
-                      navigatorKey,
-                      context.read<RouterCubit>(),
-                    ),
-                    backButtonDispatcher: RootBackButtonDispatcher(),
-                  );
-                }
-              ),
+              child: Builder(builder: (context) {
+                l10n = AppLocalizations.of(context);
+                return Router(
+                  routerDelegate: RootRouterDelegate(
+                    navigatorKey,
+                    context.read<RouterCubit>(),
+                  ),
+                  backButtonDispatcher: RootBackButtonDispatcher(),
+                );
+              }),
             ),
           );
         },
