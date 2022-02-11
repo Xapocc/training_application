@@ -44,14 +44,12 @@ class StatisticLastDateFirebaseRepositoryImpl
     }
 
     return StatisticLastDateMapper().mapStatistic(StatisticLastDateModel(
-      dataStateLastDate: int.parse((dataStateLastDateSnapshot.exists
-              ? dataStateLastDateSnapshot.value
-              : l10n.lastDateDefault)
-          .toString()),
-      errorStateLastDate: int.parse((errorStateLastDateSnapshot.exists
-              ? errorStateLastDateSnapshot.value
-              : l10n.lastDateDefault)
-          .toString()),
+      dataStateLastDate: dataStateLastDateSnapshot.exists
+          ? int.parse((dataStateLastDateSnapshot.value).toString())
+          : l10n.lastDateDefault,
+      errorStateLastDate: errorStateLastDateSnapshot.exists
+          ? int.parse((errorStateLastDateSnapshot.value).toString())
+          : l10n.lastDateDefault,
     ));
   }
 
