@@ -14,6 +14,7 @@ import 'package:training_application/domain/use_cases/use_case_statistic_last_da
 import 'package:training_application/domain/use_cases/use_case_time.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'firebase_options.dart';
 
@@ -36,7 +37,11 @@ FirebaseDatabase? database;
 
 dynamic l10n;
 
+FirebaseAuth? auth;
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   task4TimerUseCase =
       Task4TimerUseCase(repository: Task4FirebaseRepositoryImpl());
   statisticUseCase =
@@ -54,13 +59,14 @@ void main() async {
   l10nChoiceUseCase =
       L10nChoiceUseCase(repository: L10nSharedPrefsRepositoryImpl());
 
-  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  auth = FirebaseAuth.instance;
   database = FirebaseDatabase.instance;
   database!.setPersistenceEnabled(true);
+
 
   runApp(AppRoot());
 }

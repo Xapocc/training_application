@@ -4,6 +4,7 @@ import 'package:training_application/app/router/cubit/router_state.dart';
 import 'package:training_application/app/scene/choose/screen_choose.dart';
 import 'package:training_application/app/scene/gps_path_map/screen_gps_path_map.dart';
 import 'package:training_application/app/scene/gps_tracker/screen_gps_tracker.dart';
+import 'package:training_application/app/scene/login/screen_login.dart';
 import 'package:training_application/app/scene/statistic/screen_statistic.dart';
 import 'package:training_application/app/scene/task3/screen_task3.dart';
 import 'package:training_application/app/scene/splash/screen_splash.dart';
@@ -38,12 +39,20 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
       return [const MaterialPage(child: ScreenSplash())];
     }
 
+    if (_routerCubit.state is RouterStateLoginScreen) {
+      return [const MaterialPage(child: ScreenLogin())];
+    }
+
     return [const MaterialPage(child: ScreenChoose()), ..._finalPage];
   }
 
   List<Page> get _finalPage {
     if (_routerCubit.state is RouterStateTask3Screen) {
-      return [const MaterialPage(child: ScreenTask3())];
+      return [
+        const MaterialPage(
+          child: ScreenTask3(),
+        )
+      ];
     }
     if (_routerCubit.state is RouterStateTask4Screen) {
       return [
@@ -61,14 +70,14 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
         )
       ];
     }
-    if (_routerCubit.state is RouterStateGpsTracker) {
+    if (_routerCubit.state is RouterStateGpsTrackerScreen) {
       return [
         const MaterialPage(
           child: ScreenGpsTracker(),
         )
       ];
     }
-    if (_routerCubit.state is RouterStateGpsPathMap) {
+    if (_routerCubit.state is RouterStateGpsPathMapScreen) {
       return [
         const MaterialPage(
           child: ScreenGpsPathMap(),

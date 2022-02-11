@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:training_application/app/router/cubit/router_state.dart';
 import 'package:training_application/app/size.dart';
 import 'package:training_application/domain/entities/l10n_entity.dart';
@@ -25,10 +26,10 @@ class RouterCubit extends Cubit<RouterState> {
   void goToScreenTask4() => emit(RouterStateTask4Screen(locale: state.locale));
 
   void goToScreenGpsTracker() =>
-      emit(RouterStateGpsTracker(locale: state.locale));
+      emit(RouterStateGpsTrackerScreen(locale: state.locale));
 
   void goToScreenGpsPathMap() =>
-      emit(RouterStateGpsPathMap(locale: state.locale));
+      emit(RouterStateGpsPathMapScreen(locale: state.locale));
 
   void goToScreenStatistics(int seconds) =>
       emit(RouterStateStatisticScreen(seconds, locale: state.locale));
@@ -48,6 +49,16 @@ class RouterCubit extends Cubit<RouterState> {
       locale = Locale(l10nEntity.localeCode);
     }
 
-    emit(RouterStateChooseScreen(locale: locale));
+    if (auth?.currentUser?.isAnonymous ?? true) {
+      emit(RouterStateLoginScreen(locale: locale));
+    } else {
+      emit(RouterStateChooseScreen(locale: locale));
+    }
+  }
+
+  void logOut() async {
+    await GoogleSignIn().signOut();
+    await auth?.signOut();
+    emit(RouterStateLoginScreen(locale: state.locale));
   }
 }

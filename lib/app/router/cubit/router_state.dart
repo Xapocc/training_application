@@ -20,28 +20,33 @@ class RouterStateSplashScreen extends RouterState {
 }
 
 class RouterStateTask3Screen extends RouterState {
-  const RouterStateTask3Screen({required Locale locale}) : super(locale: locale);
+  const RouterStateTask3Screen({required Locale locale})
+      : super(locale: locale);
 
   @override
   List<Object?> get props => [];
 }
 
 class RouterStateChooseScreen extends RouterState {
-  const RouterStateChooseScreen({required Locale locale}) : super(locale: locale);
+  const RouterStateChooseScreen({required Locale locale})
+      : super(locale: locale);
 
   @override
   List<Object?> get props => [super._locale];
 }
 
 class RouterStateTask4Screen extends RouterState {
-  const RouterStateTask4Screen({required Locale locale}) : super(locale: locale);
+  const RouterStateTask4Screen({required Locale locale})
+      : super(locale: locale);
 
   @override
   List<Object?> get props => [];
 }
 
 class RouterStateStatisticScreen extends RouterState {
-  const RouterStateStatisticScreen(int sec, {required Locale locale})  : _seconds = sec, super(locale: locale);
+  const RouterStateStatisticScreen(int sec, {required Locale locale})
+      : _seconds = sec,
+        super(locale: locale);
 
   final int _seconds;
 
@@ -51,15 +56,25 @@ class RouterStateStatisticScreen extends RouterState {
   List<Object?> get props => [];
 }
 
-class RouterStateGpsTracker extends RouterState {
-  const RouterStateGpsTracker({required Locale locale}) : super(locale: locale);
+class RouterStateGpsTrackerScreen extends RouterState {
+  const RouterStateGpsTrackerScreen({required Locale locale})
+      : super(locale: locale);
 
   @override
   List<Object?> get props => [];
 }
 
-class RouterStateGpsPathMap extends RouterState {
-  const RouterStateGpsPathMap({required Locale locale}) : super(locale: locale);
+class RouterStateGpsPathMapScreen extends RouterState {
+  const RouterStateGpsPathMapScreen({required Locale locale})
+      : super(locale: locale);
+
+  @override
+  List<Object?> get props => [];
+}
+
+class RouterStateLoginScreen extends RouterState {
+  const RouterStateLoginScreen({required Locale locale})
+      : super(locale: locale);
 
   @override
   List<Object?> get props => [];
