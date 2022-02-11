@@ -27,6 +27,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  firebase_auth: ^3.3.7
+  google_sign_in: ^5.2.3
   fluttertoast: ^8.0.8
   flutter_cache_manager: ^3.3.0
   permission_handler: ^8.3.0
@@ -40,7 +42,7 @@ dependencies:
   path_provider: ^2.0.8
   auto_size_text: ^3.0.0
   equatable: ^2.0.0
-  firebase_core: ^1.10.6
+  firebase_core: 1.11.0
   firebase_database: ^9.0.4
   flutter_bloc: ^8.0.0
   flutter:

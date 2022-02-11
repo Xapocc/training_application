@@ -1,13 +1,14 @@
 {
   "project_info": {
     "project_number": "1046234896813",
+    "firebase_url": "https://training-application-dd0dd-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "training-application-dd0dd",
     "storage_bucket": "training-application-dd0dd.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1046234896813:android:3c2e8819f1f67ee4766924",
+        "mobilesdk_app_id": "1:1046234896813:android:cc73eb6b554931cc766924",
         "android_client_info": {
           "package_name": "com.example.training_application"
         }
@@ -31,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "1046234896813-rdiqqk39ul4a019j5tgom8h3u01ee95n.apps.googleusercontent.com",
+              "client_id": "1046234896813-14d0vgie3itj17t86jam71l87gjnjht6.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.training-application"
+                "bundle_id": "com.example.trainingApplication"
               }
             }
           ]
