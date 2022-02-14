@@ -1,8 +1,13 @@
 {
-  "helloWorld": "Hello World!",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
-  },
+  "l10nEn": "English",
+  "l10nRu": "Русский",
+  "notLoggedInMessage": "You are not logged in",
+  "googleLogIn": "Log in with Google",
+  "guestLogIn": "Continue as guest",
+  "loggedInAs": "You are logged in as ",
+  "noUser": "*no user*",
+  "guestUser": "guest",
+  "logOut": "Log Out",
   "longErrorMessage": "some long error text with a lot of symbols and words for testing your error screen as it should display every error`s message despite how long it is",
   "dataTask3Screen": "data",
   "button0ChooseScreen": "Task 3 Screen",

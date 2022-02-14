@@ -34,7 +34,12 @@ class ScreenChoose extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: FittedBox(
               child: Text(
-                "You are logged in as ${auth?.currentUser == null ? "*no user*" : (auth!.currentUser!.isAnonymous ? "guest" : auth!.currentUser!.displayName)}",
+                l10n.loggedInAs +
+                    (auth?.currentUser == null
+                        ? l10n.noUser
+                        : (auth!.currentUser!.isAnonymous
+                            ? l10n.guestUser
+                            : auth!.currentUser!.displayName ?? "")),
                 style: const TextStyle(
                   inherit: false,
                   color: Colors.grey,
@@ -50,9 +55,9 @@ class ScreenChoose extends StatelessWidget {
             style: ButtonStyle(
                 overlayColor:
                     MaterialStateColor.resolveWith((states) => Colors.black26)),
-            child: const Text(
-              "Log out",
-              style: TextStyle(
+            child: Text(
+              l10n.logOut,
+              style: const TextStyle(
                 inherit: false,
                 decoration: TextDecoration.underline,
                 color: Colors.black,
@@ -102,7 +107,7 @@ class ScreenChoose extends StatelessWidget {
                     flex: 2,
                     child: Center(
                         child: Text(
-                      "English",
+                      l10n.l10nEn,
                       style: TextStyle(
                           fontSize: AppSizes.fontSizeButtonChooseScreen,
                           color: !isLocalized ? Colors.black : Colors.grey),
@@ -124,7 +129,7 @@ class ScreenChoose extends StatelessWidget {
                     flex: 2,
                     child: Center(
                       child: Text(
-                        "Русский",
+                        l10n.l10nRu,
                         style: TextStyle(
                           fontSize: AppSizes.fontSizeButtonChooseScreen,
                           color: isLocalized ? Colors.black : Colors.grey,
