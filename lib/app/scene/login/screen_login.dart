@@ -14,63 +14,79 @@ class ScreenLogin extends StatelessWidget {
       create: (context) => LoginScreenCubit(),
       child: BlocBuilder<LoginScreenCubit, LoginScreenState>(
         builder: (context, state) {
-          return Container(
-            color: AppColors.colorBgChooseScreen,
-            child: Center(
-              child: IntrinsicWidth(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: 16.0),
-                      child: Text(
-                        "You are not logged in",
-                        style: TextStyle(
-                          inherit: false,
-                          color: Colors.black,
-                          fontSize: 26.0,
-                        ),
-                      ),
-                    ),
-                    TextButton(
-                      style:
-                          TextButton.styleFrom(backgroundColor: Colors.black),
-                      child: const Text(
-                        "Log in with Google",
-                        style: TextStyle(color: Colors.white, fontSize: 26.0),
-                      ),
-                      onPressed: () async {
-                        if (await BlocProvider.of<LoginScreenCubit>(context)
-                            .tryGoogleLogin()) {
-                          BlocProvider.of<RouterCubit>(context)
-                              .goToScreenChoose();
-                        } else {
-                          return;
-                        }
-                      },
-                    ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                          backgroundColor: Colors.transparent),
-                      child: const Text(
-                        "Continue as guest",
-                        style: TextStyle(color: Colors.grey, fontSize: 20.0),
-                      ),
-                      onPressed: () async {
-                        await BlocProvider.of<LoginScreenCubit>(context)
-                            .continueAsGuest();
+          return Stack(
+            children: [
+              Container(
+                color: AppColors.colorBgChooseScreen,
+              ),
+              _loginControls(context),
+              if (state is AwaitingLoginState) _loadingIndicator(),
+            ],
+          );
+        },
+      ),
+    );
+  }
 
-                        BlocProvider.of<RouterCubit>(context)
-                            .goToScreenChoose();
-                      },
-                    ),
-                  ],
+  Widget _loadingIndicator() {
+    return Container(
+      color: Colors.white54,
+      child: const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+
+  Widget _loginControls(BuildContext context) {
+    return Center(
+      child: IntrinsicWidth(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(bottom: 16.0),
+              child: Text(
+                "You are not logged in",
+                style: TextStyle(
+                  inherit: false,
+                  color: Colors.black,
+                  fontSize: 26.0,
                 ),
               ),
             ),
-          );
-        },
+            TextButton(
+              style: TextButton.styleFrom(backgroundColor: Colors.black),
+              child: const Text(
+                "Log in with Google",
+                style: TextStyle(color: Colors.white, fontSize: 26.0),
+              ),
+              onPressed: () async {
+                if (await BlocProvider.of<LoginScreenCubit>(context)
+                    .tryGoogleLogin()) {
+                  BlocProvider.of<RouterCubit>(context).goToScreenChoose();
+                } else {
+                  return;
+                }
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(backgroundColor: Colors.transparent),
+              child: const Text(
+                "Continue as guest",
+                style: TextStyle(color: Colors.grey, fontSize: 20.0),
+              ),
+              onPressed: () async {
+                if (await BlocProvider.of<LoginScreenCubit>(context)
+                    .continueAsGuest()) {
+                  BlocProvider.of<RouterCubit>(context).goToScreenChoose();
+                } else {
+                  return;
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

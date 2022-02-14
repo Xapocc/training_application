@@ -5,17 +5,7 @@ class LoginScreenState extends Equatable {
   List<Object?> get props => [];
 }
 
-class NullUserState extends LoginScreenState {
-  @override
-  List<Object?> get props => [];
-}
-
-class LogInState extends LoginScreenState {
-  @override
-  List<Object?> get props => [];
-}
-
-class RegistrationState extends LoginScreenState {
+class AwaitingLoginState extends LoginScreenState {
   @override
   List<Object?> get props => [];
 }

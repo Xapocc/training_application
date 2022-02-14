@@ -36,17 +36,29 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
 
   List<Page> get _extraPages {
     if (_routerCubit.state is RouterStateSplashScreen) {
-      return [const MaterialPage(child: ScreenSplash())];
+      return [
+        const MaterialPage(
+          child: ScreenSplash(),
+        )
+      ];
     }
 
     if (_routerCubit.state is RouterStateLoginScreen) {
-      return [const MaterialPage(child: ScreenLogin())];
+      return [
+        const MaterialPage(
+          child: ScreenLogin(),
+        )
+      ];
     }
 
-    return [const MaterialPage(child: ScreenChoose()), ..._finalPage];
-  }
+    if (_routerCubit.state is RouterStateChooseScreen) {
+      return [
+        const MaterialPage(
+          child: ScreenChoose(),
+        )
+      ];
+    }
 
-  List<Page> get _finalPage {
     if (_routerCubit.state is RouterStateTask3Screen) {
       return [
         const MaterialPage(
@@ -90,8 +102,23 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
 
   @override
   Future<bool> popRoute() async {
-    _routerCubit.goToScreenChoose();
-
+    switch (_routerCubit.state.runtimeType) {
+      case RouterStateStatisticScreen:
+        _routerCubit.goToScreenTask4();
+        break;
+      case RouterStateGpsPathMapScreen:
+        _routerCubit.goToScreenGpsTracker();
+        break;
+      case RouterStateLoginScreen:
+        return false;
+      case RouterStateChooseScreen:
+        return false;
+      case RouterStateSplashScreen:
+        return false;
+      default:
+        _routerCubit.goToScreenChoose();
+        break;
+    }
     return true;
   }
 
