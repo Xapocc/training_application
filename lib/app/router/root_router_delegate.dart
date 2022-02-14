@@ -51,14 +51,15 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
       ];
     }
 
-    if (_routerCubit.state is RouterStateChooseScreen) {
-      return [
-        const MaterialPage(
-          child: ScreenChoose(),
-        )
-      ];
-    }
+    return [
+      const MaterialPage(
+        child: ScreenChoose(),
+      ),
+      ..._finalPage()
+    ];
+  }
 
+  List<Page> _finalPage() {
     if (_routerCubit.state is RouterStateTask3Screen) {
       return [
         const MaterialPage(
@@ -75,6 +76,9 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
     }
     if (_routerCubit.state is RouterStateStatisticScreen) {
       return [
+        const MaterialPage(
+          child: ScreenTask4(),
+        ),
         MaterialPage(
           child: ScreenStatistics(
               seconds:
@@ -91,6 +95,9 @@ class RootRouterDelegate extends RouterDelegate<RouterState> {
     }
     if (_routerCubit.state is RouterStateGpsPathMapScreen) {
       return [
+        const MaterialPage(
+          child: ScreenGpsTracker(),
+        ),
         const MaterialPage(
           child: ScreenGpsPathMap(),
         ),
