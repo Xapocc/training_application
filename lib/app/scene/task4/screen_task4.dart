@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_application/app/colors.dart';
 import 'package:training_application/app/router/cubit/router_cubit.dart';
+import 'package:training_application/app/router/cubit/router_state.dart';
 import 'package:training_application/app/scene/task4/cubit/task4_cubit.dart';
 import 'package:training_application/app/scene/task4/cubit/task4_state.dart';
 import 'package:training_application/app/size.dart';
@@ -19,6 +20,9 @@ class ScreenTask4 extends StatelessWidget {
       create: (context) => Task4ScreenCubit(),
       child: BlocBuilder<Task4ScreenCubit, Task4ScreenState>(
         builder: (context, state) {
+          RouterStateData routerState =
+              BlocProvider.of<RouterCubit>(context).state as RouterStateData;
+
           return Container(
             color: AppColors.colorBgTask4Screen,
             child: Scaffold(
@@ -82,7 +86,7 @@ class ScreenTask4 extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(
                             bottom: AppSizes.paddingButtonStartTask4Screen),
-                        child: _startButton(context, state),
+                        child: _startButton(context, state, routerState),
                       ),
                       FittedBox(
                         child: Container(
@@ -108,10 +112,10 @@ class ScreenTask4 extends StatelessWidget {
                                           right: AppSizes
                                               .paddingDataStateCounterTask4Screen),
                                       child: _stateCounterText(
-                                          state.dataStateCounter, 1, context),
+                                          routerState.dataCounter, 1, context),
                                     ),
                                     _stateCounterText(
-                                        state.errorStateCounter, 0, context),
+                                        routerState.errorCounter, 0, context),
                                   ],
                                 ),
                               ),
@@ -123,10 +127,9 @@ class ScreenTask4 extends StatelessWidget {
                                         right: AppSizes
                                             .paddingDataStateCounterTask4Screen),
                                     child: _stateLastDateText(
-                                        state.dataStateLastDate, 1),
+                                        routerState.dataDate, 1),
                                   ),
-                                  _stateLastDateText(
-                                      state.errorStateLastDate, 0),
+                                  _stateLastDateText(routerState.errorDate, 0),
                                 ],
                               ),
                             ],
@@ -168,7 +171,8 @@ class ScreenTask4 extends StatelessWidget {
     );
   }
 
-  Widget _startButton(context, Task4ScreenState state) {
+  Widget _startButton(
+      context, Task4ScreenState state, RouterStateData routerState) {
     if (state.isButtonEnabled) {
       return ElevatedButton(
         style: ButtonStyle(
@@ -183,8 +187,13 @@ class ScreenTask4 extends StatelessWidget {
             Text(AppLocalizations.of(context)!.textButtonStartTimerTask4Screen),
         onPressed: () {
           BlocProvider.of<Task4ScreenCubit>(context).saveTime(state.seconds);
-          BlocProvider.of<RouterCubit>(context)
-              .goToScreenStatistics(state.seconds);
+          BlocProvider.of<RouterCubit>(context).goToScreenStatistics(
+            state.seconds,
+            routerState.dataCounter,
+            routerState.errorCounter,
+            routerState.dataDate,
+            routerState.errorDate,
+          );
         },
       );
     } else {

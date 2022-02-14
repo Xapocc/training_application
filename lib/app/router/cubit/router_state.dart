@@ -35,25 +35,79 @@ class RouterStateChooseScreen extends RouterState {
   List<Object?> get props => [super._locale];
 }
 
-class RouterStateTask4Screen extends RouterState {
-  const RouterStateTask4Screen({required Locale locale})
-      : super(locale: locale);
+class RouterStateData extends RouterState {
+  const RouterStateData({
+    required Locale locale,
+    required int dataCounter,
+    required int errorCounter,
+    required String dataDate,
+    required String errorDate,
+  })  : _dataCounter = dataCounter,
+        _errorCounter = errorCounter,
+        _dataDate = dataDate,
+        _errorDate = errorDate,
+        super(locale: locale);
+
+  final int _dataCounter;
+  final int _errorCounter;
+  final String _dataDate;
+  final String _errorDate;
+
+  int get dataCounter => _dataCounter;
+
+  int get errorCounter => _errorCounter;
+
+  String get dataDate => _dataDate;
+
+  String get errorDate => _errorDate;
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props =>
+      [_dataCounter, _errorCounter, _dataDate, _errorDate];
 }
 
-class RouterStateStatisticScreen extends RouterState {
-  const RouterStateStatisticScreen(int sec, {required Locale locale})
-      : _seconds = sec,
-        super(locale: locale);
+class RouterStateTask4Screen extends RouterStateData {
+  const RouterStateTask4Screen({
+    required Locale locale,
+    required int dataCounter,
+    required int errorCounter,
+    required String dataDate,
+    required String errorDate,
+  }) : super(
+            locale: locale,
+            dataCounter: dataCounter,
+            errorCounter: errorCounter,
+            dataDate: dataDate,
+            errorDate: errorDate);
+
+  @override
+  List<Object?> get props =>
+      [_dataCounter, _errorCounter, _dataDate, _errorDate];
+}
+
+class RouterStateStatisticScreen extends RouterStateData {
+  const RouterStateStatisticScreen(
+    int sec, {
+    required Locale locale,
+    required int dataCounter,
+    required int errorCounter,
+    required String dataDate,
+    required String errorDate,
+  })  : _seconds = sec,
+        super(
+            locale: locale,
+            dataCounter: dataCounter,
+            errorCounter: errorCounter,
+            dataDate: dataDate,
+            errorDate: errorDate);
 
   final int _seconds;
 
   int get seconds => _seconds;
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props =>
+      [_seconds, _dataCounter, _errorCounter, _dataDate, _errorDate];
 }
 
 class RouterStateGpsTrackerScreen extends RouterState {
