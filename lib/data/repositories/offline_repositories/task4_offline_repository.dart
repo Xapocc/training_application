@@ -10,7 +10,7 @@ class Task4OfflineRepositoryImpl implements ITask4Repository {
   // get
 
   @override
-  Future<Task4Entity> getTimeFromFile() async {
+  Future<Task4Entity> getTimeFromFile(String userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     return Task4Mapper().mapTask4(Task4Model(
@@ -21,7 +21,7 @@ class Task4OfflineRepositoryImpl implements ITask4Repository {
   // set
 
   @override
-  Future<void> saveTimeToFile(int time) async {
+  Future<void> saveTimeToFile(int time, String userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     await prefs.setInt(AppStrings.timeFieldNameStatisticScreen, time);

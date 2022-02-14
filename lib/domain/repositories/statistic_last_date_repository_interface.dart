@@ -3,11 +3,11 @@ import 'package:training_application/domain/entities/statistic_last_date_entity.
 abstract class IStatisticLastDateRepository {
   // get
 
-  Future<StatisticLastDateEntity> getStateLastDatesMap();
+  Future<StatisticLastDateEntity> getStateLastDatesMap(String userId);
 
   //set
 
-  Future<void> saveNewDataStateLastDate();
+  Future<void> saveNewDataStateLastDate(String userId);
 
-  Future<void> saveNewErrorStateLastDate();
+  Future<void> saveNewErrorStateLastDate(String userId);
 }

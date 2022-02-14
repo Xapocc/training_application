@@ -67,20 +67,22 @@ class Task4ScreenCubit extends Cubit<Task4ScreenState> {
   }
 
   void saveTime(int time) {
-    task4TimerUseCase!.saveTime(time);
+    task4TimerUseCase!.saveTime(time, auth?.currentUser?.uid ?? "");
   }
 
   Future<void> getTime() async {
-    _controllerTime.add(await task4TimerUseCase!.getTime());
+    _controllerTime
+        .add(await task4TimerUseCase!.getTime(auth?.currentUser?.uid ?? ""));
   }
 
   Future<void> getStateCountersMap() async {
-    _controllerCounter.add(await statisticUseCase!.getStateCountersMap());
+    _controllerCounter.add(await statisticUseCase!
+        .getStateCountersMap(auth?.currentUser?.uid ?? ""));
   }
 
   Future<void> getStateLastDateMap() async {
-    _controllerLastDate
-        .add(await statisticLastDateUseCase!.getStateLastDatesMap());
+    _controllerLastDate.add(await statisticLastDateUseCase!
+        .getStateLastDatesMap(auth?.currentUser?.uid ?? ""));
   }
 
   void checkIfSecondsInRange(int seconds) {

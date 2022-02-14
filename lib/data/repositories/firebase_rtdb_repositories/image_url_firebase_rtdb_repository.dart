@@ -25,8 +25,12 @@ class ImageUrlsFirebaseRepositoryImpl implements IImageUrlRepository {
       snapshot = await ref.get();
     }
 
-    List<ImageUrlEntity> imagesUrls =
-        List<ImageUrlEntity>.empty(growable: true);
+    if (snapshot.children.isEmpty) {
+      setDefaultImageUrls();
+      snapshot = await ref.get();
+    }
+
+    List<ImageUrlEntity> imagesUrls = [];
 
     for (DataSnapshot item in snapshot.children) {
       imagesUrls.add(ImageUrlMapper()

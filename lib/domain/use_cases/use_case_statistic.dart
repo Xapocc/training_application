@@ -8,17 +8,17 @@ class StatisticUseCase {
 
   // get
 
-  Future<StatisticEntity> getStateCountersMap() {
-    return repository.getStateCountersMapFromFile();
+  Future<StatisticEntity> getStateCountersMap(String userId) {
+    return repository.getStateCountersMapFromFile(userId);
   }
 
   // set
 
-  void incrementDataStateCounter() {
-    repository.incrementDataStateCounterInFile();
+  void incrementDataStateCounter(String userId) {
+    repository.incrementDataStateCounterInFile(userId);
   }
 
-  void incrementErrorStateCounter() {
-    repository.incrementErrorStateCounterInFile();
+  void incrementErrorStateCounter(String userId) {
+    repository.incrementErrorStateCounterInFile(userId);
   }
 }

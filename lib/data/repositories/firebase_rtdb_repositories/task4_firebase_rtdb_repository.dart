@@ -11,8 +11,9 @@ class Task4FirebaseRepositoryImpl implements ITask4Repository {
   // get
 
   @override
-  Future<Task4Entity> getTimeFromFile() async {
-    DatabaseReference ref = database!.ref(AppStrings.timePathRepositories);
+  Future<Task4Entity> getTimeFromFile(String userId) async {
+    DatabaseReference ref =
+        database!.ref(AppStrings.timePathRepositories + userId);
 
     DataSnapshot snapshot;
 
@@ -36,8 +37,9 @@ class Task4FirebaseRepositoryImpl implements ITask4Repository {
   // set
 
   @override
-  Future<void> saveTimeToFile(int time) async {
-    DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
+  Future<void> saveTimeToFile(int time, String userId) async {
+    DatabaseReference ref =
+        database!.ref(AppStrings.basePathRepositories + userId);
 
     await ref.update({
       AppStrings.timeFieldNameStatisticScreen: time,

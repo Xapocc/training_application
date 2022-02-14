@@ -27,23 +27,25 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
 
   Future<void> getStateCountersMapStream(stateType) async {
     if (stateType is DataState) {
-      _controllerCounter.add(
-          (await statisticUseCase!.getStateCountersMap()).dataStateCounter);
+      _controllerCounter.add((await statisticUseCase!
+              .getStateCountersMap(auth?.currentUser?.uid ?? ""))
+          .dataStateCounter);
     } else {
-      _controllerCounter.add(
-          (await statisticUseCase!.getStateCountersMap()).errorStateCounter);
+      _controllerCounter.add((await statisticUseCase!
+              .getStateCountersMap(auth?.currentUser?.uid ?? ""))
+          .errorStateCounter);
     }
   }
 
   Future<void> getStateLastDateMapStream(stateType) async {
     if (stateType is DataState) {
-      _controllerLastDate.add(
-          (await statisticLastDateUseCase!.getStateLastDatesMap())
-              .dataStateLastDate);
+      _controllerLastDate.add((await statisticLastDateUseCase!
+              .getStateLastDatesMap(auth?.currentUser?.uid ?? ""))
+          .dataStateLastDate);
     } else {
-      _controllerLastDate.add(
-          (await statisticLastDateUseCase!.getStateLastDatesMap())
-              .errorStateLastDate);
+      _controllerLastDate.add((await statisticLastDateUseCase!
+              .getStateLastDatesMap(auth?.currentUser?.uid ?? ""))
+          .errorStateLastDate);
     }
   }
 
@@ -58,10 +60,10 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
 
     // data state
     if (rnd.nextInt(AppSizes.randomMaxValue).isEven) {
-      statisticUseCase!.incrementDataStateCounter();
+      statisticUseCase!.incrementDataStateCounter(auth?.currentUser?.uid ?? "");
 
       List<ImageUrlEntity> imageUrlsEntities = await getImageUrls();
-      List<String> imageUrlsStrings = List.empty(growable: true);
+      List<String> imageUrlsStrings = [];
       for (ImageUrlEntity item in imageUrlsEntities) {
         imageUrlsStrings.add(item.url);
       }
@@ -82,7 +84,8 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
         _subscriptionLastDate?.cancel();
       });
 
-      statisticLastDateUseCase!.saveNewDataStateDate();
+      statisticLastDateUseCase!
+          .saveNewDataStateDate(auth?.currentUser?.uid ?? "");
       emit(DataState(imageUrlsStrings));
     } else {
       // error state
@@ -100,8 +103,10 @@ class StatisticScreenCubit extends Cubit<StatisticScreenState> {
         _subscriptionLastDate?.cancel();
       });
 
-      statisticUseCase!.incrementErrorStateCounter();
-      statisticLastDateUseCase!.saveNewErrorStateDate();
+      statisticUseCase!
+          .incrementErrorStateCounter(auth?.currentUser?.uid ?? "");
+      statisticLastDateUseCase!
+          .saveNewErrorStateDate(auth?.currentUser?.uid ?? "");
       emit(ErrorState());
     }
   }

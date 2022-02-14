@@ -11,8 +11,9 @@ class StatisticFirebaseRepositoryImpl implements IStatisticRepository {
   // get
 
   @override
-  Future<StatisticEntity> getStateCountersMapFromFile() async {
-    DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
+  Future<StatisticEntity> getStateCountersMapFromFile(String userId) async {
+    DatabaseReference ref =
+        database!.ref(AppStrings.basePathRepositories + userId);
 
     DataSnapshot dataStateSnapshot;
     try {
@@ -22,7 +23,7 @@ class StatisticFirebaseRepositoryImpl implements IStatisticRepository {
           .timeout(const Duration(
               milliseconds: AppSizes.millisecondsTimeoutDurationFirebaseRtdb));
     } catch (ex) {
-      setDefaultDataStateCounter();
+      setDefaultDataStateCounter(userId);
 
       dataStateSnapshot =
           await ref.child(AppStrings.dataStateFieldNameStatisticScreen).get();
@@ -36,7 +37,7 @@ class StatisticFirebaseRepositoryImpl implements IStatisticRepository {
           .timeout(const Duration(
               milliseconds: AppSizes.millisecondsTimeoutDurationFirebaseRtdb));
     } catch (ex) {
-      setDefaultErrorStateCounter();
+      setDefaultErrorStateCounter(userId);
 
       errorStateSnapshot =
           await ref.child(AppStrings.errorStateFieldNameStatisticScreen).get();
@@ -57,8 +58,9 @@ class StatisticFirebaseRepositoryImpl implements IStatisticRepository {
   // set
 
   @override
-  Future<void> incrementDataStateCounterInFile() async {
-    DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
+  Future<void> incrementDataStateCounterInFile(String userId) async {
+    DatabaseReference ref =
+        database!.ref(AppStrings.basePathRepositories + userId);
 
     await ref.update({
       AppStrings.dataStateFieldNameStatisticScreen: ServerValue.increment(1),
@@ -66,16 +68,18 @@ class StatisticFirebaseRepositoryImpl implements IStatisticRepository {
   }
 
   @override
-  Future<void> incrementErrorStateCounterInFile() async {
-    DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
+  Future<void> incrementErrorStateCounterInFile(String userId) async {
+    DatabaseReference ref =
+        database!.ref(AppStrings.basePathRepositories + userId);
 
     await ref.update({
       AppStrings.errorStateFieldNameStatisticScreen: ServerValue.increment(1),
     });
   }
 
-  Future<void> setDefaultDataStateCounter() async {
-    DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
+  Future<void> setDefaultDataStateCounter(String userId) async {
+    DatabaseReference ref =
+        database!.ref(AppStrings.basePathRepositories + userId);
 
     await ref.update({
       AppStrings.dataStateFieldNameStatisticScreen:
@@ -83,8 +87,9 @@ class StatisticFirebaseRepositoryImpl implements IStatisticRepository {
     });
   }
 
-  Future<void> setDefaultErrorStateCounter() async {
-    DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
+  Future<void> setDefaultErrorStateCounter(String userId) async {
+    DatabaseReference ref =
+        database!.ref(AppStrings.basePathRepositories + userId);
 
     await ref.update({
       AppStrings.errorStateFieldNameStatisticScreen:

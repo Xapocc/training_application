@@ -72,8 +72,6 @@ abstract class AppSizes {
   static const double factorHeightStartStopButtonGpsTrackerScreen = 1;
   static const double paddingStartStopButtonGpsTrackerScreen = 8.0;
 
-
-
   // gps path map screen
   static const int lengthTabControllerGpsPathMapScreen = 2;
   static const double paddingListViewItemGpsPathMapScreen = 8.0;
@@ -90,6 +88,6 @@ abstract class AppSizes {
   static const double factorButtonCameraGpsPathMapScreen = 0.1;
 
   // repositories
-  static const int millisecondsTimeoutDurationFirebaseRtdb = 300;
+  static const int millisecondsTimeoutDurationFirebaseRtdb = 2000;
   static const int lastDateDefaultMilliseconds = 0;
 }

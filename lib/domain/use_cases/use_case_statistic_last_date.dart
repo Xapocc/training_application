@@ -8,17 +8,17 @@ class StatisticLastDateUseCase {
 
   // get
 
-  Future<StatisticLastDateEntity> getStateLastDatesMap() {
-    return repository.getStateLastDatesMap();
+  Future<StatisticLastDateEntity> getStateLastDatesMap(String userId) {
+    return repository.getStateLastDatesMap(userId);
   }
 
   // set
 
-  void saveNewDataStateDate() {
-    repository.saveNewDataStateLastDate();
+  void saveNewDataStateDate(String userId) {
+    repository.saveNewDataStateLastDate(userId);
   }
 
-  void saveNewErrorStateDate() {
-    repository.saveNewErrorStateLastDate();
+  void saveNewErrorStateDate(String userId) {
+    repository.saveNewErrorStateLastDate(userId);
   }
 }

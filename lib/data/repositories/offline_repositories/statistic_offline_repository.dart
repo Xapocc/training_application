@@ -9,7 +9,7 @@ class StatisticOfflineRepositoryImpl implements IStatisticRepository {
   // get
 
   @override
-  Future<StatisticEntity> getStateCountersMapFromFile() async {
+  Future<StatisticEntity> getStateCountersMapFromFile(String userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     return StatisticMapper().mapStatistic(StatisticModel(
@@ -22,7 +22,7 @@ class StatisticOfflineRepositoryImpl implements IStatisticRepository {
   // set
 
   @override
-  Future<void> incrementDataStateCounterInFile() async {
+  Future<void> incrementDataStateCounterInFile(String userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int counter =
         prefs.getInt(AppStrings.dataStateFieldNameStatisticScreen) ?? 0;
@@ -32,7 +32,7 @@ class StatisticOfflineRepositoryImpl implements IStatisticRepository {
   }
 
   @override
-  Future<void> incrementErrorStateCounterInFile() async {
+  Future<void> incrementErrorStateCounterInFile(String userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int counter =
         prefs.getInt(AppStrings.errorStateFieldNameStatisticScreen) ?? 0;

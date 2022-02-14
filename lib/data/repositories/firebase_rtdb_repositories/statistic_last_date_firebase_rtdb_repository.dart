@@ -10,8 +10,9 @@ import 'package:training_application/main.dart';
 class StatisticLastDateFirebaseRepositoryImpl
     implements IStatisticLastDateRepository {
   @override
-  Future<StatisticLastDateEntity> getStateLastDatesMap() async {
-    DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
+  Future<StatisticLastDateEntity> getStateLastDatesMap(String userId) async {
+    DatabaseReference ref =
+        database!.ref(AppStrings.basePathRepositories + userId);
 
     DataSnapshot dataStateLastDateSnapshot;
     try {
@@ -21,7 +22,7 @@ class StatisticLastDateFirebaseRepositoryImpl
           .timeout(const Duration(
               milliseconds: AppSizes.millisecondsTimeoutDurationFirebaseRtdb));
     } catch (ex) {
-      setDefaultDataStateLastDate();
+      setDefaultDataStateLastDate(userId);
 
       dataStateLastDateSnapshot = await ref
           .child(AppStrings.dataStateLastDateFieldNameStatisticScreen)
@@ -36,7 +37,7 @@ class StatisticLastDateFirebaseRepositoryImpl
           .timeout(const Duration(
               milliseconds: AppSizes.millisecondsTimeoutDurationFirebaseRtdb));
     } catch (ex) {
-      setDefaultErrorStateLastDate();
+      setDefaultErrorStateLastDate(userId);
 
       errorStateLastDateSnapshot = await ref
           .child(AppStrings.errorStateLastDateFieldNameStatisticScreen)
@@ -46,15 +47,16 @@ class StatisticLastDateFirebaseRepositoryImpl
     return StatisticLastDateMapper().mapStatistic(StatisticLastDateModel(
       dataStateLastDate: dataStateLastDateSnapshot.exists
           ? int.parse((dataStateLastDateSnapshot.value).toString())
-          : l10n.lastDateDefault,
+          : 0,
       errorStateLastDate: errorStateLastDateSnapshot.exists
           ? int.parse((errorStateLastDateSnapshot.value).toString())
-          : l10n.lastDateDefault,
+          : 0,
     ));
   }
 
-  Future<void> saveNewStateLastDate(bool isDataState) async {
-    DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
+  Future<void> saveNewStateLastDate(bool isDataState, String userId) async {
+    DatabaseReference ref =
+        database!.ref(AppStrings.basePathRepositories + userId);
     DateTime now = DateTime.now();
 
     await ref.update({
@@ -63,22 +65,21 @@ class StatisticLastDateFirebaseRepositoryImpl
               : AppStrings.errorStateLastDateFieldNameStatisticScreen):
           now.millisecondsSinceEpoch,
     });
-
-    print("${now.millisecondsSinceEpoch}");
   }
 
   @override
-  Future<void> saveNewDataStateLastDate() async {
-    saveNewStateLastDate(true);
+  Future<void> saveNewDataStateLastDate(String userId) async {
+    saveNewStateLastDate(true, userId);
   }
 
   @override
-  Future<void> saveNewErrorStateLastDate() async {
-    saveNewStateLastDate(false);
+  Future<void> saveNewErrorStateLastDate(String userId) async {
+    saveNewStateLastDate(false, userId);
   }
 
-  Future<void> setDefaultDataStateLastDate() async {
-    DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
+  Future<void> setDefaultDataStateLastDate(String userId) async {
+    DatabaseReference ref =
+        database!.ref(AppStrings.basePathRepositories + userId);
 
     await ref.update({
       AppStrings.dataStateLastDateFieldNameStatisticScreen:
@@ -86,8 +87,9 @@ class StatisticLastDateFirebaseRepositoryImpl
     });
   }
 
-  Future<void> setDefaultErrorStateLastDate() async {
-    DatabaseReference ref = database!.ref(AppStrings.basePathRepositories);
+  Future<void> setDefaultErrorStateLastDate(String userId) async {
+    DatabaseReference ref =
+        database!.ref(AppStrings.basePathRepositories + userId);
 
     await ref.update({
       AppStrings.errorStateLastDateFieldNameStatisticScreen:

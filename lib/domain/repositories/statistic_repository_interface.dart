@@ -3,11 +3,11 @@ import 'package:training_application/domain/entities/statistic_entity.dart';
 abstract class IStatisticRepository {
   // get
 
-  Future<StatisticEntity> getStateCountersMapFromFile();
+  Future<StatisticEntity> getStateCountersMapFromFile(String userId);
 
   //set
 
-  Future<void> incrementDataStateCounterInFile();
+  Future<void> incrementDataStateCounterInFile(String userId);
 
-  Future<void> incrementErrorStateCounterInFile();
+  Future<void> incrementErrorStateCounterInFile(String userId);
 }

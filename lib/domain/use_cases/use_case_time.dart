@@ -8,13 +8,13 @@ class Task4TimerUseCase {
 
   // get
 
-  Future<Task4Entity> getTime() {
-    return repository.getTimeFromFile();
+  Future<Task4Entity> getTime(String userId) {
+    return repository.getTimeFromFile(userId);
   }
 
   // set
 
-  void saveTime(int time) {
-    repository.saveTimeToFile(time);
+  void saveTime(int time, String userId) {
+    repository.saveTimeToFile(time, userId);
   }
 }
